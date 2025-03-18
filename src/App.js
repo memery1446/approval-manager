@@ -1,13 +1,13 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { Provider } from "react-redux" 
 import store from "./store/index" 
 import WalletConnect from "./components/WalletConnect.js"
 import NetworkSelector from "./components/NetworkSelector.js"
 import ApprovalDashboard from "./components/ApprovalDashboard.js"
-import ApprovalEducation from "./components/ApprovalEducation.js"
+import ApprovalEducationPage from "./components/ApprovalEducationPage.js"
 import BatchRevoke from "./components/BatchRevoke.js" 
 import { FEATURES } from './constants/config' 
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -15,8 +15,6 @@ import { BootstrapWrapper } from "./utils/provider"
 import { initializeProvider } from "./utils/providerService"
 import ReduxDebugger from './components/ReduxDebugger';
 import MinimalTest from './components/MinimalTest';
-
-
 
 console.log("🔴 App.js loaded - " + new Date().toISOString())
 
@@ -27,6 +25,8 @@ const AppContent = () => {
   const wallet = useSelector((state) => state.web3.account)
   const network = useSelector((state) => state.web3.network)
   const approvals = useSelector((state) => state.web3.approvals)
+  // Add state for showing education page
+  const [showEducation, setShowEducation] = useState(false)
 
   useEffect(() => {
     console.log("🔄 Initializing provider service...")
@@ -59,62 +59,68 @@ const AppContent = () => {
           <p className="text-muted">Review and revoke token approvals to protect your assets.</p>
         </header>
 
-        <div className="row mb-4">
-<div className="col-md-6">
-  {/* Comment out problematic components temporarily */}
-  {/* <MinimalTest /> */}
-  {/* <ReduxDebugger /> */}
-  <WalletConnect />
-</div>
-          <div className="col-md-6">
-            <NetworkSelector />
-
-          </div>
-        </div>
-
-        {!wallet ? (
-          <div className="text-center py-5">
-          <ReduxDebugger />
-            <h2>Connect Your Wallet</h2>
-            <p className="text-muted">View and manage your active token approvals.</p>
-          </div>
-        ) : (
-          <div className="row mt-4">
-            <div className="col-lg-12">
-              {/* Only render BatchRevoke if feature is enabled */}
-              {FEATURES.batchRevoke.enabled && <BatchRevoke />}
-
-              {/* Educational Section */}
-              <ApprovalEducation />
-
-              {/* Approval List */}
-              <ApprovalDashboard />
-              
-              {/* Environment indicator for testing */}
-              {process.env.NODE_ENV !== 'production' && (
-                <div className="alert alert-warning mt-4">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>Testing Environment</strong> - Feature Toggles Active
-                    </div>
-                    <div>
-                      <small>
-                        Batch Revoke: {FEATURES.batchRevoke.enabled ? '✅' : '❌'} | 
-                        ERC-20: {FEATURES.batchRevoke.erc20Enabled ? '✅' : '❌'} | 
-                        NFT: {FEATURES.batchRevoke.nftEnabled ? '✅' : '❌'} |
-                        Batch Size: {FEATURES.batchRevoke.maxBatchSize}
-                      </small>
-                    </div>
-                  </div>
-                  <div className="mt-2">
-                    <small className="text-muted">
-                      Use console to toggle features: <code>window.toggleFeature('batchRevoke.nftEnabled', true)</code>
-                    </small>
-                  </div>
-                </div>
-              )}
+        {!showEducation ? (
+          // Dashboard View
+          <>
+            <div className="row mb-4">
+              <div className="col-md-6">
+                {/* Comment out problematic components temporarily */}
+                {/* <MinimalTest /> */}
+                {/* <ReduxDebugger /> */}
+                <WalletConnect />
+              </div>
+              <div className="col-md-6">
+                <NetworkSelector />
+              </div>
             </div>
-          </div>
+
+            {!wallet ? (
+              <div className="text-center py-5">
+                <ReduxDebugger />
+                <h2>Connect Your Wallet</h2>
+                <p className="text-muted">View and manage your active token approvals.</p>
+              </div>
+            ) : (
+              <div className="row mt-4">
+                <div className="col-lg-12">
+                  {/* Only render BatchRevoke if feature is enabled */}
+                  {FEATURES.batchRevoke.enabled && <BatchRevoke />}
+
+                  {/* Approval List with education button */}
+                  <ApprovalDashboard 
+                    onNavigateToEducation={() => setShowEducation(true)} 
+                  />
+                  
+                  {/* Environment indicator for testing */}
+                  {process.env.NODE_ENV !== 'production' && (
+                    <div className="alert alert-warning mt-4">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div>
+                          <strong>Testing Environment</strong> - Feature Toggles Active
+                        </div>
+                        <div>
+                          <small>
+                            Batch Revoke: {FEATURES.batchRevoke.enabled ? '✅' : '❌'} | 
+                            ERC-20: {FEATURES.batchRevoke.erc20Enabled ? '✅' : '❌'} | 
+                            NFT: {FEATURES.batchRevoke.nftEnabled ? '✅' : '❌'} |
+                            Batch Size: {FEATURES.batchRevoke.maxBatchSize}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="mt-2">
+                        <small className="text-muted">
+                          Use console to toggle features: <code>window.toggleFeature('batchRevoke.nftEnabled', true)</code>
+                        </small>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          // Education Page View
+          <ApprovalEducationPage onBack={() => setShowEducation(false)} />
         )}
       </div>
     </BootstrapWrapper>
