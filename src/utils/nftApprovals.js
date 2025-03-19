@@ -3,6 +3,57 @@ import { NFT_ABI, CONTRACT_ADDRESSES } from "../constants/abis";
 import { getProvider } from "./providerService";
 
 /**
+ * Get the latest Approval transaction hash for an ERC-721 approval.
+ * @param {ethers.Provider} provider - The ethers provider
+ * @param {string} owner - The token owner address
+ * @param {string} contractAddress - The NFT contract address
+ * @param {string} operator - The approved operator address
+ * @returns {Promise<string>} - The transaction hash or "N/A" if not found
+ */
+async function getLatestNFTApprovalTransaction(provider, owner, contractAddress, operator) {
+  try {
+    console.log(`🔍 Searching for NFT approval events from ${contractAddress} for owner ${owner} and operator ${operator}`);
+    
+    // ApprovalForAll(address,address,bool) event signature
+    const approvalForAllSignature = "0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31";
+    
+    // Format addresses for topic filtering (pad to 32 bytes)
+    const formattedOwner = "0x" + owner.slice(2).padStart(64, "0");
+    const formattedOperator = "0x" + operator.slice(2).padStart(64, "0");
+    
+    console.log(`🔍 Using formatted topics - Owner: ${formattedOwner}, Operator: ${formattedOperator}`);
+    
+    // Search for ApprovalForAll events
+    try {
+      const approvalForAllLogs = await provider.getLogs({
+        address: contractAddress,
+        topics: [
+          approvalForAllSignature,
+          formattedOwner,
+          formattedOperator
+        ],
+        fromBlock: "earliest",
+        toBlock: "latest"
+      });
+
+      if (approvalForAllLogs.length > 0) {
+        const latestLog = approvalForAllLogs[approvalForAllLogs.length - 1];
+        console.log(`✅ Found ApprovalForAll transaction: ${latestLog.transactionHash}`);
+        return latestLog.transactionHash;
+      } else {
+        console.log(`⚠️ No ApprovalForAll events found`);
+      }
+    } catch (error) {
+      console.warn(`⚠️ Error searching for ApprovalForAll logs:`, error.message);
+    }
+  } catch (error) {
+    console.warn(`⚠️ Error in getLatestNFTApprovalTransaction:`, error.message);
+  }
+  
+  return "N/A"; // If no transaction is found
+}
+
+/**
  * Fetch ERC-721 NFT approvals for a user
  * @param {string} ownerAddress - Owner's wallet address
  * @param {ethers.Provider} [providedProvider] - Optional provider instance
@@ -113,13 +164,22 @@ export async function getERC721Approvals(ownerAddress, providedProvider) {
           console.log(`🖼️ isApprovedForAll result: ${isApproved}`);
 
           if (isApproved) {
+            // Get transaction hash for this approval
+            const transactionHash = await getLatestNFTApprovalTransaction(
+              provider, 
+              ownerAddress,  
+              collectionAddress, 
+              spender
+            );
+            
             const approval = {
               contract: collectionAddress,
               type: "ERC-721",
               spender: spender,
               asset: collectionName || collectionSymbol,
               tokenId: "all", // Using "all" to indicate approval for all tokens
-              valueAtRisk: "All NFTs in Collection"
+              valueAtRisk: "All NFTs in Collection",
+              transactionHash // Add transaction hash
             };
 
             approvals.push(approval);
@@ -139,3 +199,4 @@ export async function getERC721Approvals(ownerAddress, providedProvider) {
 }
 
 export default getERC721Approvals;
+

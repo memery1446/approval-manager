@@ -10,6 +10,7 @@ import { revokeERC20Approvals, revokeERC721Approvals } from "../utils/batchRevok
 import { CONTRACT_ADDRESSES } from "../constants/abis"; 
 import MixedBatchRevoke from "../components/MixedBatchRevoke";
 import TransactionProgressBar from "../components/TransactionProgressBar";
+import TransactionHashComponent from "../components/TransactionHashComponent";
 
 const ApprovalDashboard = ({ onNavigateToEducation }) => {
   const dispatch = useDispatch();
@@ -25,6 +26,14 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
   const [progressValue, setProgressValue] = useState(0);
   const [progressStatus, setProgressStatus] = useState('');
   const [error, setError] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Refresh approvals on wallet connection
+  useEffect(() => {
+    if (wallet) {
+      refreshApprovals();
+    }
+  }, [wallet]);
 
   // ✅ Allow selection of individual approvals
   const handleSelect = (approval) => {
@@ -66,6 +75,77 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
     setSelectedApprovals([approval]);
     // We need to use setTimeout because setState is asynchronous
     setTimeout(() => handleRevoke(), 0);
+  };
+
+  // Function to refresh approvals with better error handling
+  const refreshApprovals = async () => {
+    console.log("🔄 Refreshing approvals for wallet:", wallet);
+    setRefreshing(true);
+    setError(null);
+    
+    try {
+      const provider = await getProvider();
+      if (!provider) {
+        throw new Error("Failed to get provider");
+      }
+      
+      console.log("🔄 Fetching ERC-20 approvals...");
+      let erc20Approvals = [];
+      try {
+        // First try with empty array as first parameter
+        erc20Approvals = await getERC20Approvals([], wallet, provider) || [];
+        console.log("✅ ERC-20 approvals fetched:", erc20Approvals);
+      } catch (erc20Error) {
+        console.error("❌ Error fetching ERC-20 approvals with [] first param:", erc20Error);
+        
+        try {
+          // Try with null as first parameter as fallback
+          console.log("🔄 Attempting fallback with null first param");
+          erc20Approvals = await getERC20Approvals(null, wallet, provider) || [];
+          console.log("✅ ERC-20 approvals fetched with fallback:", erc20Approvals);
+        } catch (nullError) {
+          console.error("❌ Fallback also failed:", nullError);
+          
+          // Final attempt with just wallet and provider
+          try {
+            console.log("🔄 Final attempt with just wallet and provider");
+            erc20Approvals = await getERC20Approvals(wallet, provider) || [];
+            console.log("✅ ERC-20 approvals fetched with final attempt:", erc20Approvals);
+          } catch (finalError) {
+            console.error("❌ All ERC-20 fetch attempts failed:", finalError);
+          }
+        }
+      }
+      
+      console.log("🔄 Fetching ERC-721 approvals...");
+      const erc721Approvals = await getERC721Approvals(wallet, provider) || [];
+      console.log("✅ ERC-721 approvals fetched:", erc721Approvals);
+      
+      console.log("🔄 Fetching ERC-1155 approvals...");
+      const erc1155Approvals = await getERC1155Approvals(wallet, provider) || [];
+      console.log("✅ ERC-1155 approvals fetched:", erc1155Approvals);
+      
+      // Combine all approvals
+      const allApprovals = [
+        ...erc20Approvals, 
+        ...erc721Approvals, 
+        ...erc1155Approvals
+      ];
+      
+      console.log("📊 Total approvals found:", {
+        'ERC-20': erc20Approvals.length,
+        'ERC-721': erc721Approvals.length,
+        'ERC-1155': erc1155Approvals.length,
+        'Total': allApprovals.length
+      });
+      
+      dispatch(setApprovals(allApprovals));
+    } catch (error) {
+      console.error("❌ Error refreshing approvals:", error);
+      setError("Failed to refresh approvals: " + error.message);
+    } finally {
+      setRefreshing(false);
+    }
   };
 
   // ✅ Fix revocation to process selected approvals
@@ -215,35 +295,10 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
           </button>
           <button 
             className="btn btn-secondary" 
-            onClick={async () => {
-              console.log("Fetching fresh approval data");
-              try {
-                const provider = await getProvider();
-                if (!provider) {
-                  throw new Error("Failed to get provider");
-                }
-                
-                // Fetch all types of approvals
-                // Fix: Pass empty array as first parameter to getERC20Approvals
-                const erc20Approvals = await getERC20Approvals([], wallet, provider);
-                const erc721Approvals = await getERC721Approvals(wallet, provider);
-                const erc1155Approvals = await getERC1155Approvals(wallet, provider);
-                
-                // Combine all approvals
-                const allApprovals = [
-                  ...erc20Approvals, 
-                  ...erc721Approvals, 
-                  ...erc1155Approvals
-                ];
-                
-                dispatch(setApprovals(allApprovals));
-              } catch (error) {
-                console.error("Error refreshing approvals:", error);
-                setError("Failed to refresh approvals: " + error.message);
-              }
-            }}
+            onClick={refreshApprovals}
+            disabled={refreshing}
           >
-            🔄 Refresh
+            {refreshing ? '⏳ Loading...' : '🔄 Refresh'}
           </button>
         </div>
       </div>
@@ -276,6 +331,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                       disabled={approvals.length === 0 || processing}
                     />
                   </th>
+                  <th>Transaction Hash</th>
                   <th>Asset</th>
                   <th>Type</th>
                   <th>Value at Risk</th>
@@ -297,7 +353,10 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                         disabled={processing}
                       />
                     </td>
-                    <td>{a.asset || a.contract.substring(0, 8)}</td>
+                    <td>
+                      <TransactionHashComponent transactionHash={a.transactionHash} />
+                    </td>
+                    <td>{a.asset || a.contract?.substring(0, 8)}</td>
                     <td>
                       <span className={`badge bg-${a.type === "ERC-20" ? "success" : a.type === "ERC-721" ? "primary" : "warning"}`}>
                         {a.type || 'Unknown'}
@@ -339,4 +398,3 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
 };
 
 export default ApprovalDashboard;
-
