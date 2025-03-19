@@ -1,3 +1,47 @@
+}, 10000);
+    console.log("⏳ Checking after delay:", await erc1155.isApprovedForAll(owner, spender));
+setTimeout(async () => {
+// Wait 10 seconds and check again
+console.log("🔄 Checking after approval:", await erc1155.isApprovedForAll(owner, spender));
+await erc1155.setApprovalForAll(spender, true);
+console.log("✅ Setting Approval...");
+console.log("🔍 Checking before approval:", await erc1155.isApprovedForAll(owner, spender));
+const erc1155 = await ethers.getContractAt("TestERC1155", contractAddress);
+const contractAddress = "0x26291175Fa0Ea3C8583fEdEB56805eA68289b105"; // ERC-1155 contract
+const spender = "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad";
+const owner = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"; // Your wallet
+const { ethers } = require("hardhat");
+console.log("🔎 ERC-1155 Approval Status:", isApproved);
+const isApproved = await erc1155.isApprovedForAll(owner, spender);
+const erc1155 = await ethers.getContractAt("TestERC1155", contractAddress);
+const contractAddress = "0x26291175Fa0Ea3C8583fEdEB56805eA68289b105"; // ERC-1155 contract
+const spender = "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad"; // The spender address
+const owner = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"; // Your wallet
+const { ethers } = require("hardhat");
+console.log("ERC-1155 Approval Status:", isApproved);
+let isApproved = await erc1155.isApprovedForAll(owner, spender);
+let erc1155 = await ethers.getContractAt("TestERC1155", contractAddress);
+// Instead of IERC1155, use the actual ERC-1155 contract name
+let contractAddress = "0x26291175Fa0Ea3C8583fEdEB56805eA68289b105"; // ERC-1155 contract
+let spender = "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad"; // MockSpender
+let owner = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"; // Your wallet
+npx hardhat console --network localhost
+.exit
+console.log("ERC-1155 Approval Status:", isApproved);
+const isApproved = await erc1155.isApprovedForAll(owner, spender);
+const erc1155 = await ethers.getContractAt("TestERC1155", contractAddress);
+// Instead of IERC1155, use the actual ERC-1155 contract name
+const contractAddress = "0x26291175Fa0Ea3C8583fEdEB56805eA68289b105"; // ERC-1155 contract
+const spender = "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad"; // MockSpender
+const owner = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"; // Your wallet
+const { ethers } = require("hardhat");
+console.log("ERC-1155 Approval Status:", isApproved);
+const isApproved = await erc1155.isApprovedForAll(owner, spender);
+const erc1155 = await ethers.getContractAt("IERC1155", contractAddress);
+const contractAddress = "0x26291175Fa0Ea3C8583fEdEB56805eA68289b105"; // ERC-1155 contract
+const spender = "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad"; // MockSpender
+const owner = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"; // Your wallet
+const { ethers } = require("hardhat");
 .exit
 console.log("✅ Loaded TestToken Factory:", TestToken);
 const TestToken = await hre.ethers.getContractFactory("TestToken");
