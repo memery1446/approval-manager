@@ -2026,6 +2026,186 @@
         "IERC721",
         "MockSpender"
       ]
+    },
+    "/Users/markemery/approval-manager/contracts/BridgeSpender.sol": {
+      "lastModificationDate": 1742910454950,
+      "contentHash": "0c09f7e466371c81c7063b95a438906d",
+      "sourceName": "contracts/BridgeSpender.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "BridgeSpender"
+      ]
+    },
+    "/Users/markemery/approval-manager/contracts/DexSpender.sol": {
+      "lastModificationDate": 1742910347869,
+      "contentHash": "1414946f98d0e84d063e4d3ee5b847d9",
+      "sourceName": "contracts/DexSpender.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "DexSpender"
+      ]
+    },
+    "/Users/markemery/approval-manager/contracts/LendingSpender.sol": {
+      "lastModificationDate": 1742910375334,
+      "contentHash": "bc76a42cfa82fdfa56593afce4981347",
+      "sourceName": "contracts/LendingSpender.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "LendingSpender"
+      ]
+    },
+    "/Users/markemery/approval-manager/contracts/MiscSpender.sol": {
+      "lastModificationDate": 1742910477880,
+      "contentHash": "315928678296c3717930f1718e3fce3c",
+      "sourceName": "contracts/MiscSpender.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "MiscSpender"
+      ]
+    },
+    "/Users/markemery/approval-manager/contracts/NftMarketplaceSpender.sol": {
+      "lastModificationDate": 1742910427139,
+      "contentHash": "fe928f69f7f30808371c88d7d0e0b458",
+      "sourceName": "contracts/NftMarketplaceSpender.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "NftMarketplaceSpender"
+      ]
     }
   }
 }

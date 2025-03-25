@@ -47,117 +47,95 @@ async function getLatestERC1155ApprovalTransaction(provider, owner, contractAddr
 }
 
 /**
- * Fetch ERC-1155 approvals for a given owner.
- * @param {string} ownerAddress - The wallet address of the token owner.
- * @param {ethers.Provider} [providedProvider] - Optional provider instance.
- * @returns {Promise<Array>} - Resolves to an array of approvals.
+ * Fetch ERC-1155 approvals for a given owner - simplified direct approach
+ * @param {string} ownerAddress - The wallet address of the token owner
+ * @param {ethers.Provider} [providedProvider] - Optional provider instance
+ * @returns {Promise<Array>} - Array of approvals
  */
 export async function getERC1155Approvals(ownerAddress, providedProvider) {
-    try {
-        console.log("🔍 Fetching ERC-1155 approvals for:", ownerAddress);
-        
-        if (!ownerAddress) {
-            console.warn("⚠️ No owner address provided for ERC-1155 approvals");
-            return [];
-        }
-
-        // Use provided provider or get one from providerService
-        const provider = providedProvider || await getProvider();
-        if (!provider) {
-            console.error("❌ No provider available for ERC-1155 approvals");
-            return [];
-        }
-
-        // Get spender address from constants or use OpenSea proxy as fallback
-        let spender;
+  try {
+    console.log("🔍 SIMPLIFIED ERC-1155 check for:", ownerAddress);
+    
+    // Use provided provider or get one
+    const provider = providedProvider || await getProvider();
+    if (!provider) return [];
+    
+    // Get contract addresses directly
+    const contracts = [
+      { address: CONTRACT_ADDRESSES.TestERC1155, name: "Test ERC-1155" },
+      { address: CONTRACT_ADDRESSES.UpgradeableERC1155, name: "Upgradeable ERC-1155" }
+    ].filter(c => c.address); // Remove undefined
+    
+    // Get spender addresses directly
+    const spenders = [
+      { address: CONTRACT_ADDRESSES.MockSpender, name: "MockSpender" },
+      { address: CONTRACT_ADDRESSES.BridgeSpender, name: "BridgeSpender" },
+      { address: CONTRACT_ADDRESSES.NftMarketplaceSpender, name: "NftMarketplaceSpender" }
+    ].filter(s => s.address); // Remove undefined
+    
+    console.log(`🔍 Checking ${contracts.length} ERC-1155 collections against ${spenders.length} spenders`);
+    
+    const approvals = [];
+    
+    // Check each contract and spender combination
+    for (const contract of contracts) {
+      const erc1155Contract = new Contract(
+        contract.address, 
+        ["function isApprovedForAll(address,address) view returns (bool)"], 
+        provider
+      );
+      
+      for (const spender of spenders) {
         try {
-            spender = CONTRACT_ADDRESSES.MockSpender 
-                ? getAddress(CONTRACT_ADDRESSES.MockSpender)
-                : "0x207a32a58e1666f4109b361869b9456bf4761283"; // OpenSea ERC-1155 proxy
-        } catch (err) {
-            console.warn("⚠️ Invalid spender address format, using fallback");
-            spender = "0x207a32a58e1666f4109b361869b9456bf4761283"; // OpenSea ERC-1155 proxy
-        }
-
-        // Get contract addresses from constants
-        const erc1155Contracts = [
-            CONTRACT_ADDRESSES.TestERC1155,
-            CONTRACT_ADDRESSES.UpgradeableERC1155
-        ].filter(Boolean); // Remove null/undefined values
-
-        if (erc1155Contracts.length === 0) {
-            console.error("❌ No valid ERC-1155 contract addresses found.");
-            return [];
-        }
-
-        const approvals = [];
-        for (const address of erc1155Contracts) {
+          console.log(`🔍 Checking ${contract.name} for spender ${spender.name}`);
+          const isApproved = await erc1155Contract.isApprovedForAll(ownerAddress, spender.address);
+          
+          if (isApproved) {
+            console.log(`✅ Found approval: ${contract.name} → ${spender.name}`);
+            
+            // Get TX hash (simplified)
+            let txHash = "N/A";
             try {
-                // Skip null/undefined addresses
-                if (!address) continue;
-                
-                // Validate address format
-                let contractAddress;
-                try {
-                    contractAddress = getAddress(address);
-                } catch (err) {
-                    console.warn(`⚠️ Invalid contract address format: ${address}, skipping...`);
-                    continue;
-                }
-                
-                console.log(`🔍 Checking ERC-1155 approval for contract: ${contractAddress}`);
-                const contract = new Contract(contractAddress, ERC1155_ABI, provider);
-                
-                console.log(`🔍 Checking ERC-1155 approval: ${contractAddress} for spender ${spender}`);
-
-                const isApproved = await contract.isApprovedForAll(ownerAddress, spender);
-                console.log(`🔎 Approval Check: Contract ${contractAddress}, Spender ${spender}, Result: ${isApproved}`);
-                
-                if (isApproved) {
-                    // Extract collection name if possible
-                    let collectionName = "ERC-1155 Collection";
-                    try {
-                        if (contract.name) {
-                            collectionName = await contract.name();
-                        } else if (contract.uri) {
-                            // Some ERC-1155 contracts use URI instead
-                            collectionName = `Collection at ${contractAddress.substring(0, 8)}...`;
-                        }
-                    } catch (err) {
-                        console.warn(`⚠️ Could not get collection name for ${contractAddress}`);
-                    }
-                    
-                    // 🔍 Get the transaction hash that set this approval
-                    const transactionHash = await getLatestERC1155ApprovalTransaction(
-                        provider, 
-                        ownerAddress, 
-                        contractAddress, 
-                        spender
-                    );
-                    
-                    approvals.push({
-                        contract: contractAddress,
-                        type: "ERC-1155",
-                        spender,
-                        isApproved: true,
-                        asset: collectionName,
-                        valueAtRisk: "All Items",
-                        transactionHash // Add transaction hash to the approval object
-                    });
-                    
-                    console.log(`✅ Found ERC-1155 approval: ${contractAddress} → ${spender}, TX: ${transactionHash}`);
-                }
-            } catch (error) {
-                console.error(`❌ Error checking ERC-1155 approval for ${address}:`, error);
+              const formattedOwner = "0x" + ownerAddress.slice(2).padStart(64, "0");
+              const formattedOperator = "0x" + spender.address.slice(2).padStart(64, "0");
+              const eventSignature = "0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31";
+              
+              const logs = await provider.getLogs({
+                address: contract.address,
+                topics: [eventSignature, formattedOwner, formattedOperator],
+                fromBlock: "earliest",
+                toBlock: "latest"
+              });
+              
+              if (logs.length > 0) {
+                txHash = logs[logs.length - 1].transactionHash;
+              }
+            } catch (e) {
+              console.warn("Error getting TX hash", e);
             }
+            
+            approvals.push({
+              contract: contract.address,
+              type: "ERC-1155",
+              spender: spender.address,
+              isApproved: true,
+              asset: contract.name,
+              valueAtRisk: "All Items",
+              transactionHash: txHash
+            });
+          }
+        } catch (error) {
+          console.error(`Error checking ${contract.name} for ${spender.name}:`, error.message);
         }
-
-        console.log(`✅ Fetched ${approvals.length} ERC-1155 approvals`);
-        return approvals;
-    } catch (error) {
-        console.error("❌ Error fetching ERC-1155 approvals:", error);
-        return [];
+      }
     }
+    
+    console.log(`✅ Found ${approvals.length} ERC-1155 approvals`);
+    return approvals;
+  } catch (error) {
+    console.error("❌ Error in ERC-1155 approvals check:", error);
+    return [];
+  }
 }
 
 /**

@@ -316,20 +316,58 @@ function getHardhatApprovedTokens() {
  * @returns {Array} - Array of spender addresses
  */
 function getAllPossibleSpenders() {
+  // First try to get addresses from deployedAddresses.json via the window object
+  let deployedSpenders = [];
+  try {
+    // Check if we have deployedAddresses available in the window
+    if (window.deployedAddresses) {
+      console.log("Found deployedAddresses in window object");
+      // Extract all spender contracts
+      if (window.deployedAddresses.MockSpender) 
+        deployedSpenders.push(window.deployedAddresses.MockSpender);
+      if (window.deployedAddresses.BridgeSpender)
+        deployedSpenders.push(window.deployedAddresses.BridgeSpender);
+      if (window.deployedAddresses.DexSpender)
+        deployedSpenders.push(window.deployedAddresses.DexSpender);
+      if (window.deployedAddresses.LendingSpender)
+        deployedSpenders.push(window.deployedAddresses.LendingSpender);
+      if (window.deployedAddresses.MiscSpender)
+        deployedSpenders.push(window.deployedAddresses.MiscSpender);
+      if (window.deployedAddresses.NftMarketplaceSpender)
+        deployedSpenders.push(window.deployedAddresses.NftMarketplaceSpender);
+    }
+  } catch (error) {
+    console.warn("Error accessing window.deployedAddresses", error);
+  }
+
+  // Include our hardcoded known spender addresses from local deployment
+  const hardcodedSpenders = [
+    // All your deployed spenders
+    "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad", // MockSpender
+    "0x04f1A5b9BD82a5020C49975ceAd160E98d8B77Af", // BridgeSpender
+    "0xde79380FBd39e08150adAA5C6c9dE3146f53029e", // DexSpender
+    "0xbFD3c8A956AFB7a9754C951D03C9aDdA7EC5d638", // LendingSpender
+    "0x38F6F2caE52217101D7CA2a5eC040014b4164E6C", // MiscSpender
+    "0xc075BC0f734EFE6ceD866324fc2A9DBe1065CBB1", // NftMarketplaceSpender
+  ];
+  
+  // Combine with popular DEXes and protocols
   return [
-    // Your MockSpender from scripts
-    "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad",
-    
-    // Popular DEXes and protocols
-    "0x7a250d5630b4cf539739df2c5dacb4c659f2488d", // Uniswap V2 Router
-    "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45", // Uniswap V3 Router
-    "0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f", // SushiSwap Router
-    "0x11111112542d85b3ef69ae05771c2dccff4faa26", // 1inch Router
-    
-    // Add any other known spenders
-    "0x00000000006c3852cbef3e08e8df289169ede581", // OpenSea Seaport 1.1
-    "0x00000000000001ad428e4906ae43d8f9852d0dd6", // OpenSea Seaport 1.4
-    "0x000000000000ad05ccc4f10045630fb830b95127", // OpenSea Seaport 1.5
+    ...new Set([
+      ...deployedSpenders,
+      ...hardcodedSpenders,
+      
+      // Popular DEXes and protocols
+      "0x7a250d5630b4cf539739df2c5dacb4c659f2488d", // Uniswap V2 Router
+      "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45", // Uniswap V3 Router
+      "0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f", // SushiSwap Router
+      "0x11111112542d85b3ef69ae05771c2dccff4faa26", // 1inch Router
+      
+      // Add any other known spenders
+      "0x00000000006c3852cbef3e08e8df289169ede581", // OpenSea Seaport 1.1
+      "0x00000000000001ad428e4906ae43d8f9852d0dd6", // OpenSea Seaport 1.4
+      "0x000000000000ad05ccc4f10045630fb830b95127", // OpenSea Seaport 1.5
+    ])
   ];
 }
 

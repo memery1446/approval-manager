@@ -3,6 +3,47 @@ import { NFT_ABI, CONTRACT_ADDRESSES } from "../constants/abis";
 import { getProvider } from "./providerService";
 
 /**
+ * Get all possible NFT spenders to check for approvals
+ * @returns {Array<string>} - Array of spender addresses
+ */
+function getAllPossibleNFTSpenders() {
+    // First check if we have deployedAddresses available in the window
+    let deployedSpenders = [];
+    try {
+        if (window.deployedAddresses) {
+            console.log("Found deployedAddresses in window object for NFT checks");
+            // Extract all spender contracts that might interact with NFTs
+            if (window.deployedAddresses.MockSpender) 
+                deployedSpenders.push(window.deployedAddresses.MockSpender);
+            if (window.deployedAddresses.BridgeSpender)
+                deployedSpenders.push(window.deployedAddresses.BridgeSpender);
+            if (window.deployedAddresses.NftMarketplaceSpender)
+                deployedSpenders.push(window.deployedAddresses.NftMarketplaceSpender);
+        }
+    } catch (error) {
+        console.warn("Error accessing window.deployedAddresses for NFTs", error);
+    }
+
+    // Hardcoded spenders as fallback
+    const hardcodedSpenders = [
+        // Your deployed spenders that interact with NFTs
+        "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad", // MockSpender
+        "0x04f1A5b9BD82a5020C49975ceAd160E98d8B77Af", // BridgeSpender
+        "0xc075BC0f734EFE6ceD866324fc2A9DBe1065CBB1", // NftMarketplaceSpender
+        
+        // Common NFT marketplaces
+        "0x00000000006c3852cbef3e08e8df289169ede581", // OpenSea Seaport 1.1
+        "0x00000000000001ad428e4906ae43d8f9852d0dd6", // OpenSea Seaport 1.4
+        "0x000000000000ad05ccc4f10045630fb830b95127", // OpenSea Seaport 1.5
+        "0x4feE7B061C97C9c496b01DbcE9CDb10c02f0a0Be", // Rarible
+        "0xf42aa99F011A1fA7CDA90E5E98b277E306BcA83e"  // LooksRare
+    ];
+    
+    // Combine and remove duplicates
+    return [...new Set([...deployedSpenders, ...hardcodedSpenders])];
+}
+
+/**
  * Get the latest Approval transaction hash for an ERC-721 approval.
  * @param {ethers.Provider} provider - The ethers provider
  * @param {string} owner - The token owner address
@@ -96,14 +137,10 @@ export async function getERC721Approvals(ownerAddress, providedProvider) {
   
   console.log(`🔍 Checking ${nftCollections.length} NFT collections`);
 
-  // Define spender addresses to check (primary is MockSpender)
-  const spenderAddresses = [
-    CONTRACT_ADDRESSES.MockSpender || "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad",
-    // Add other common spenders like OpenSea if needed
-    "0x00000000006c3852cbef3e08e8df289169ede581" // OpenSea Seaport
-  ].filter(Boolean);
+  // Use getAllPossibleNFTSpenders() instead of hardcoded spenders
+  const spenderAddresses = getAllPossibleNFTSpenders();
   
-  console.log("🔍 Checking for approvals to spenders:", spenderAddresses);
+  console.log(`🔍 Checking for approvals to ${spenderAddresses.length} spenders:`, spenderAddresses);
   
   let approvals = [];
 
@@ -199,4 +236,3 @@ export async function getERC721Approvals(ownerAddress, providedProvider) {
 }
 
 export default getERC721Approvals;
-
