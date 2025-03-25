@@ -56,7 +56,7 @@ const AppContent = () => {
           <h1 className="text-primary fw-bold">
             <span className="me-2">🔒</span> Approval Manager
           </h1>
-          <p className="text-muted">Review and revoke token approvals to protect your assets.</p>
+          <p className="text-muted">Leave the ZERO-KNOWLEDGE to us. We want you to know everything about approvals.</p>
         </header>
 
         {!showEducation ? (
