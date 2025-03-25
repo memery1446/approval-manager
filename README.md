@@ -23,7 +23,9 @@ npm install
 
 touch .env
 
-### Set up is for 1337, not 31337, so check hardhat set up in Web3 wallet
+### Wallet setup
+
+This is set up for 1337, not 31337
 
 ### Compile the smart contracts
 
