@@ -407,20 +407,34 @@ function removeDuplicateTokens(tokens) {
  * Format a token amount with proper decimals
  * @param {BigInt} amount - Raw token amount
  * @param {number} decimals - Token decimals
+ * @param {number} displayDecimals - Number of decimals to display (default: 0)
  * @returns {string} - Formatted amount
  */
-function formatAmount(amount, decimals = 18) {
+function formatAmount(amount, decimals = 18, displayDecimals = 0) {
   const amountStr = amount.toString();
   
   if (decimals === 0) return amountStr;
   
   // If amount is less than 10^decimals, we need to pad with leading zeros
   if (amountStr.length <= decimals) {
-    return `0.${amountStr.padStart(decimals, '0')}`;
+    const fullStr = `0.${amountStr.padStart(decimals, '0')}`;
+    if (displayDecimals === 0) {
+      return '0'; // Return just '0' if we don't want to display decimals for small amounts
+    } else {
+      // Truncate to specified number of display decimals
+      return fullStr.slice(0, 2 + displayDecimals); // 2 is for "0."
+    }
   }
   
   // Otherwise insert decimal point at the right position
-  return `${amountStr.slice(0, -decimals)}.${amountStr.slice(-decimals)}`;
+  const integerPart = amountStr.slice(0, -decimals);
+  const fractionalPart = amountStr.slice(-decimals);
+  
+  if (displayDecimals === 0) {
+    return integerPart; // Just return the integer part
+  } else {
+    return `${integerPart}.${fractionalPart.slice(0, displayDecimals)}`;
+  }
 }
 
 export default getERC20Approvals;
