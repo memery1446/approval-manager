@@ -1,4 +1,4 @@
-Overview
+## Overview
 Approval-Manager is a comprehensive tool for managing and monitoring token approvals on Ethereum and compatible blockchains. It provides a streamlined interface for handling ERC20, ERC721, and ERC1155 token approvals, helping users secure their assets by maintaining visibility and control over smart contract permissions. The project is currently deployed on the Hardhat testnet.
 
 ## Getting Started 
@@ -8,8 +8,6 @@ Approval-Manager is a comprehensive tool for managing and monitoring token appro
 Make sure you have installed:
 
 Node.js & npm
-
-Docker
 
 ### Clone the Repository
 
@@ -25,26 +23,7 @@ npm install
 
 touch .env
 
-### Stop running any Docker containers
-
-docker stop approval-manager
-
-docker rm approval-manager
-
-docker rmi approval-manager
-
-### Pull the latest version
-
-docker pull memery1446/approval-manager:latest
-
-### Start the container in detatched mode routing to 8545
-
-docker run -d --name approval-manager -p 8545:8545 memery1446/approval-manager:latest
-
-
-### Enter the container:
-
-docker exec -it approval-manager bash
+### Set up is for 1337, not 31337, so check hardhat set up in Web3 wallet
 
 ### Compile the smart contracts
 
@@ -54,13 +33,23 @@ npx hardhat compile
 
 npx hardhat node
 
-### Run a fresh deployment in another terminal window:
+### In a fresh terminal window open the Dapp UI
+
+npm start
+
+### In a fresh terminal window, run the first of two scripts:
 
 npx hardhat run scripts/deploy.js --network localhost
 
-### Run the approval script:
+### Run the second of two scripts:
 
 npx hardhat run scripts/Approve.js --network localhost
+
+### Click the refresh button in the Approval Window
+
+35 approvals range through the various types within each standard. 
+
+### Revoke approvals in singles or any combination or select-all, etc.
 
 ## Features
 
