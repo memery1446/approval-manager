@@ -8,7 +8,7 @@ async function main() {
   const deployer = signers[0]; // Use the first signer
   console.log(`📌 Deploying contracts as: ${deployer.address}`);
 
-  // Object to store all deployed addresses
+  // Object to store deployed addresses
   const deployedAddresses = {};
 
   // 🔹 Fetch gas price (avoids EIP-1559 issues)
@@ -18,7 +18,7 @@ async function main() {
 
   console.log(`📌 Gas Price: ${gasPrice.toString()} wei`);
 
-  // ✅ Deploy ERC-20 Test Tokens
+  // ERC-20 Test Tokens
   const TestToken = await hre.ethers.getContractFactory("TestToken");
   const tk1 = await TestToken.deploy("Test Token 1", "TK1", 18, { gasPrice });
   await tk1.waitForDeployment();
@@ -46,7 +46,7 @@ async function main() {
   deployedAddresses.FeeToken = feeTokenAddress;
   console.log(`✅ FeeToken deployed at: ${feeTokenAddress}`);
 
-  // ✅ Deploy ERC-721 Contracts
+  // ERC-721 Contracts
   const TestNFT = await hre.ethers.getContractFactory("TestNFT");
   const testNFT = await TestNFT.deploy({ gasPrice });
   await testNFT.waitForDeployment();
@@ -83,7 +83,7 @@ async function main() {
   deployedAddresses.UpgradeableERC1155 = upgradeableERC1155Address;
   console.log(`✅ UpgradeableERC1155 deployed at: ${upgradeableERC1155Address}`);
 
-  // ✅ Deploy Spender Contracts
+  // Spender Contracts
   console.log("🚀 Deploying Spender contracts...");
   
   // Original MockSpender
@@ -138,7 +138,7 @@ async function main() {
     fs.mkdirSync(dirPath, { recursive: true });
   }
   
-  // Write the addresses to the JSON file
+  // Write to JSON file
   fs.writeFileSync(
     filePath,
     JSON.stringify(deployedAddresses, null, 2)

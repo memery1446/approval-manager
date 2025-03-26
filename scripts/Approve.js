@@ -19,7 +19,7 @@ async function main() {
     console.error("❌ Error loading deployedAddresses.json:", error.message);
     console.log("⚠️ Using hardcoded fallback addresses instead");
     
-    // Fallback to hardcoded addresses if JSON file is not available
+    // Fallback hardcoded addresses 
     tokenAddresses = {
       TK1: "0xa85EffB2658CFd81e0B1AaD4f2364CdBCd89F3a1",
       TK2: "0x8aAC5570d54306Bb395bf2385ad327b7b706016b",
@@ -39,7 +39,7 @@ async function main() {
     };
   }
 
-  // ✅ Load all available spenders
+  // Load available spenders
   const spenders = {
     MockSpender: tokenAddresses.MockSpender || "",
     BridgeSpender: tokenAddresses.BridgeSpender || "",
@@ -59,7 +59,7 @@ async function main() {
 
   console.log(`📌 Found ${Object.keys(availableSpenders).length} spender contracts`);
   
-  // ✅ Load deployed contracts using correct provider syntax
+  // Load deployed contracts 
   const tk1 = await ethers.getContractAt("TestToken", tokenAddresses.TK1, deployer);
   const tk2 = await ethers.getContractAt("TestToken", tokenAddresses.TK2, deployer);
   const permitToken = await ethers.getContractAt("PermitToken", tokenAddresses.PermitToken, deployer);
@@ -72,7 +72,7 @@ async function main() {
   const testERC1155 = await ethers.getContractAt("TestERC1155", tokenAddresses.TestERC1155, deployer);
   const upgradeableERC1155 = await ethers.getContractAt("UpgradeableERC1155", tokenAddresses.UpgradeableERC1155, deployer);
 
-  // ✅ Fix `parseUnits` by explicitly referencing `ethers.utils`
+  // Explicitly reference `ethers.utils`
   const amount = ethers.utils ? ethers.utils.parseUnits("1000", 18) : ethers.parseUnits("1000", 18);
 
   // Configure which spenders get which approvals
@@ -83,31 +83,31 @@ async function main() {
       erc721: [testNFT, upgradeableNFT, dynamicNFT],
       erc1155: [testERC1155, upgradeableERC1155]
     },
-    // Bridge gets ERC20 and NFT approvals
+    // Bridge- ERC20 and NFT approvals
     BridgeSpender: {
       erc20: [tk1, tk2, permitToken, feeToken],
       erc721: [testNFT, upgradeableNFT, dynamicNFT],
       erc1155: [testERC1155, upgradeableERC1155]
     },
-    // DEX gets ERC20 approvals
+    // DEX- ERC20 approvals
     DexSpender: {
       erc20: [tk1, tk2, permitToken, feeToken],
       erc721: [],
       erc1155: []
     },
-    // Lending gets ERC20 approvals
+    // Lending- ERC20 approvals
     LendingSpender: {
       erc20: [tk1, tk2, permitToken, feeToken],
       erc721: [],
       erc1155: []
     },
-    // Misc gets small ERC20 approvals
+    // Misc- ERC20 approvals
     MiscSpender: {
       erc20: [tk1, tk2, permitToken, feeToken],
       erc721: [],
       erc1155: []
     },
-    // NFT Marketplace gets NFT approvals
+    // NFT Marketplace- NFT approvals
     NftMarketplaceSpender: {
       erc20: [],
       erc721: [testNFT, upgradeableNFT, dynamicNFT],
@@ -117,7 +117,7 @@ async function main() {
 
   const transactionHashes = [];
 
-  // ✅ Approve ERC-20 tokens
+  // pprove ERC-20 tokens
   async function approveERC20(token, name, spenderName, spenderAddress) {
     console.log(`🔄 Approving ERC-20: ${name} for ${spenderName}...`);
     const tx = await token.approve(spenderAddress, amount);
@@ -126,7 +126,7 @@ async function main() {
     transactionHashes.push({ type: "ERC-20", asset: name, spender: spenderName, hash: tx.hash });
   }
 
-  // ✅ Approve ERC-721 NFTs
+  // Approve ERC-721 NFTs
   async function approveERC721(nft, name, spenderName, spenderAddress) {
     console.log(`🔄 Approving ERC-721: ${name} for ${spenderName}...`);
     const tx = await nft.setApprovalForAll(spenderAddress, true);
@@ -135,7 +135,7 @@ async function main() {
     transactionHashes.push({ type: "ERC-721", asset: name, spender: spenderName, hash: tx.hash });
   }
 
-  // ✅ Approve ERC-1155 tokens
+  // Approve ERC-1155 tokens
   async function approveERC1155(erc1155, name, spenderName, spenderAddress) {
     console.log(`🔄 Approving ERC-1155: ${name} for ${spenderName}...`);
     const tx = await erc1155.setApprovalForAll(spenderAddress, true);
@@ -213,3 +213,4 @@ main().catch((error) => {
   console.error("❌ Approval Error:", error);
   process.exit(1);
 });
+

@@ -2,7 +2,7 @@ const { abi: testERC1155ABI } = require('../artifacts/contracts/TestERC1155.sol/
 const { abi: testTokenABI } = require('../artifacts/contracts/TestToken.sol/TestToken.json');
 const { abi: testNFTABI } = require('../artifacts/contracts/TestNFT.sol/TestNFT.json');
 
-// Try to load the deployed addresses, fall back to default if file doesn't exist
+// Fall back to default if file doesn't exist
 let deployedAddresses;
 try {
     deployedAddresses = require('./deployedAddresses.json');

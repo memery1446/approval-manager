@@ -4,7 +4,6 @@ import { getERC20Approvals } from "../utils/erc20Approvals";
 import { getERC721Approvals } from "../utils/nftApprovals";
 import { getERC1155Approvals, revokeMultipleERC1155Approvals } from "../utils/erc1155Approvals";
 import { setApprovals } from "../store/web3Slice";
-// IMPORTANT: Switch to providerService to match ExistingApprovals.js
 import { getProvider } from "../utils/providerService";
 import { revokeERC20Approvals, revokeERC721Approvals } from "../utils/batchRevokeUtils";
 import { CONTRACT_ADDRESSES } from "../constants/abis"; 
@@ -35,7 +34,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
     }
   }, [wallet]);
 
-  // ✅ Allow selection of individual approvals
+  // Allow selection of individual approvals
   const handleSelect = (approval) => {
     console.log("🔘 Selecting approval:", approval);
     setSelectedApprovals((prev) => {
@@ -54,7 +53,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
     });
   };
 
-  // Add function to handle select all approvals
+  // Handle select all approvals
   const handleSelectAll = (isChecked) => {
     if (!Array.isArray(approvals)) {
       console.error("Approvals is not an array:", approvals);
@@ -68,7 +67,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
     }
   };
 
-  // NEW: Add a function to handle single approval revokes
+  // Handle single approval revokes
   const handleSingleRevoke = (approval) => {
     console.log("🔴 Revoking single approval:", approval);
     // Set the selected approval and then call the main revoke function
@@ -77,7 +76,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
     setTimeout(() => handleRevoke(), 0);
   };
 
-  // Function to refresh approvals with better error handling
+  // Refresh approvals with better error handling
   const refreshApprovals = async () => {
     console.log("🔄 Refreshing approvals for wallet:", wallet);
     setRefreshing(true);
@@ -148,7 +147,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
     }
   };
 
-  // ✅ Fix revocation to process selected approvals
+  // Process selected approvals
   const handleRevoke = async () => {
     if (!selectedApprovals.length || processing) {
       console.log("⚠️ No approvals selected or already processing");
@@ -398,3 +397,4 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
 };
 
 export default ApprovalDashboard;
+

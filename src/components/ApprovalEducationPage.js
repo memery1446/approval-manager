@@ -117,3 +117,5 @@ const ApprovalEducationPage = ({ onBack }) => {
 };
 
 export default ApprovalEducationPage;
+
+
