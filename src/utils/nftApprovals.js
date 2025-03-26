@@ -26,7 +26,7 @@ function getAllPossibleNFTSpenders() {
 
     // Hardcoded spenders as fallback
     const hardcodedSpenders = [
-        // Your deployed spenders that interact with NFTs
+        // Deployed spenders that interact with NFTs
         "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad", // MockSpender
         "0x04f1A5b9BD82a5020C49975ceAd160E98d8B77Af", // BridgeSpender
         "0xc075BC0f734EFE6ceD866324fc2A9DBe1065CBB1", // NftMarketplaceSpender
