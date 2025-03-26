@@ -35,7 +35,7 @@ touch .env
 
 #### Add Hardhat network
 
-NOTE: Check network setup to use chainID: 1337, -NOT- 31337 
+NOTE: Use chainID: 1337, -NOT- 31337 
 
 Hardhat Network RPC URL, http://127.0.0.1:8545/ 
 
