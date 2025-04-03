@@ -7,6 +7,9 @@ import { getERC721Approvals } from "../utils/nftApprovals";
 import { getERC1155Approvals } from "../utils/erc1155Approvals";
 import { setApprovals } from "../store/web3Slice";
 import { getProvider } from "../utils/providerService";
+import { getSpenderType } from "../utils/spenderMapping"; // Import the spender utility
+import { getAssetDisplayInfo } from "../utils/tokenMapping"; // Import the token utility
+import { CONTRACT_ADDRESSES } from "../abis"; // Import contract addresses
 
 const ExistingApprovals = () => {
   const dispatch = useDispatch();
@@ -193,6 +196,42 @@ const ExistingApprovals = () => {
         spender: '0x207a32a58e1666f4109b361869b9456bf4761283',
         asset: 'OpenSea Collection',
         valueAtRisk: 'Multiple NFTs'
+      },
+      // Add new mock approvals for your demo spenders
+      {
+        type: 'ERC-20',
+        contract: CONTRACT_ADDRESSES.TK1,
+        spender: CONTRACT_ADDRESSES.LendingSpender,
+        asset: 'Standard Token',
+        valueAtRisk: '5,000 tokens'
+      },
+      {
+        type: 'ERC-721',
+        contract: CONTRACT_ADDRESSES.TestNFT,
+        spender: CONTRACT_ADDRESSES.NftMarketplaceSpender,
+        asset: 'Test NFT',
+        valueAtRisk: 'All NFTs'
+      },
+      {
+        type: 'ERC-20',
+        contract: CONTRACT_ADDRESSES.PermitToken,
+        spender: CONTRACT_ADDRESSES.DexSpender,
+        asset: 'Permit Token',
+        valueAtRisk: 'Unlimited'
+      },
+      {
+        type: 'ERC-1155',
+        contract: CONTRACT_ADDRESSES.TestERC1155,
+        spender: CONTRACT_ADDRESSES.BridgeSpender,
+        asset: 'Multi-Token',
+        valueAtRisk: 'Multiple Tokens'
+      },
+      {
+        type: 'ERC-20',
+        contract: CONTRACT_ADDRESSES.FeeToken,
+        spender: CONTRACT_ADDRESSES.MockSpender,
+        asset: 'Fee Token',
+        valueAtRisk: '200 tokens'
       }
     ];
     
@@ -236,6 +275,74 @@ const ExistingApprovals = () => {
                   : "No approvals found. Click 'Add Mock Data' to add test approvals."}
               </p>
             </div>
+            
+            {/* Show a preview of the approvals */}
+            {currentApprovals.length > 0 && (
+              <div className="mt-3">
+                <h5>Approval Preview:</h5>
+                <div className="table-responsive">
+                  <table className="table table-sm table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>Asset</th>
+                        <th>Spender</th>
+                        <th>Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentApprovals.slice(0, 3).map((approval, index) => (
+                        <tr key={index}>
+                          <td>
+                            <span className={`badge bg-${approval.type === "ERC-20" ? "success" : approval.type === "ERC-721" ? "primary" : "warning"}`}>
+                              {approval.type}
+                            </span>
+                          </td>
+                          <td>
+                            {(() => {
+                              const assetInfo = getAssetDisplayInfo(approval);
+                              return (
+                                <div>
+                                  <div className="fw-bold">
+                                    {assetInfo.name}
+                                  </div>
+                                  <div className="small text-muted">
+                                    {assetInfo.description}
+                                  </div>
+                                </div>
+                              );
+                            })()}
+                          </td>
+                          <td>
+                            <div>
+                              {/* Display spender type if available */}
+                              {getSpenderType(approval.spender) && (
+                                <div className="small fw-bold mb-1">
+                                  <span className="badge bg-info text-dark">
+                                    {getSpenderType(approval.spender)}
+                                  </span>
+                                </div>
+                              )}
+                              {/* Display truncated address */}
+                              <span title={approval.spender}>
+                                {approval.spender.substring(0, 6)}...
+                                {approval.spender.substring(approval.spender.length - 4)}
+                              </span>
+                            </div>
+                          </td>
+                          <td>{approval.valueAtRisk || "Unknown"}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {currentApprovals.length > 3 && (
+                  <p className="text-muted small">
+                    ...and {currentApprovals.length - 3} more approvals
+                  </p>
+                )}
+              </div>
+            )}
           </div>
         )}
         
@@ -272,3 +379,4 @@ const ExistingApprovals = () => {
 };
 
 export default ExistingApprovals;
+

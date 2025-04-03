@@ -10,6 +10,8 @@ import { getProvider } from "../utils/providerService"
 import { revokeERC20Approvals, revokeERC721Approvals } from "../utils/batchRevokeUtils"
 import TransactionProgressBar from "../components/TransactionProgressBar"
 import TransactionHashComponent from "../components/TransactionHashComponent"
+import { getSpenderType } from "../utils/spenderMapping" // Import the spender utility
+import { getAssetDisplayInfo } from "../utils/tokenMapping" // Import the token utility
 
 const ApprovalDashboard = ({ onNavigateToEducation }) => {
   const dispatch = useDispatch()
@@ -356,7 +358,22 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                     <td>
                       <TransactionHashComponent transactionHash={a.transactionHash} />
                     </td>
-                    <td>{a.asset || a.contract?.substring(0, 8)}</td>
+                    <td>
+                      {/* Enhanced asset display with token mapping */}
+                      {(() => {
+                        const assetInfo = getAssetDisplayInfo(a);
+                        return (
+                          <div>
+                            <div className="fw-bold mb-1">
+                              {assetInfo.name}
+                            </div>
+                            <div className="small text-muted">
+                              {assetInfo.description}
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </td>
                     <td>
                       <span
                         className={`badge bg-${a.type === "ERC-20" ? "success" : a.type === "ERC-721" ? "primary" : "warning"}`}
@@ -366,9 +383,20 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                     </td>
                     <td>
                       {a.spender ? (
-                        <span title={a.spender}>
-                          {a.spender.substring(0, 6)}...{a.spender.substring(a.spender.length - 4)}
-                        </span>
+                        <div>
+                          {/* Display spender type if available */}
+                          {getSpenderType(a.spender) && (
+                            <div className="small fw-bold mb-1">
+                              <span className="badge bg-info text-dark">
+                                {getSpenderType(a.spender)}
+                              </span>
+                            </div>
+                          )}
+                          {/* Display truncated address */}
+                          <span title={a.spender}>
+                            {a.spender.substring(0, 6)}...{a.spender.substring(a.spender.length - 4)}
+                          </span>
+                        </div>
                       ) : (
                         "Unknown"
                       )}
