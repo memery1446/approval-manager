@@ -330,7 +330,13 @@ const ExistingApprovals = () => {
                               </span>
                             </div>
                           </td>
-                          <td>{approval.valueAtRisk || "Unknown"}</td>
+                          <td>
+                          {approval.valueAtRisk
+                            ? (approval.type === "ERC-20" && approval.valueAtRisk.toLowerCase() !== "unlimited"
+                                ? `${approval.valueAtRisk} / Unlimited`
+                                : approval.valueAtRisk)
+                            : "Unknown"}
+                        </td>
                         </tr>
                       ))}
                     </tbody>

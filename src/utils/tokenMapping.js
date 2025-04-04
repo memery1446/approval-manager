@@ -1,9 +1,9 @@
 // utils/tokenMapping.js
 import { CONTRACT_ADDRESSES } from "../constants/abis";
 
-// Map of token addresses to their descriptive names and types
+// Map of token addresses 
 const TOKEN_TYPES = {
-  // Using addresses from your CONTRACT_ADDRESSES
+  // Using addresses from CONTRACT_ADDRESSES
   [CONTRACT_ADDRESSES.TK1?.toLowerCase()]: {
     name: "Standard Token",
     description: "Basic ERC20 implementation"
@@ -44,7 +44,7 @@ const TOKEN_TYPES = {
   }
 };
 
-// NFT collection mapping for better display of ERC721/ERC1155 tokens
+// NFT collection mapping 
 const NFT_COLLECTIONS = {
   [CONTRACT_ADDRESSES.TestNFT?.toLowerCase()]: {
     name: "Test NFT",
@@ -86,10 +86,10 @@ const NFT_COLLECTIONS = {
 export const getTokenInfo = (address) => {
   if (!address) return null;
   
-  // Normalize the address to lowercase for comparison
+  // Normalize the address 
   const normalizedAddress = address.toLowerCase();
   
-  // Return the token info if found, or null if not
+  // Return the token info or null
   return TOKEN_TYPES[normalizedAddress] || null;
 };
 
@@ -137,7 +137,7 @@ export const getAssetDisplayInfo = (approval) => {
     }
   }
   
-  // Return the default if no mapping found
+  // Return default if no mapping found
   return defaultDisplay;
 };
 

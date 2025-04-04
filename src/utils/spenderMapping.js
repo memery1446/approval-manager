@@ -1,7 +1,7 @@
 // utils/spenderMapping.js
 import { CONTRACT_ADDRESSES } from "../constants/abis";
 
-// Map of spender addresses to their types
+// Map of spender addresses 
 const SPENDER_TYPES = {
   // Using addresses from your CONTRACT_ADDRESSES
   [CONTRACT_ADDRESSES.MockSpender?.toLowerCase()]: "Mock Service",
@@ -11,7 +11,7 @@ const SPENDER_TYPES = {
   [CONTRACT_ADDRESSES.MiscSpender?.toLowerCase()]: "Misc Service",
   [CONTRACT_ADDRESSES.NftMarketplaceSpender?.toLowerCase()]: "NFT Marketplace",
   
-  // Common known spenders on mainnet (you can add more)
+  // Common known spenders
   "0x7a250d5630b4cf539739df2c5dacb4c659f2488d": "Uniswap Router",
   "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45": "Uniswap Router V3",
   "0x00000000006c3852cbef3e08e8df289169ede581": "OpenSea Seaport",
@@ -27,7 +27,7 @@ const SPENDER_TYPES = {
 export const getSpenderType = (address) => {
   if (!address) return null;
   
-  // Normalize the address to lowercase for comparison
+  // Normalize the address 
   const normalizedAddress = address.toLowerCase();
   
   // Return the spender type if found, or null if not

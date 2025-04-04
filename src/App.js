@@ -56,7 +56,7 @@ const AppContent = () => {
           <h1 className="text-primary fw-bold">
             <span className="me-2">🔒</span> Approval Manager
           </h1>
-          <p className="text-muted">Leave zero-knowledge to us. We want you to know everything about approvals.</p>
+          <p className="text-muted">View and manage token approvals.</p>
         </header>
 
         {!showEducation ? (
@@ -64,7 +64,7 @@ const AppContent = () => {
           <>
             <div className="row mb-4">
               <div className="col-md-6">
-                {/* Comment out problematic components temporarily */}
+                {/* Comment out testing components */}
                 {/* <MinimalTest /> */}
                 {/* <ReduxDebugger /> */}
                 <WalletConnect />
@@ -152,7 +152,7 @@ const App = () => {
         },
       }
 
-      // Add this new section to enable Redux logging in console
+      // Enable Redux logging in console
       console.log(
         "%c Redux Console Logging Enabled",
         "background: #4CAF50; color: white; padding: 4px; border-radius: 4px;",

@@ -401,7 +401,13 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                         "Unknown"
                       )}
                     </td>
-                    <td>{a.valueAtRisk || "Unknown"}</td>
+                    <td>
+                      {a.valueAtRisk
+                        ? (a.type === "ERC-20" && a.valueAtRisk.toLowerCase() !== "unlimited"
+                            ? `${a.valueAtRisk} / Unlimited`
+                            : a.valueAtRisk)
+                        : "Unknown"}
+                    </td>
                     <td>
                       <button
                         className="btn btn-danger btn-sm"
