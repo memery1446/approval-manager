@@ -1,6 +1,10 @@
 // utils/providerService.js
 import { BrowserProvider } from "ethers";
 
+// Get the dynamic chain ID matching hardhat.config.js
+const USE_DEFAULT_CHAIN_ID = process.env.USE_DEFAULT_CHAIN_ID === "true";
+const LOCAL_CHAIN_ID = USE_DEFAULT_CHAIN_ID ? 31337 : 1337;
+
 // Force direct console access
 const safeConsole = {
   log: window.console.log.bind(window.console),
@@ -200,15 +204,15 @@ export async function connectWallet() {
       safeDispatch({ type: 'web3/setAccount', payload: accounts[0] });
       
       // Get and set network ID
-const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
 
-if (parseInt(chainId, 16) !== 1337) {
-    alert("❌ Wrong network detected! Please switch to Hardhat.");
-    return false;
-}
+      // Dynamic check based on environment variable
+      if (parseInt(chainId, 16) !== LOCAL_CHAIN_ID) {
+          alert(`❌ Wrong network detected! Please switch to Hardhat (Chain ID: ${LOCAL_CHAIN_ID}).`);
+          return false;
+      }
 
-safeDispatch({ type: 'web3/setNetwork', payload: 1337 });
-
+      safeDispatch({ type: 'web3/setNetwork', payload: LOCAL_CHAIN_ID });
       
       // Make sure event listeners are set up
       if (!initialized) {
@@ -231,13 +235,16 @@ safeDispatch({ type: 'web3/setNetwork', payload: 1337 });
   }
 }
 
+// Export LOCAL_CHAIN_ID for use in other components
+export { LOCAL_CHAIN_ID };
+
 // Export for debug access
 if (typeof window !== 'undefined') {
   window.providerDebug = {
     refreshProvider,
     getProvider,
     initializeProvider,
-    connectWallet
+    connectWallet,
+    LOCAL_CHAIN_ID
   };
 }
-

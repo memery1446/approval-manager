@@ -2,6 +2,10 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setNetwork } from "../store/web3Slice";
 
+// Get the dynamic chain ID matching hardhat.config.js
+const USE_DEFAULT_CHAIN_ID = process.env.USE_DEFAULT_CHAIN_ID === "true";
+const LOCAL_CHAIN_ID = USE_DEFAULT_CHAIN_ID ? 31337 : 1337;
+
 const isProduction = process.env.NODE_ENV === "production";
 
 // Ensure all environment variables are correctly used
@@ -51,13 +55,13 @@ const supportedNetworks = {
 //     name: "Polygon Mumbai",
 //     rpcUrl: process.env.POLYGON_MUMBAI_RPC_URL || `https://polygon-mumbai.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
 //   },
-1337: {
-  chainId: "0x7A69",
+};
+
+// Dynamically add the local network with the correct chain ID
+supportedNetworks[LOCAL_CHAIN_ID] = {
+  chainId: LOCAL_CHAIN_ID === 1337 ? "0x539" : "0x7A69", // 0x539 for 1337, 0x7A69 for 31337
   name: "Hardhat Local",
   rpcUrl: process.env.HARDHAT_RPC_URL || "http://127.0.0.1:8545",
-
-},
-
 };
 
 const NetworkSelector = () => {
@@ -112,7 +116,7 @@ const NetworkSelector = () => {
           </div>
         </div>
         <small className="text-muted mt-2 d-block">
-          Using {currentNetwork === 1337 ? "Hardhat Local" : "Alchemy / Infura Remote Node"}
+          Using {currentNetwork === LOCAL_CHAIN_ID ? "Hardhat Local" : "Alchemy / Infura Remote Node"}
         </small>
       </div>
     </div>
@@ -120,4 +124,3 @@ const NetworkSelector = () => {
 };
 
 export default NetworkSelector;
-
