@@ -1,8 +1,14 @@
 // src/constants/networks.js
 import { CONTRACT_ADDRESSES } from './abis';  // Reuse your existing address configuration
 
-export const NETWORK_CONFIG = {
-    1337: {  // Hardhat Chain ID
+// Get the dynamic chain ID matching hardhat.config.js
+const USE_DEFAULT_CHAIN_ID = process.env.USE_DEFAULT_CHAIN_ID === "true";
+const LOCAL_CHAIN_ID = USE_DEFAULT_CHAIN_ID ? 31337 : 1337;
+
+// Create the network config object
+const networkConfig = {
+    // Dynamically use the correct local chain ID
+    [LOCAL_CHAIN_ID]: {
         name: "Hardhat",
         rpcUrl: process.env.HARDHAT_RPC_URL || "http://127.0.0.1:8545",
         contracts: {
@@ -55,6 +61,11 @@ export const NETWORK_CONFIG = {
         }
     }
 };
+
+export const NETWORK_CONFIG = networkConfig;
+
+// Export the current local chain ID for use in other files
+export const CURRENT_CHAIN_ID = LOCAL_CHAIN_ID;
 
 /**
  * @typedef {Object} NetworkConfig

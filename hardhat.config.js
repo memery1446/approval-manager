@@ -5,12 +5,15 @@ require("dotenv").config();
 require("@nomicfoundation/hardhat-chai-matchers");
 require("@nomicfoundation/hardhat-verify");
 
-
 const INFURA_API_KEY = process.env.INFURA_API_KEY || "";
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || "";
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
 const CMC_API_KEY = process.env.CMC_API_KEY || "";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
+
+// Chain ID configuration
+const USE_DEFAULT_CHAIN_ID = process.env.USE_DEFAULT_CHAIN_ID === "true";
+const DEFAULT_CHAIN_ID = USE_DEFAULT_CHAIN_ID ? 31337 : 1337;
 
 module.exports = {
   solidity: {
@@ -30,36 +33,18 @@ module.exports = {
       chainId: 1,
       explorerUrl: "https://etherscan.io/"
     },
-    // polygon: {
-    //   url: `https://polygon-mainnet.infura.io/v3/${INFURA_API_KEY}`,
-    //   accounts: [PRIVATE_KEY],
-    //   chainId: 137,
-    //   explorerUrl: "https://polygonscan.com/"
-    // },
-    // bsc: {
-    //   url: "https://bsc-dataseed.binance.org/",
-    //   accounts: [PRIVATE_KEY],
-    //   chainId: 56,
-    //   explorerUrl: "https://bscscan.com/"
-    // },
-    // arbitrum: {
-    //   url: "https://arb1.arbitrum.io/rpc",
-    //   accounts: [PRIVATE_KEY],
-    //   chainId: 42161,
-    //   explorerUrl: "https://arbiscan.io/"
-    // },
     hardhat: {
       forking: {
         url: `https://mainnet.infura.io/v3/${INFURA_API_KEY}`,
-        blockNumber: 18000000, // Optional: Pin to a stable block
-          enabled: true
+        blockNumber: 18000000,
+        enabled: true
       },
-      chainId: 1337,
+      chainId: DEFAULT_CHAIN_ID, // Dynamic chain ID
       allowUnlimitedContractSize: true
     },
     localhost: {
-      url: "http://127.0.0.1:8545",  
-      chainId: 1337
+      url: "http://127.0.0.1:8545",
+      chainId: DEFAULT_CHAIN_ID // Match the same dynamic ID
     }
   },
   gasReporter: {
@@ -72,4 +57,3 @@ module.exports = {
     apiKey: ETHERSCAN_API_KEY
   }
 };
-
