@@ -1,3 +1,4 @@
+// src/constants/abis.js
 const { abi: testERC1155ABI } = require('../artifacts/contracts/TestERC1155.sol/TestERC1155.json');
 const { abi: testTokenABI } = require('../artifacts/contracts/TestToken.sol/TestToken.json');
 const { abi: testNFTABI } = require('../artifacts/contracts/TestNFT.sol/TestNFT.json');

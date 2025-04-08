@@ -1,57 +1,79 @@
-export const NETWORK_CONFIG = {
-1337: {  // Hardhat Chain ID
-  name: "Hardhat",
-  rpcUrl: process.env.HARDHAT_RPC_URL || 
-          "http://127.0.0.1:8545",
+// src/constants/networks.js
+import { CONTRACT_ADDRESSES } from './abis';  // Reuse your existing address configuration
 
-contracts: {
-    tokenManager: "0xa85EffB2658CFd81e0B1AaD4f2364CdBCd89F3a1", // TK1
-    secondToken: "0x8aAC5570d54306Bb395bf2385ad327b7b706016b", // TK2
-    erc721: [
-      "0x6484EB0792c646A4827638Fc1B6F20461418eB00", // TestNFT
-      "0xf201fFeA8447AB3d43c98Da3349e0749813C9009", // UpgradeableNFT
-      "0xA75E74a5109Ed8221070142D15cEBfFe9642F489"  // DynamicNFT
-    ],
-    erc1155: [
-      "0x26291175Fa0Ea3C8583fEdEB56805eA68289b105", // TestERC1155
-      "0x840748F7Fd3EA956E5f4c88001da5CC1ABCBc038"  // UpgradeableERC1155
-    ],
-    MockSpender: "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad",
-    BridgeSpender: "0x04f1A5b9BD82a5020C49975ceAd160E98d8B77Af",
-    DexSpender: "0xde79380FBd39e08150adAA5C6c9dE3146f53029e",
-    LendingSpender: "0xbFD3c8A956AFB7a9754C951D03C9aDdA7EC5d638",
-    MiscSpender: "0x38F6F2caE52217101D7CA2a5eC040014b4164E6C",
-    NftMarketplaceSpender: "0xc075BC0f734EFE6ceD866324fc2A9DBe1065CBB1",
-    PermitToken: "0x64f5219563e28EeBAAd91Ca8D31fa3b36621FD4f",
-    FeeToken: "0x1757a98c1333B9dc8D408b194B2279b5AFDF70Cc"
+export const NETWORK_CONFIG = {
+    1337: {  // Hardhat Chain ID
+        name: "Hardhat",
+        rpcUrl: process.env.HARDHAT_RPC_URL || "http://127.0.0.1:8545",
+        contracts: {
+            tokenManager: CONTRACT_ADDRESSES.TK1,
+            secondToken: CONTRACT_ADDRESSES.TK2,
+            erc721: [
+                CONTRACT_ADDRESSES.TestNFT,
+                CONTRACT_ADDRESSES.UpgradeableNFT,
+                CONTRACT_ADDRESSES.DynamicNFT
+            ],
+            erc1155: [
+                CONTRACT_ADDRESSES.TestERC1155,
+                CONTRACT_ADDRESSES.UpgradeableERC1155
+            ],
+            MockSpender: CONTRACT_ADDRESSES.MockSpender,
+            BridgeSpender: CONTRACT_ADDRESSES.BridgeSpender,
+            DexSpender: CONTRACT_ADDRESSES.DexSpender,
+            LendingSpender: CONTRACT_ADDRESSES.LendingSpender,
+            MiscSpender: CONTRACT_ADDRESSES.MiscSpender,
+            NftMarketplaceSpender: CONTRACT_ADDRESSES.NftMarketplaceSpender,
+            PermitToken: CONTRACT_ADDRESSES.PermitToken,
+            FeeToken: CONTRACT_ADDRESSES.FeeToken
+        }
+    },
+    1: {
+        name: "Ethereum Mainnet",
+        rpcUrl: process.env.ETH_MAINNET_RPC || "https://mainnet.infura.io/v3/YOUR_INFURA_API_KEY",
+        contracts: {
+            tokenManager: process.env.ETH_TOKEN_MANAGER || "0xYourEthereumTokenManager",
+            erc721: process.env.ETH_ERC721 || "0xYourEthereumERC721",
+            erc1155: process.env.ETH_ERC1155 || "0xYourEthereumERC1155"
+        }
+    },
+    56: {
+        name: "Binance Smart Chain",
+        rpcUrl: process.env.BSC_RPC || "https://bsc-dataseed.binance.org/",
+        contracts: {
+            tokenManager: process.env.BSC_TOKEN_MANAGER || "0xYourBSCManager",
+            erc721: process.env.BSC_ERC721 || "0xYourBSCERC721",
+            erc1155: process.env.BSC_ERC1155 || "0xYourBSCERC1155"
+        }
+    },
+    137: {
+        name: "Polygon",
+        rpcUrl: process.env.POLYGON_RPC || "https://polygon-rpc.com/",
+        contracts: {
+            tokenManager: process.env.POLYGON_TOKEN_MANAGER || "0xYourPolygonTokenManager",
+            erc721: process.env.POLYGON_ERC721 || "0xYourPolygonERC721",
+            erc1155: process.env.POLYGON_ERC1155 || "0xYourPolygonERC1155"
+        }
     }
-  },
-  1: {
-    name: "Ethereum Mainnet",
-    rpcUrl: "https://mainnet.infura.io/v3/YOUR_INFURA_API_KEY",
-    contracts: {
-      tokenManager: "0xYourEthereumTokenManager",
-      erc721: "0xYourEthereumERC721",
-      erc1155: "0xYourEthereumERC1155"
-    }
-  },
-  56: {
-    name: "Binance Smart Chain",
-    rpcUrl: "https://bsc-dataseed.binance.org/",
-    contracts: {
-      tokenManager: "0xYourBSCManager",
-      erc721: "0xYourBSCERC721",
-      erc1155: "0xYourBSCERC1155"
-    }
-  },
-  137: {
-    name: "Polygon",
-    rpcUrl: "https://polygon-rpc.com/",
-    contracts: {
-      tokenManager: "0xYourPolygonTokenManager",
-      erc721: "0xYourPolygonERC721",
-      erc1155: "0xYourPolygonERC1155"
-    }
-  }
 };
+
+/**
+ * @typedef {Object} NetworkConfig
+ * @property {string} name - Human-readable network name
+ * @property {string} rpcUrl - Network RPC endpoint
+ * @property {Object} contracts - Contract addresses configuration
+ * 
+ * @typedef {Object} ContractAddresses
+ * @property {string} tokenManager
+ * @property {string} secondToken
+ * @property {string[]} erc721
+ * @property {string[]} erc1155
+ * @property {string} MockSpender
+ * @property {string} BridgeSpender
+ * @property {string} DexSpender
+ * @property {string} LendingSpender
+ * @property {string} MiscSpender
+ * @property {string} NftMarketplaceSpender
+ * @property {string} PermitToken
+ * @property {string} FeeToken
+ */
 
