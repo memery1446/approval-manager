@@ -2,7 +2,7 @@ const { ethers } = require("hardhat");
 
 async function main() {
   const [signer] = await ethers.getSigners();
-  const tokenAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"; // USDC
+  const tokenAddress = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"; // UNI
   const spender = "0x11111112542d85b3ef69ae05771c2dccff4faa26"; // 1inch
 
   const token = await ethers.getContractAt(
@@ -18,7 +18,7 @@ async function main() {
 
   const tx = await token.approve(
     spender,
-    ethers.parseUnits("1000000", 6), // approve 1M USDC
+    ethers.parseUnits("1000000", 18), // approve 1M UNI
     {
       maxFeePerGas,
       maxPriorityFeePerGas,
@@ -26,7 +26,7 @@ async function main() {
   );
 
   await tx.wait();
-  console.log("✅ Approved 1inch for USDC.");
+  console.log("✅ Approved 1inch for UNI.");
 }
 
 main().catch(console.error);
