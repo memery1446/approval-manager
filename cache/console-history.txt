@@ -1,0 +1,213 @@
+.exit
+console.log("✅ USDC balance of dev wallet:", formatUnits(balance, 6));
+const balance = await token.balanceOf(receiver.address);
+// Confirm new balance
+await token.transfer(receiver.address, parseUnits("1000", 6));
+// Transfer USDC to dev wallet
+);
+  signer
+  tokenAddress,
+  "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+const token = await ethers.getContractAt(
+// Attach IERC20
+const signer = await ethers.getSigner(whale);
+// Get whale signer
+});
+  params: [whale],
+  method: "hardhat_impersonateAccount",
+await network.provider.request({
+// Impersonate whale
+const receiver = (await ethers.getSigners())[0];
+// Get dev account
+const tokenAddress = ethers.getAddress("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48");
+const whale = ethers.getAddress("0x28C6c06298d514Db089934071355E5743bf21d60");
+// Proper checksummed addresses (force checksum via getAddress)
+const { parseUnits, formatUnits } = ethers;
+const { ethers } = require("hardhat");
+// Load from Hardhat + fully destructure
+.exit
+console.log("✅ USDC balance of dev wallet:", formatUnits(balance, 6));
+const balance = await token.balanceOf(receiver.address);
+// Check balance
+await token.transfer(receiver.address, parseUnits("1000", 6));
+// Send USDC to receiver
+);
+  signer
+  tokenAddress,
+  "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+const token = await ethers.getContractAt(
+// Attach IERC20 with correctly checksummed address
+const signer = await ethers.getSigner(whale);
+// Get whale signer
+});
+  params: [whale],
+  method: "hardhat_impersonateAccount",
+await network.provider.request({
+// Impersonate the whale
+const tokenAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606EB48"; // NOTE the capital "EB48"
+const whale = "0x28C6c06298d514Db089934071355E5743bf21d60"; // Binance 8
+// Define WHALE and USDC using VALID checksum addresses (direct copy from Etherscan)
+const receiver = (await ethers.getSigners())[0];
+// Setup receiver (your default Hardhat account)
+const { parseUnits, formatUnits, getAddress } = ethers;
+const { ethers } = require("hardhat");
+// Grab everything from Ethers
+.exit
+console.log("USDC balance:", formatUnits(balance, 6));
+const balance = await token.balanceOf(receiver.address);
+// Get balance
+await token.transfer(receiver.address, parseUnits("1000", 6));
+// Transfer USDC to receiver
+);
+  signer
+  tokenAddress,
+  "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+const token = await ethers.getContractAt(
+// Attach IERC20
+const signer = await ethers.getSigner(whale);
+// Get whale signer
+});
+  params: [whale],
+  method: "hardhat_impersonateAccount",
+await network.provider.request({
+// Impersonate whale
+const tokenAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48"; // USDC checksummed
+const whale = "0x28C6c06298d514Db089934071355E5743bf21d60"; // checksummed
+const receiver = (await ethers.getSigners())[0];
+// Get signer and define raw strings
+const { parseUnits, formatUnits } = ethers;
+// Destructure only what works
+.exit
+console.log("USDC balance:", formatUnits(balance, 6));
+const balance = await token.balanceOf(receiver.address);
+// Confirm balance
+await token.transfer(receiver.address, parseUnits("1000", 6));
+// Send USDC to dev account
+);
+  signer
+  tokenAddress,
+  "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+const token = await ethers.getContractAt(
+const signer = await ethers.getSigner(whale);
+// Whale signer + USDC contract
+});
+  params: [whale],
+  method: "hardhat_impersonateAccount",
+await network.provider.request({
+// Impersonate whale
+const tokenAddress = getAddress("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48"); // USDC
+const whale = getAddress("0x28C6c06298d514Db089934071355E5743bf21d60");
+// Whale + token
+const receiver = (await ethers.getSigners())[0];
+// Receiver (first default account)
+const { parseUnits, formatUnits, getAddress } = ethers;
+// Fully destructure Ethers v6 objects
+.exit
+console.log("USDC balance:", utils.formatUnits(balance, 6));
+const balance = await token.balanceOf(receiver.address);
+// Step 6: Read back balance
+await token.transfer(receiver.address, utils.parseUnits("1000", 6));
+// Step 5: Transfer tokens to dev account
+);
+  signer
+  tokenAddress,
+  "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+const token = await ethers.getContractAt(
+const signer = await ethers.getSigner(whale);
+// Step 4: Get whale signer + attach contract
+});
+  params: [whale],
+  method: "hardhat_impersonateAccount",
+await network.provider.request({
+// Step 3: Impersonate the whale
+const tokenAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48";
+const whale = "0x28C6c06298d514Db089934071355E5743bf21d60";
+// Step 2: Set USDC whale + token address (using checksummed address)
+const receiver = (await ethers.getSigners())[0];
+// Step 1: Get your local dev account
+const utils = require("ethers").utils;
+// Pull utils from ethers
+.exit
+console.log("USDC balance:", utils.formatUnits(balance, 6));
+const balance = await token.balanceOf(receiver.address);
+await token.transfer(receiver.address, utils.parseUnits("1000", 6));
+);
+  signer
+  tokenAddress,
+  "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+const token = await ethers.getContractAt(
+const signer = await ethers.getSigner(whale);
+});
+  params: [whale],
+  method: "hardhat_impersonateAccount",
+await network.provider.request({
+const tokenAddress = utils.getAddress("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48"); // USDC
+const whale = "0x28C6c06298d514Db089934071355E5743bf21d60";
+const receiver = (await ethers.getSigners())[0];
+const { utils } = ethers;
+.exit
+console.log("USDC balance:", ethers.utils.formatUnits(balance, 6));
+const balance = await token.balanceOf(receiver.address);
+// ✅ Confirm the new balance
+await token.transfer(receiver.address, ethers.utils.parseUnits("1000", 6));
+// Send USDC to your dev account
+);
+  signer
+  tokenAddress,
+  "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+const token = await ethers.getContractAt(
+// Attach the IERC20 contract
+const signer = await ethers.getSigner(whale);
+// Get a signer for the whale
+});
+  params: [whale],
+  method: "hardhat_impersonateAccount",
+await network.provider.request({
+// Impersonate the whale
+const whale = "0x28C6c06298d514Db089934071355E5743bf21d60";
+// Binance 8 address (USDC whale)
+const tokenAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48";
+// USDC token contract
+const receiver = (await ethers.getSigners())[0];
+// Replace with any dev account from `npx hardhat node` output
+.exit
+console.log("USDC balance:", ethers.utils.formatUnits(balance, 6));
+const balance = await token.balanceOf(receiver.address);
+// ✅ Confirm the new balance
+await token.transfer(receiver.address, ethers.utils.parseUnits("1000", 6));
+// Send USDC to your dev account
+);
+  signer
+  tokenAddress,
+  "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+const token = await ethers.getContractAt(
+// Attach the IERC20 contract
+const signer = await ethers.getSigner(whale);
+// Get a signer for the whale
+});
+  params: [whale],
+  method: "hardhat_impersonateAccount",
+await network.provider.request({
+// Impersonate the whale
+const whale = "0x28C6c06298d514Db089934071355E5743bf21d60";
+// Binance 8 address (USDC whale)
+const tokenAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48";
+// USDC token contract
+const receiver = (await ethers.getSigners())[0];
+// Replace with any dev account from `npx hardhat node` output
+main().catch(console.error);
+}
+  console.log("USDC sent to:", receiver.address);
+  await token.transfer(receiver.address, ethers.utils.parseUnits("1000", 6));
+  // Send tokens to your dev address
+  const token = await ethers.getContractAt("IERC20", tokenAddress, signer);
+  const signer = await ethers.getSigner(whale);
+  });
+    params: [whale],
+    method: "hardhat_impersonateAccount",
+  await network.provider.request({
+  const tokenAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48"; // USDC
+  const whale = "0x28C6c06298d514Db089934071355E5743bf21d60"; // Binance 8
+  const [receiver] = await ethers.getSigners();
+async function main() {
+// scripts/impersonate.js

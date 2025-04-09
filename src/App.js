@@ -65,7 +65,7 @@ const AppContent = () => {
             <div className="row mb-4">
               <div className="col-md-6">
                 {/* Comment out testing components */}
-                {/* <MinimalTest /> */}
+                <MinimalTest /> 
                 {/* <ReduxDebugger /> */}
                 <WalletConnect />
               </div>
