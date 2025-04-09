@@ -1,15 +1,5 @@
-const hre = require("hardhat");
+import { getAddress } from 'ethers';
 
-async function main() {
-    const signers = await hre.ethers.getSigners();
-    console.log("📜 Available Accounts:");
-    signers.forEach((signer, index) => {
-        console.log(`${index + 1}: ${signer.address}`);
-    });
-}
-
-main().catch((error) => {
-    console.error("❌ Error:", error);
-    process.exit(1);
-});
-
+const address = '0xb66a603f4cfe17e3d27b87a8bfcad319856518b8';
+const checksummedAddress = getAddress(address);
+console.log(checksummedAddress);

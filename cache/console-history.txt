@@ -1,4 +1,12 @@
 .exit
+console.log(getAddress("0xb66a603f4cfe17e3d27b87a8bfcad319856518b8"));
+const { getAddress } = require("ethers");
+.exit
+console.log(checksummedAddress);
+const checksummedAddress = getAddress(address);
+const address = '0xb66a603f4cfe17e3d27b87a8bfcad319856518b8';
+import { getAddress } from 'ethers';
+.exit
 console.log("✅ USDC balance of dev wallet:", formatUnits(balance, 6));
 const balance = await token.balanceOf(receiver.address);
 // Confirm new balance

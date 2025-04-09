@@ -1,18 +1,17 @@
 const { ethers } = require("hardhat");
 
 async function main() {
-    const address = "0x0dB30c6cC6440E2B534D06edF2969fcaEd1C6B2B";
-    
-    try {
-        const checksummed = ethers.getAddress(address);
-        console.log(`✅ Correct Checksum Address: ${checksummed}`);
-    } catch (error) {
-        console.error(`❌ Address checksum failed: ${address}`);
-    }
+  const [sender] = await ethers.getSigners();
+  const whale = "0xfe9e8709d3215310075d67e3ed32a380ccf451c8";
+
+  const tx = await sender.sendTransaction({
+    to: whale,
+    value: ethers.parseEther("2.0"),
+  });
+
+  await tx.wait();
+  console.log("✅ Funded RFI whale with 2 ETH");
 }
 
-main().catch((error) => {
-    console.error("❌ Script failed:", error);
-    process.exit(1);
-});
+main().catch(console.error);
 

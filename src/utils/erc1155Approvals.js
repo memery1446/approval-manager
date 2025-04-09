@@ -70,7 +70,8 @@ export async function getERC1155Approvals(ownerAddress, providedProvider) {
     const spenders = [
       { address: CONTRACT_ADDRESSES.MockSpender, name: "MockSpender" },
       { address: CONTRACT_ADDRESSES.BridgeSpender, name: "BridgeSpender" },
-      { address: CONTRACT_ADDRESSES.NftMarketplaceSpender, name: "NftMarketplaceSpender" }
+      { address: CONTRACT_ADDRESSES.NftMarketplaceSpender, name: "NftMarketplaceSpender" },
+      { address: CONTRACT_ADDRESSES.RaribleSpender, name: "RaribleSpender" }
     ].filter(s => s.address); // Remove undefined
     
     console.log(`🔍 Checking ${contracts.length} ERC-1155 collections against ${spenders.length} spenders`);
