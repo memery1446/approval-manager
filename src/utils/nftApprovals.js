@@ -29,14 +29,16 @@ function getAllPossibleNFTSpenders() {
         // Deployed spenders that interact with NFTs
         "0x1bEfE2d8417e22Da2E0432560ef9B2aB68Ab75Ad", // MockSpender
         "0x04f1A5b9BD82a5020C49975ceAd160E98d8B77Af", // BridgeSpender
-        "0xc075BC0f734EFE6ceD866324fc2A9DBe1065CBB1", // NftMarketplaceSpender
+        "0x207Fa8Df3a17D96Ca7EA4f2893fcdCb78a304101", // NftMarketplaceSpender
         
         // Common NFT marketplaces
         "0x00000000006c3852cbef3e08e8df289169ede581", // OpenSea Seaport 1.1
         "0x00000000000001ad428e4906ae43d8f9852d0dd6", // OpenSea Seaport 1.4
         "0x000000000000ad05ccc4f10045630fb830b95127", // OpenSea Seaport 1.5
         "0x4feE7B061C97C9c496b01DbcE9CDb10c02f0a0Be", // Rarible
-        "0xf42aa99F011A1fA7CDA90E5E98b277E306BcA83e"  // LooksRare
+        "0xf42aa99F011A1fA7CDA90E5E98b277E306BcA83e", // LooksRare
+        "0xFF9c1b15b16263C61d017ee9f65c50E4AE0113D7",
+        "0x6484EB0792c646A4827638Fc1B6F20461418eB00"  
     ];
     
     // Combine and remove duplicates
@@ -108,131 +110,124 @@ export async function getERC721Approvals(ownerAddress, providedProvider) {
     return [];
   }
 
-  // Use provided provider or get one from providerService
   const provider = providedProvider || await getProvider();
   if (!provider) {
     console.error("❌ No provider available for ERC-721 approvals");
     return [];
   }
 
-  // Get all NFT contract addresses - from multiple sources to be thorough
   const nftCollections = [
-    // Explicitly defined NFT collections from your Approve.js script
     {
-      address: CONTRACT_ADDRESSES.TestNFT || "0x6484EB0792c646A4827638Fc1B6F20461418eB00",
-      symbol: "TestNFT",
-      name: "Test NFT Collection"
+      address: CONTRACT_ADDRESSES.TestNFT,
+      name: "Test NFT Collection",
+      symbol: "TestNFT"
     },
     {
-      address: CONTRACT_ADDRESSES.UpgradeableNFT || "0xf201fFeA8447AB3d43c98Da3349e0749813C9009",
-      symbol: "UpgradeableNFT",
-      name: "Upgradeable NFT Collection"
+      address: CONTRACT_ADDRESSES.UpgradeableNFT,
+      name: "Upgradeable NFT Collection",
+      symbol: "UpgradeableNFT"
     },
     {
-      address: CONTRACT_ADDRESSES.DynamicNFT || "0xA75E74a5109Ed8221070142D15cEBfFe9642F489",
-      symbol: "DynamicNFT",
-      name: "Dynamic NFT Collection"
+      address: CONTRACT_ADDRESSES.DynamicNFT,
+      name: "Dynamic NFT Collection",
+      symbol: "DynamicNFT"
     }
-  ];
-  
+  ].filter(n => n.address);
+
   console.log(`🔍 Checking ${nftCollections.length} NFT collections`);
 
-  // Use getAllPossibleNFTSpenders() instead of hardcoded spenders
   const spenderAddresses = getAllPossibleNFTSpenders();
-  
   console.log(`🔍 Checking for approvals to ${spenderAddresses.length} spenders:`, spenderAddresses);
-  
+
   let approvals = [];
 
-  // Define minimal ABI for NFT checks
   const minimalNFTABI = [
     "function isApprovedForAll(address owner, address operator) view returns (bool)",
     "function name() view returns (string)",
-    "function symbol() view returns (string)"
+    "function symbol() view returns (string)",
+    "function getApproved(uint256 tokenId) view returns (address)"
   ];
 
   for (let nftCollection of nftCollections) {
+    if (!nftCollection.address) continue;
+
+    let collectionAddress;
     try {
-      // Skip null/undefined addresses
-      if (!nftCollection.address) continue;
-      
-      // Normalize address
-      let collectionAddress = nftCollection.address;
+      collectionAddress = getAddress(nftCollection.address);
+    } catch {
+      console.warn(`⚠️ Invalid NFT address: ${nftCollection.address}`);
+      continue;
+    }
+
+    const contract = new Contract(collectionAddress, NFT_ABI || minimalNFTABI, provider);
+    let collectionName = nftCollection.name || "";
+    let collectionSymbol = nftCollection.symbol || "";
+
+    try {
+      if (!collectionName) collectionName = await contract.name();
+      if (!collectionSymbol) collectionSymbol = await contract.symbol();
+    } catch {
+      collectionName ||= collectionAddress.slice(0, 10);
+    }
+
+    for (let spender of spenderAddresses) {
       try {
-        collectionAddress = getAddress(collectionAddress);
-      } catch (err) {
-        console.warn(`⚠️ Invalid NFT address format: ${collectionAddress}, skipping...`);
+        spender = getAddress(spender);
+      } catch {
         continue;
       }
-      
-      console.log(`🔍 Checking NFT collection: ${nftCollection.name || nftCollection.symbol || collectionAddress}`);
-      
-      // Use either provided ABI or minimal ABI
-      const contract = new Contract(collectionAddress, NFT_ABI || minimalNFTABI, provider);
-      
-      // Try to get collection name/symbol if not provided
-      let collectionName = nftCollection.name || "";
-      let collectionSymbol = nftCollection.symbol || "";
-      
+
+      console.log(`🔍 Checking NFT approval for spender: ${spender}`);
+
+      // Check isApprovedForAll
       try {
-        if (!collectionName) collectionName = await contract.name();
-        if (!collectionSymbol) collectionSymbol = await contract.symbol();
+        const isApproved = await contract.isApprovedForAll(ownerAddress, spender);
+        if (isApproved) {
+          const transactionHash = await getLatestNFTApprovalTransaction(provider, ownerAddress, collectionAddress, spender);
+          const approval = {
+            contract: collectionAddress,
+            type: "ERC-721",
+            spender,
+            asset: collectionName,
+            tokenId: "all",
+            valueAtRisk: "All NFTs in Collection",
+            transactionHash
+          };
+          approvals.push(approval);
+          console.log(`✅ Found collection-level approval:`, approval);
+        }
       } catch (err) {
-        console.warn(`⚠️ Could not get NFT collection info for ${collectionAddress}`);
-        // Use address snippet as fallback
-        collectionName = collectionName || `Collection at ${collectionAddress.substring(0, 10)}...`;
+        console.warn(`⚠️ isApprovedForAll failed for ${collectionAddress} → ${spender}:`, err.message);
       }
 
-      for (let spender of spenderAddresses) {
-        // Skip null/undefined spenders
-        if (!spender) continue;
-        
+      // Check getApproved(tokenId) — always
+      const tokenIdsToCheck = [1, 100, 999];
+      for (let tokenId of tokenIdsToCheck) {
         try {
-          spender = getAddress(spender);
-        } catch (err) {
-          console.warn(`⚠️ Invalid spender address format: ${spender}, skipping...`);
-          continue;
-        }
-        
-        console.log(`🔍 Checking NFT approval for spender: ${spender}`);
-        
-        try {
-          const isApproved = await contract.isApprovedForAll(ownerAddress, spender);
-          console.log(`🖼️ isApprovedForAll result: ${isApproved}`);
-
-          if (isApproved) {
-            // Get transaction hash for this approval
-            const transactionHash = await getLatestNFTApprovalTransaction(
-              provider, 
-              ownerAddress,  
-              collectionAddress, 
-              spender
-            );
-            
+          const approvedSpender = await contract.getApproved(tokenId);
+          if (approvedSpender.toLowerCase() === spender.toLowerCase()) {
             const approval = {
               contract: collectionAddress,
               type: "ERC-721",
-              spender: spender,
-              asset: collectionName || collectionSymbol,
-              tokenId: "all", // Using "all" to indicate approval for all tokens
-              valueAtRisk: "All NFTs in Collection",
-              transactionHash // Add transaction hash
+              spender,
+              asset: collectionName,
+              tokenId,
+              valueAtRisk: `NFT #${tokenId}`,
+              transactionHash: "N/A"
             };
-
             approvals.push(approval);
-            console.log(`✅ Found ERC-721 approval:`, approval);
+            console.log(`✅ Found token-level approval:`, approval);
           }
-        } catch (error) {
-          console.error(`❌ Error checking NFT approvals for ${collectionAddress} - ${spender}:`, error.message);
+        } catch (err) {
+          // Most likely due to non-existent token
         }
       }
-    } catch (error) {
-      console.error(`❌ Error checking NFT collection ${nftCollection.address}:`, error.message);
     }
   }
 
   console.log("✅ Completed ERC-721 check. Found approvals:", approvals.length);
   return approvals;
 }
+
 
 export default getERC721Approvals;
