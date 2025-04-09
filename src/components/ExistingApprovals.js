@@ -8,8 +8,8 @@ import { getERC1155Approvals } from "../utils/erc1155Approvals";
 import { setApprovals } from "../store/web3Slice";
 import { getProvider } from "../utils/providerService";
 import { getSpenderType } from "../utils/spenderMapping"; // Import the spender utility
-import { getAssetDisplayInfo } from "../utils/tokenMapping"; // Import the token utility
 import { CONTRACT_ADDRESSES } from "../abis"; // Import contract addresses
+import AssetDisplay from "../components/AssetDisplay"; // Import our new component
 
 const ExistingApprovals = () => {
   const dispatch = useDispatch();
@@ -299,19 +299,8 @@ const ExistingApprovals = () => {
                             </span>
                           </td>
                           <td>
-                            {(() => {
-                              const assetInfo = getAssetDisplayInfo(approval);
-                              return (
-                                <div>
-                                  <div className="fw-bold">
-                                    {assetInfo.name}
-                                  </div>
-                                  <div className="small text-muted">
-                                    {assetInfo.description}
-                                  </div>
-                                </div>
-                              );
-                            })()}
+                            {/* Updated to use the new AssetDisplay component */}
+                            <AssetDisplay approval={approval} compact={true} logoSize="small" />
                           </td>
                           <td>
                             <div>
@@ -385,4 +374,3 @@ const ExistingApprovals = () => {
 };
 
 export default ExistingApprovals;
-

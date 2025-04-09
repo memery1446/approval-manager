@@ -11,7 +11,7 @@ import { revokeERC20Approvals, revokeERC721Approvals } from "../utils/batchRevok
 import TransactionProgressBar from "../components/TransactionProgressBar"
 import TransactionHashComponent from "../components/TransactionHashComponent"
 import { getSpenderType } from "../utils/spenderMapping" // Import the spender utility
-import { getAssetDisplayInfo } from "../utils/tokenMapping" // Import the token utility
+import AssetDisplay from "../components/AssetDisplay" // Import the new component
 
 const ApprovalDashboard = ({ onNavigateToEducation }) => {
   const dispatch = useDispatch()
@@ -359,20 +359,8 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                       <TransactionHashComponent transactionHash={a.transactionHash} />
                     </td>
                     <td>
-                      {/* Enhanced asset display with token mapping */}
-                      {(() => {
-                        const assetInfo = getAssetDisplayInfo(a);
-                        return (
-                          <div>
-                            <div className="fw-bold mb-1">
-                              {assetInfo.name}
-                            </div>
-                            <div className="small text-muted">
-                              {assetInfo.description}
-                            </div>
-                          </div>
-                        );
-                      })()}
+                      {/* Updated to use AssetDisplay component */}
+                      <AssetDisplay approval={a} compact={true} logoSize="small" />
                     </td>
                     <td>
                       <span
@@ -443,4 +431,3 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
 }
 
 export default ApprovalDashboard
-
