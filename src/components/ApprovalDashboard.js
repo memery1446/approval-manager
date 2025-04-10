@@ -140,11 +140,13 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
         Total: allApprovals.length,
       })
 
+      // Always dispatch the approvals, even if empty
       dispatch(setApprovals(allApprovals))
     } catch (error) {
       console.error("❌ Error refreshing approvals:", error)
       setError("Failed to refresh approvals: " + error.message)
     } finally {
+      // Make sure refreshing state is always set to false when done
       setRefreshing(false)
     }
   }
@@ -375,9 +377,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                           {/* Display spender type if available */}
                           {getSpenderType(a.spender) && (
                             <div className="small fw-bold mb-1">
-                              <span className="badge bg-info text-dark">
-                                {getSpenderType(a.spender)}
-                              </span>
+                              <span className="badge bg-info text-dark">{getSpenderType(a.spender)}</span>
                             </div>
                           )}
                           {/* Display truncated address */}
@@ -391,9 +391,9 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                     </td>
                     <td>
                       {a.valueAtRisk
-                        ? (a.type === "ERC-20" && a.valueAtRisk.toLowerCase() !== "unlimited"
-                            ? `${a.valueAtRisk} / Unlimited`
-                            : a.valueAtRisk)
+                        ? a.type === "ERC-20" && a.valueAtRisk.toLowerCase() !== "unlimited"
+                          ? `${a.valueAtRisk} / Unlimited`
+                          : a.valueAtRisk
                         : "Unknown"}
                     </td>
                     <td>

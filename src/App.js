@@ -2,19 +2,23 @@
 
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { Provider } from "react-redux" 
-import store from "./store/index" 
+import { Provider } from "react-redux"
+import store from "./store/index"
 import WalletConnect from "./components/WalletConnect.js"
 import NetworkSelector from "./components/NetworkSelector.js"
 import ApprovalDashboard from "./components/ApprovalDashboard.js"
 import ApprovalEducationPage from "./components/ApprovalEducationPage.js"
-import BatchRevoke from "./components/BatchRevoke.js" 
-import { FEATURES } from './constants/config' 
+import BatchRevoke from "./components/BatchRevoke.js"
+import { FEATURES } from "./constants/config"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { BootstrapWrapper } from "./utils/provider"
 import { initializeProvider } from "./utils/providerService"
-import ReduxDebugger from './components/ReduxDebugger';
-import MinimalTest from './components/MinimalTest';
+import ReduxDebugger from "./components/ReduxDebugger"
+import MinimalTest from "./components/MinimalTest"
+import CustomHeader from "./components/CustomHeader"
+
+// Import the custom theme CSS
+import "./styles/theme.css"
 
 console.log("🔴 App.js loaded - " + new Date().toISOString())
 
@@ -52,11 +56,14 @@ const AppContent = () => {
   return (
     <BootstrapWrapper>
       <div className="container my-5">
-        <header className="mb-4 text-center">
-          <h1 className="text-primary fw-bold">
-            <span className="me-2">🔒</span> Approval Manager
+        <header className="mb-4">
+          <h1 className="text-primary fw-bold text-center">
+            <span className="me-2">🔒</span> Revoke
           </h1>
-          <p className="text-muted">View and manage token approvals.</p>
+          <p className="text-muted text-center">Understand and manage token approvals.</p>
+
+          {/* Add the CustomHeader component */}
+          <CustomHeader wallet={wallet} />
         </header>
 
         {!showEducation ? (
@@ -65,9 +72,9 @@ const AppContent = () => {
             <div className="row mb-4">
               <div className="col-md-6">
                 {/* Comment out testing components */}
-                <MinimalTest /> 
+               {/*  <MinimalTest /> */}
                 {/* <ReduxDebugger /> */}
-                <WalletConnect />
+                <WalletConnect /> 
               </div>
               <div className="col-md-6">
                 <NetworkSelector />
@@ -87,12 +94,10 @@ const AppContent = () => {
                   {FEATURES.batchRevoke.enabled && <BatchRevoke />}
 
                   {/* Approval List with education button */}
-                  <ApprovalDashboard 
-                    onNavigateToEducation={() => setShowEducation(true)} 
-                  />
-                  
+                  <ApprovalDashboard onNavigateToEducation={() => setShowEducation(true)} />
+
                   {/* Environment indicator for testing */}
-                  {process.env.NODE_ENV !== 'production' && (
+                  {process.env.NODE_ENV !== "production" && (
                     <div className="alert alert-warning mt-4">
                       <div className="d-flex justify-content-between align-items-center">
                         <div>
@@ -100,16 +105,17 @@ const AppContent = () => {
                         </div>
                         <div>
                           <small>
-                            Batch Revoke: {FEATURES.batchRevoke.enabled ? '✅' : '❌'} | 
-                            ERC-20: {FEATURES.batchRevoke.erc20Enabled ? '✅' : '❌'} | 
-                            NFT: {FEATURES.batchRevoke.nftEnabled ? '✅' : '❌'} |
-                            Batch Size: {FEATURES.batchRevoke.maxBatchSize}
+                            Batch Revoke: {FEATURES.batchRevoke.enabled ? "✅" : "❌"} | ERC-20:{" "}
+                            {FEATURES.batchRevoke.erc20Enabled ? "✅" : "❌"} | NFT:{" "}
+                            {FEATURES.batchRevoke.nftEnabled ? "✅" : "❌"} | Batch Size:{" "}
+                            {FEATURES.batchRevoke.maxBatchSize}
                           </small>
                         </div>
                       </div>
                       <div className="mt-2">
                         <small className="text-muted">
-                          Use console to toggle features: <code>window.toggleFeature('batchRevoke.nftEnabled', true)</code>
+                          Use console to toggle features:{" "}
+                          <code>window.toggleFeature('batchRevoke.nftEnabled', true)</code>
                         </small>
                       </div>
                     </div>
@@ -193,4 +199,3 @@ const App = () => {
 }
 
 export default App
-
