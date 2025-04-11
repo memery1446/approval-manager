@@ -279,155 +279,172 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
   }
 
   return (
-    <div className="card shadow-lg">
-      <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-        <h5 className="mb-0">Token Approvals</h5>
-        <div>
-          {/* Add Learn About Approvals button if onNavigateToEducation is provided */}
-          {onNavigateToEducation && (
-            <button className="btn btn-light btn-sm me-2" onClick={onNavigateToEducation}>
-              Learn About Approvals
-            </button>
-          )}
-          <button
-            className="btn btn-info btn-sm me-2"
-            onClick={() => console.log("Current Redux approvals:", approvals)}
-          >
-            Debug
-          </button>
-          <button className="btn btn-secondary" onClick={refreshApprovals} disabled={refreshing}>
-            {refreshing ? "⏳ Loading..." : "🔄 Refresh"}
-          </button>
-        </div>
-      </div>
+  <>
+    {/* Error Display */}
+    {error && <div className="alert alert-danger mb-3">{error}</div>}
 
-      <div className="card-body">
-        {/* Connection Status */}
-        <div className="mb-3">
-          <strong>Account:</strong>{" "}
-          {wallet ? `${wallet.substring(0, 6)}...${wallet.substring(wallet.length - 4)}` : "Not connected"}
-          <div>
-            <strong>Approvals Found:</strong> {approvals.length}
-          </div>
-        </div>
+    {/* Progress Bar */}
+    {progressValue > 0 && <TransactionProgressBar progress={progressValue} status={progressStatus} />}
 
-        {/* Error Display */}
-        {error && <div className="alert alert-danger mb-3">{error}</div>}
+    {/* Approvals table with more compact rows */}
+<div
+  className="approval-window p-3"
+  style={{
+    height: "350px",
+    overflowY: "auto",
+    border: "1px solid var(--border-color)",
+    borderRadius: "0.75rem",
+    backgroundColor: "var(--form-bg)",
+    boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.05)",
+  }}
+>
+      <table className="table table-hover mb-0">
+        <thead className="table-dark sticky-top">
+          <tr style={{ lineHeight: "1" }}> {/* More compact header */}
+            <th style={{ padding: "0.5rem" }}>
+              <input
+                type="checkbox"
+                onChange={(e) => handleSelectAll(e.target.checked)}
+                checked={approvals.length > 0 && selectedApprovals.length === approvals.length}
+                disabled={approvals.length === 0 || processing}
+              />
+            </th>
+            <th style={{ padding: "0.5rem" }}>TX Hash</th>
+            <th style={{ padding: "0.5rem" }}>Asset</th>
+            <th style={{ padding: "0.5rem" }}>Type</th>
+            <th style={{ padding: "0.5rem" }}>Approved Spender</th>
+            <th style={{ padding: "0.5rem" }}>Value at Risk</th>
+            <th style={{ padding: "0.5rem" }}>Actions</th>
+          </tr>
+        </thead>
+<tbody className="border-0">
+  {approvals.map((a, idx) => {
+    const isSelected = selectedApprovals.some(
+      (sel) =>
+        sel.contract === a.contract &&
+        sel.spender === a.spender &&
+        (a.tokenId !== undefined ? sel.tokenId === a.tokenId : true),
+    )
 
-        {/* Progress Bar */}
-        {progressValue > 0 && <TransactionProgressBar progress={progressValue} status={progressStatus} />}
-
-        {approvals && approvals.length > 0 ? (
+    return (
+      <tr key={idx} className="border-0">
+        <td colSpan="7" className="p-0 border-0">
           <div
-            className="approval-window"
-            style={{ height: "500px", overflowY: "auto", border: "1px solid #dee2e6", borderRadius: "0.25rem" }}
+            style={{
+              backgroundColor: isSelected ? "#2c3545" : "#1e2636",
+              border: "1px solid rgba(255, 255, 255, 0.12)", // more visible divider line
+              borderRadius: "0", // keeps the original styling
+              padding: isSelected ? "14px 14px" : "10px 14px",
+              marginBottom: isSelected ? "12px" : "0px", // spacing only when selected
+              color: "#ffffff",
+              boxShadow: isSelected ? "0 2px 6px rgba(0,0,0,0.25)" : "none",
+              transform: isSelected ? "scale(1.01)" : "scale(1)",
+              transition: "all 0.2s ease-in-out",
+              cursor: "pointer",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "#2c3545"
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = isSelected ? "#2c3545" : "#1e2636"
+            }}
           >
-            <table className="table table-hover mb-0">
-              <thead className="table-dark sticky-top">
-                <tr>
-                  <th>
-                    <input
-                      type="checkbox"
-                      onChange={(e) => handleSelectAll(e.target.checked)}
-                      checked={approvals.length > 0 && selectedApprovals.length === approvals.length}
-                      disabled={approvals.length === 0 || processing}
-                    />
-                  </th>
-                  <th>Transaction Hash</th>
-                  <th>Asset</th>
-                  <th>Type</th>
-                  <th>Approved Spender</th>
-                  <th>Value at Risk</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {approvals.map((a, idx) => (
-                  <tr key={idx}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={selectedApprovals.some(
-                          (sel) =>
-                            sel.contract === a.contract &&
-                            sel.spender === a.spender &&
-                            (a.tokenId !== undefined ? sel.tokenId === a.tokenId : true),
-                        )}
-                        onChange={() => handleSelect(a)}
-                        disabled={processing}
-                      />
-                    </td>
-                    <td>
-                      <TransactionHashComponent transactionHash={a.transactionHash} />
-                    </td>
-                    <td>
-                      {/* Updated to use AssetDisplay component */}
-                      <AssetDisplay approval={a} compact={true} logoSize="small" />
-                    </td>
-                    <td>
-                      <span
-                        className={`badge bg-${a.type === "ERC-20" ? "success" : a.type === "ERC-721" ? "primary" : "warning"}`}
-                      >
-                        {a.type || "Unknown"}
-                      </span>
-                    </td>
-                    <td>
-                      {a.spender ? (
-                        <div>
-                          {/* Display spender type if available */}
-                          {getSpenderType(a.spender) && (
-                            <div className="small fw-bold mb-1">
-                              <span className="badge bg-info text-dark">{getSpenderType(a.spender)}</span>
-                            </div>
-                          )}
-                          {/* Display truncated address */}
-                          <span title={a.spender}>
-                            {a.spender.substring(0, 6)}...{a.spender.substring(a.spender.length - 4)}
-                          </span>
-                        </div>
-                      ) : (
-                        "Unknown"
-                      )}
-                    </td>
-                    <td>
-                      {a.valueAtRisk
-                        ? a.type === "ERC-20" && a.valueAtRisk.toLowerCase() !== "unlimited"
-                          ? `${a.valueAtRisk} / Unlimited`
-                          : a.valueAtRisk
-                        : "Unknown"}
-                    </td>
-                    <td>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleSingleRevoke(a)}
-                        disabled={processing}
-                      >
-                        Revoke
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="row align-items-center">
+              <div className="col-auto">
+                <input
+                  type="checkbox"
+                  checked={isSelected}
+                  onChange={() => handleSelect(a)}
+                  disabled={processing}
+                />
+              </div>
+              <div className="col-auto">
+                <TransactionHashComponent transactionHash={a.transactionHash} />
+              </div>
+              <div className="col">
+                <AssetDisplay approval={a} compact={true} logoSize="small" />
+              </div>
+              <div className="col-auto">
+                <span
+                  className={`badge bg-${a.type === "ERC-20" ? "success" : a.type === "ERC-721" ? "primary" : "warning"}`}
+                  style={{ fontSize: "0.75rem" }}
+                >
+                  {a.type}
+                </span>
+              </div>
+              <div className="col-auto text-truncate" title={a.spender}>
+                {getSpenderType(a.spender) && (
+                  <span className="badge bg-info me-2" style={{ fontSize: "0.7rem" }}>
+                    {getSpenderType(a.spender)}
+                  </span>
+                )}
+                <span style={{ fontSize: "0.85rem" }}>
+                  {a.spender.substring(0, 6)}...{a.spender.substring(a.spender.length - 4)}
+                </span>
+              </div>
+              <div className="col-auto" style={{ fontSize: "0.85rem" }}>
+                {a.valueAtRisk
+                  ? a.type === "ERC-20" && a.valueAtRisk.toLowerCase() !== "unlimited"
+                    ? `${a.valueAtRisk} / Unlimited`
+                    : a.valueAtRisk
+                  : "Unknown"}
+              </div>
+              <div className="col-auto">
+                <button
+                  className="btn btn-danger btn-sm"
+                  style={{ fontSize: "0.75rem" }}
+                  onClick={() => handleSingleRevoke(a)}
+                  disabled={processing}
+                >
+                  Revoke
+                </button>
+              </div>
+            </div>
           </div>
-        ) : (
-          <div className="alert alert-warning">
-            <p className="mb-0">No active approvals found in Redux store.</p>
-            <small>If you've connected your wallet, try refreshing or check console logs for errors.</small>
-          </div>
-        )}
+        </td>
+      </tr>
+    )
+  })}
+</tbody>
 
-        {/* REVOKE SELECTED BUTTON */}
-        <button
-          className="btn btn-danger w-100 mt-3"
-          onClick={handleRevoke}
-          disabled={processing || selectedApprovals.length === 0}
-        >
-          {processing ? "Revoking..." : `Revoke Selected (${selectedApprovals.length})`}
-        </button>
-      </div>
+      </table>
     </div>
-  )
-}
 
-export default ApprovalDashboard
+{/* PROCEED Button with metallic gradient and white highlight */}
+<button
+  className="btn btn-proceed w-100 text-uppercase mt-3"
+  onClick={handleRevoke}
+  disabled={processing || selectedApprovals.length === 0}
+  style={{ 
+    background: "linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, #0dcc8e 100%)",
+    border: "none",
+    borderRadius: "0.5rem",
+    padding: "0.875rem",
+    fontWeight: "500",
+    color: "#ffffff",
+    letterSpacing: "0.05rem",
+    boxShadow: "0 4px 10px rgba(10, 21, 37, 0.2), 0 0 20px rgba(14, 181, 130, 0.3)",
+    textShadow: "0 1px 2px rgba(0, 0, 0, 0.2)",
+    position: "relative",
+    overflow: "hidden"
+  }}
+>
+  <span
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      height: "40%",
+      background: "linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent)",
+      borderRadius: "0.5rem 0.5rem 0 0",
+      pointerEvents: "none"
+    }}
+  ></span>
+  {processing ? "PROCESSING..." : "PROCEED"}
+</button>
+  </>
+  );
+};
+
+export default ApprovalDashboard;

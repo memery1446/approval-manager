@@ -1,3 +1,4 @@
+// App.js with improved text contrast
 "use client"
 
 import { useEffect, useState } from "react"
@@ -8,189 +9,96 @@ import WalletConnect from "./components/WalletConnect.js"
 import NetworkSelector from "./components/NetworkSelector.js"
 import ApprovalDashboard from "./components/ApprovalDashboard.js"
 import ApprovalEducationPage from "./components/ApprovalEducationPage.js"
-import BatchRevoke from "./components/BatchRevoke.js"
-import { FEATURES } from "./constants/config"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { BootstrapWrapper } from "./utils/provider"
 import { initializeProvider } from "./utils/providerService"
-import ReduxDebugger from "./components/ReduxDebugger"
-import MinimalTest from "./components/MinimalTest"
-import CustomHeader from "./components/CustomHeader"
 
 // Import the custom theme CSS
 import "./styles/theme.css"
 
-console.log("🔴 App.js loaded - " + new Date().toISOString())
-
 // Use Redux hooks
 const AppContent = () => {
-  console.log("🔶 App content component rendering")
   const dispatch = useDispatch()
-  const wallet = useSelector((state) => state.web3.account)
+  const wallet = useSelector((state) => state.web3?.account)
   const network = useSelector((state) => state.web3.network)
   const approvals = useSelector((state) => state.web3.approvals)
-  // Add state for showing education page
   const [showEducation, setShowEducation] = useState(false)
 
   useEffect(() => {
-    console.log("🔄 Initializing provider service...")
-    initializeProvider()
-      .then(() => {
-        console.log("✅ Provider service initialized")
-      })
-      .catch((error) => {
-        console.error("❌ Provider initialization error:", error)
-      })
+    initializeProvider().catch((error) => console.error("❌ Provider initialization error:", error))
   }, [])
-
-  useEffect(() => {
-    console.log("👛 Wallet:", wallet)
-    console.log("🌐 Network:", network)
-  }, [wallet, network])
-
-  useEffect(() => {
-    console.log("📋 Approvals updated:", approvals)
-    console.log("📋 Total approvals:", approvals ? approvals.length : 0)
-  }, [approvals])
 
   return (
     <BootstrapWrapper>
-      <div className="container my-5">
-        <header className="mb-4">
-          <h1 className="text-primary fw-bold text-center">
-            <span className="me-2">🔒</span> Revoke
-          </h1>
-          <p className="text-muted text-center">Understand and manage token approvals.</p>
+      {!showEducation ? (
+        // Main Dashboard View styled like the modal in the screenshot
+        <div className="container my-5" style={{ maxWidth: "768px" }}>
+          <div className="card shadow-lg" style={{ position: "relative" }}>
+            <div className="card-body p-4">
+              <h3 className="mb-3" style={{ color: "#ffffff", fontWeight: "normal" }}>
+                __ Revoke
+              </h3>
 
-          {/* Add the CustomHeader component */}
-          <CustomHeader wallet={wallet} />
-        </header>
-
-        {!showEducation ? (
-          // Dashboard View
-          <>
-            <div className="row mb-4">
-              <div className="col-md-6">
-                {/* Comment out testing components */}
-               {/*  <MinimalTest /> */}
-                {/* <ReduxDebugger /> */}
-                <WalletConnect /> 
+              {/* Wallet Selector - more compact */}
+              <div className="mb-3">
+                <label className="d-block mb-1" style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
+                  Connect Wallet
+                </label>
+                <WalletConnect />
               </div>
-              <div className="col-md-6">
+
+              {/* Wallet Details - more compact */}
+              {wallet && (
+                <div
+                  style={{
+                    backgroundColor: "var(--input-bg)",
+                    padding: "0.75rem",
+                    borderRadius: "0.5rem",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  <div className="d-flex justify-content-between" style={{ color: "#ffffff", fontSize: "0.9rem" }}>
+                    <span>Total Approvals:</span>
+                    <span>{approvals?.length || 0}</span>
+                  </div>
+                  <div className="d-flex justify-content-between" style={{ color: "#ffffff", fontSize: "0.9rem" }}>
+                    <span>Network:</span>
+                    <span>{network || "Not selected"}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Network Selector - more compact */}
+              <div className="mb-3">
+                <label className="d-block mb-1" style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
+                  Select Network
+                </label>
                 <NetworkSelector />
               </div>
+
+              {/* Approval Dashboard - given more vertical space */}
+              <ApprovalDashboard onNavigateToEducation={() => setShowEducation(true)} />
             </div>
-
-            {!wallet ? (
-              <div className="text-center py-5">
-                <ReduxDebugger />
-                <h2>Connect Your Wallet</h2>
-                <p className="text-muted">View and manage your active token approvals.</p>
-              </div>
-            ) : (
-              <div className="row mt-4">
-                <div className="col-lg-12">
-                  {/* Only render BatchRevoke if feature is enabled */}
-                  {FEATURES.batchRevoke.enabled && <BatchRevoke />}
-
-                  {/* Approval List with education button */}
-                  <ApprovalDashboard onNavigateToEducation={() => setShowEducation(true)} />
-
-                  {/* Environment indicator for testing */}
-                  {process.env.NODE_ENV !== "production" && (
-                    <div className="alert alert-warning mt-4">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <div>
-                          <strong>Testing Environment</strong> - Feature Toggles Active
-                        </div>
-                        <div>
-                          <small>
-                            Batch Revoke: {FEATURES.batchRevoke.enabled ? "✅" : "❌"} | ERC-20:{" "}
-                            {FEATURES.batchRevoke.erc20Enabled ? "✅" : "❌"} | NFT:{" "}
-                            {FEATURES.batchRevoke.nftEnabled ? "✅" : "❌"} | Batch Size:{" "}
-                            {FEATURES.batchRevoke.maxBatchSize}
-                          </small>
-                        </div>
-                      </div>
-                      <div className="mt-2">
-                        <small className="text-muted">
-                          Use console to toggle features:{" "}
-                          <code>window.toggleFeature('batchRevoke.nftEnabled', true)</code>
-                        </small>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </>
-        ) : (
-          // Education Page View
+          </div>
+        </div>
+      ) : (
+        // Education Page View
+        <div className="container my-5">
           <ApprovalEducationPage onBack={() => setShowEducation(false)} />
-        )}
-      </div>
+        </div>
+      )}
     </BootstrapWrapper>
   )
 }
 
 const App = () => {
-  console.log("🔶 App component rendering")
-
   useEffect(() => {
-    console.log("🔄 App component useEffect running")
     // Expose store to window for debugging
-    if (typeof window !== "undefined") {
-      if (!window.store) {
-        window.store = store
-        console.log("📊 Redux store exposed to window")
-      }
-
-      // Setup debugging tools - keeping your exact implementation
-      window.debugApp = {
-        getState: () => (window.store ? window.store.getState() : "Store not available"),
-        logState: () => {
-          if (window.store) {
-            const state = window.store.getState()
-            console.log("Current Redux State:", state)
-            return state
-          }
-          return "Store not available"
-        },
-      }
-
-      // Enable Redux logging in console
-      console.log(
-        "%c Redux Console Logging Enabled",
-        "background: #4CAF50; color: white; padding: 4px; border-radius: 4px;",
-      )
-      console.log("Try dispatching an action to see detailed logs")
-
-      // Test dispatch to demonstrate logging
-      setTimeout(() => {
-        if (window.store) {
-          window.store.dispatch({ type: "TEST_ACTION", payload: { message: "Redux logger test" } })
-          console.log("%c ✅ Redux logger test complete. You should see formatted logs above.", "color: #4CAF50;")
-        }
-      }, 1000)
-
-      console.log("🛠️ Debug tools setup complete. Try window.debugApp.logState() in console")
+    if (typeof window !== "undefined" && !window.store) {
+      window.store = store
     }
-
-    // Display feature configuration in console for debugging
-    console.log("%c Feature Configuration:", "background: #007bff; color: white; padding: 4px; border-radius: 4px;")
-    console.log("Batch Revoke Enabled:", FEATURES.batchRevoke.enabled)
-    console.log("ERC-20 Batch Revoke:", FEATURES.batchRevoke.erc20Enabled)
-    console.log("NFT Batch Revoke:", FEATURES.batchRevoke.nftEnabled)
-    console.log("Max Batch Size:", FEATURES.batchRevoke.maxBatchSize)
-
-    // Dispatch a test action from the App component
-    store.dispatch({ type: "APP_LOADED", payload: "App has loaded" })
-
-    // Log the current state
-    console.log("Current Redux State:", store.getState())
   }, [])
 
-  // Return the AppContent wrapped in a Provider to fix the circular dependency issue
   return (
     <Provider store={store}>
       <AppContent />

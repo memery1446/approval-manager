@@ -60,7 +60,7 @@ const supportedNetworks = {
 // Dynamically add the local network with the correct chain ID
 supportedNetworks[LOCAL_CHAIN_ID] = {
   chainId: LOCAL_CHAIN_ID === 1337 ? "0x539" : "0x7A69", // 0x539 for 1337, 0x7A69 for 31337
-  name: "Hardhat Local",
+  name: "Ethereum (Forked)",
   rpcUrl: process.env.HARDHAT_RPC_URL || "http://127.0.0.1:8545",
 };
 

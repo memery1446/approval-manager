@@ -99,9 +99,17 @@ const WalletConnect = () => {
             {connecting ? "Connecting..." : "Connect Wallet"}
           </button>
         ) : (
-          <div>
-            <div className="alert alert-success">
-              <strong>Connected:</strong> {account.substring(0, 6)}...{account.substring(account.length - 4)}
+          <div
+            style={{
+              backgroundColor: "var(--input-bg)",
+              padding: "0.75rem",
+              borderRadius: "0.5rem",
+              marginBottom: "1rem",
+            }}
+          >
+            <div className="d-flex justify-content-between" style={{ color: "#ffffff", fontSize: "0.9rem" }}>
+              <span>Connected:</span>
+              <span>{account.substring(0, 6)}...{account.substring(account.length - 4)}</span>
             </div>
             <button 
               className="btn btn-outline-secondary w-100 mt-2"
@@ -121,4 +129,3 @@ const WalletConnect = () => {
 };
 
 export default WalletConnect;
-
