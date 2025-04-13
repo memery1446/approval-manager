@@ -32,7 +32,7 @@ const AppContent = () => {
     <BootstrapWrapper>
       {!showEducation ? (
         // Main Dashboard View styled like the modal in the screenshot
-        <div className="container my-5" style={{ maxWidth: "768px" }}>
+        <div className="container my-5" style={{ maxWidth: "968px" }}>
           <div className="card shadow-lg" style={{ position: "relative" }}>
             <div className="card-body p-4">
               <h3 className="mb-3" style={{ color: "#ffffff", fontWeight: "normal" }}>
