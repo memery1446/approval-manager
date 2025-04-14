@@ -17,7 +17,7 @@ const TOKEN_TYPES = {
   [CONTRACT_ADDRESSES.PermitToken?.toLowerCase()]: {
     name: "Uniswap",
     description: "UNI",
-    logoUrl: "/assets/tokens/uni.png"
+    logoUrl: "/logos/uniswap-logo.png"
   },
   [CONTRACT_ADDRESSES.FeeToken?.toLowerCase()]: {
     name: "Chainlink",
@@ -34,18 +34,28 @@ const TOKEN_TYPES = {
   "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": {
     name: "USD Coin",
     description: "USDC",
-    logoUrl: "/assets/tokens/usdc.png"
+    logoUrl: "/logos/usdc-logo.svg"
   },
   "0xdac17f958d2ee523a2206206994597c13d831ec7": {
     name: "Tether",
     description: "USDT",
     logoUrl: "/assets/tokens/usdt.png"
   },
+    "0xcf0c122c6b73ff809c693db761e7baebe62b6a2e": {
+    name: "Floki",
+    description: "FLOKI",
+    logoUrl: "/logos/floki-logo.svg"
+  },
   "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": {
     name: "Wrapped Bitcoin",
     description: "WBTC",
     logoUrl: "/assets/tokens/wbtc.png"
   },
+"0x1f9840a85d5af5bf1d1762f925bdaddc4201f984": {
+  name: "Uniswap",
+  description: "UNI",
+  logoUrl: "/logos/uniswap-logo.png"
+},
   "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
     name: "Wrapped Ether",
     description: "WETH",
@@ -59,17 +69,17 @@ const NFT_COLLECTIONS = {
   [CONTRACT_ADDRESSES.TestNFT?.toLowerCase()]: {
     name: "Bored Ape Yacht Club",
     description: "BAYC",
-    logoUrl: "/assets/nfts/bayc.png"
+    logoUrl: "/logos/boredApe-logo.jpeg"
   },
   [CONTRACT_ADDRESSES.UpgradeableNFT?.toLowerCase()]: {
     name: "Azuki",
     description: "AZUKI",
-    logoUrl: "/assets/nfts/azuki.png"
+    logoUrl: "/logos/azuki-logo.jpeg"
   },
   [CONTRACT_ADDRESSES.DynamicNFT?.toLowerCase()]: {
     name: "Doodles",
     description: "DOODLE",
-    logoUrl: "/assets/nfts/doodles.png"
+    logoUrl: "/logos/doodles-logo.avif"
   },
   
   // ERC-1155 Collections with realistic names
@@ -81,7 +91,7 @@ const NFT_COLLECTIONS = {
   [CONTRACT_ADDRESSES.UpgradeableERC1155?.toLowerCase()]: {
     name: "Sandbox",
     description: "SAND",
-    logoUrl: "/assets/nfts/sandbox.png"
+    logoUrl: "/logos/sandbox-logo.svg"
   },
   
   // Known NFT collections
@@ -93,7 +103,7 @@ const NFT_COLLECTIONS = {
   "0x495f947276749ce646f68ac8c248420045cb7b5e": {
     name: "OpenSea Collections",
     description: "Various NFTs",
-    logoUrl: "/assets/nfts/opensea.png"
+    logoUrl: "/logos/opensea-logo.svg"
   }
 };
 
@@ -184,12 +194,6 @@ export const getAssetDisplayInfo = (approval) => {
   };
 };
 
-/**
- * Get logo URL for a contract address based on its type
- * @param {string} address - Contract address
- * @param {string} type - Token type (ERC-20, ERC-721, ERC-1155)
- * @returns {string} - URL to the logo
- */
 export const getLogoUrl = (address, type) => {
   if (!address) {
     return DEFAULT_TOKEN_LOGO;
@@ -197,17 +201,51 @@ export const getLogoUrl = (address, type) => {
   
   const normalizedAddress = address.toLowerCase();
   
-  if (type === "ERC-20") {
-    const tokenInfo = TOKEN_TYPES[normalizedAddress];
-    return tokenInfo?.logoUrl || DEFAULT_TOKEN_LOGO;
-  } 
-  else if (type === "ERC-721" || type === "ERC-1155") {
-    const nftInfo = NFT_COLLECTIONS[normalizedAddress];
-    return nftInfo?.logoUrl || DEFAULT_NFT_LOGO;
+  // Try to get from our static mappings first
+if (type === "ERC-20") {
+  const tokenInfo = TOKEN_TYPES[normalizedAddress];
+  if (tokenInfo?.logoUrl) return tokenInfo.logoUrl;
+  
+  // New: Try to get from CDN if not in our mapping
+  return getDynamicTokenLogo(address);
+} 
+else if (type === "ERC-721" || type === "ERC-1155") {
+  const nftInfo = NFT_COLLECTIONS[normalizedAddress];
+  return nftInfo?.logoUrl || DEFAULT_NFT_LOGO;
+}
+  
+return DEFAULT_TOKEN_LOGO;
+};
+
+/**
+ * Get dynamic token logo URL from reliable CDN services
+ * @param {string} address - The token contract address
+ * @returns {string} - URL to the token logo
+ */
+// Add this function to your tokenMapping.js file (before the existing getLogoUrl function)
+function getDynamicTokenLogo(address) {
+  if (!address) return DEFAULT_TOKEN_LOGO;
+  
+  // Convert to lowercase for consistency
+  const normalizedAddress = address.toLowerCase();
+  
+  // Special cases for common tokens we care about
+  const specialCases = {
+    // USDC
+    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "https://cryptologos.cc/logos/usd-coin-usdc-logo.png",
+    // UNI (for Permit token) 
+    "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984": "https://cryptologos.cc/logos/uniswap-uni-logo.png",
+    // FLOKI (for Fee token)
+    "0xcf0c122c6b73ff809c693db761e7baebe62b6a2e": "https://cryptologos.cc/logos/floki-inu-floki-logo.png"
+  };
+  
+  if (specialCases[normalizedAddress]) {
+    return specialCases[normalizedAddress];
   }
   
-  return DEFAULT_TOKEN_LOGO;
-};
+  // For other tokens, use 1inch CDN
+  return `https://tokens.1inch.io/${normalizedAddress}.png`;
+}
 
 export default {
   getTokenInfo,

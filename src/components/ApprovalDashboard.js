@@ -361,7 +361,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                   {/* Type Column */}
                   <td style={{ padding: "0.5rem" }}>
                     <span
-                      className={`badge bg-${a.type === "ERC-20" ? "success" : a.type === "ERC-721" ? "primary" : "warning"}`}
+                      className={`badge bg-${a.type === "ERC-20" ? "success" : a.type === "ERC-721" ? "success" : "success"}`}
                       style={{ fontSize: "0.75rem" }}
                     >
                       {a.type}
@@ -390,7 +390,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                   {/* Last Used Column */}
                   <td style={{ padding: "0.5rem", fontSize: "0.85rem" }}>
                     {a.lastUsed || "15/03/2023 14:30"}
-                  </td>
+                    </td>
 
                   {/* Actions Column */}
                   <td style={{ padding: "0.5rem" }}>
