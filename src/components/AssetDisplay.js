@@ -1,4 +1,3 @@
-// components/AssetDisplay.js
 import TokenLogo from './TokenLogo';
 import { getAssetDisplayInfo } from '../utils/tokenMapping';
 
@@ -22,9 +21,11 @@ const AssetDisplay = ({ approval, compact = false, logoSize = 'small' }) => {
           address={approval.contract} 
           type={approval.type} 
           size={logoSize}
-          className="me-2"
+          className="me-3" // Increased spacing for better alignment
         />
-        <span className="fw-bold">{assetInfo.name}</span>
+        <span className="fw-bold text-truncate" style={{ maxWidth: '150px' }}> {/* Truncate long names */}
+          {assetInfo.name}
+        </span>
       </div>
     );
   }
@@ -36,13 +37,13 @@ const AssetDisplay = ({ approval, compact = false, logoSize = 'small' }) => {
         address={approval.contract} 
         type={approval.type} 
         size={logoSize}
-        className="me-2" 
+        className="me-3" // Increased spacing for better alignment
       />
       <div>
-        <div className="fw-bold">
+        <div className="fw-bold mb-1" style={{ fontSize: '1.1rem' }}> {/* Slightly larger font for title */}
           {assetInfo.name}
         </div>
-        <div className="small text-muted">
+        <div className="small text-muted" style={{ lineHeight: '1.2' }}> {/* Improved line height for description */}
           {assetInfo.description}
         </div>
       </div>
@@ -51,4 +52,3 @@ const AssetDisplay = ({ approval, compact = false, logoSize = 'small' }) => {
 };
 
 export default AssetDisplay;
-

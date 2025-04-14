@@ -80,51 +80,51 @@ const WalletConnect = () => {
   }, [account]);
 
   return (
-    <div className="card h-100">
-      <div className="card-body">
-        <h5 className="card-title">Wallet Connection</h5>
-        
-        {error && (
-          <div className="alert alert-danger" role="alert">
-            {error}
-          </div>
-        )}
-        
-        {!account ? (
-          <button 
-            className="btn btn-primary w-100" 
-            onClick={handleConnect}
-            disabled={connecting}
-          >
-            {connecting ? "Connecting..." : "Connect Wallet"}
-          </button>
-        ) : (
-          <div
-            style={{
-              backgroundColor: "var(--input-bg)",
-              padding: "0.75rem",
-              borderRadius: "0.5rem",
-              marginBottom: "1rem",
-            }}
-          >
-            <div className="d-flex justify-content-between" style={{ color: "#ffffff", fontSize: "0.9rem" }}>
-              <span>Connected:</span>
-              <span>{account.substring(0, 6)}...{account.substring(account.length - 4)}</span>
-            </div>
-            <button 
-              className="btn btn-outline-secondary w-100 mt-2"
-              onClick={handleDisconnect}
-            >
-              Disconnect
-            </button>
-          </div>
-        )}
-        
-        <div className="mt-3 text-muted small">
-          <p>Status: {connecting ? "Connecting..." : account ? "Connected" : "Not connected"}</p>
-        </div>
+<div className="card my-1">
+  <div className="card-body p-2"> {/* Reduced padding */}
+    <h5 className="card-title mb-2" style={{ color: "#ffffff" }}>Wallet Connection</h5> {/* Explicit white text */}
+
+    {error && (
+      <div className="alert alert-danger mb-2" role="alert"> {/* Reduced margin-bottom */}
+        {error}
       </div>
+    )}
+
+    {!account ? (
+      <button 
+        className="btn btn-primary w-100 mb-2" // Reduced margin-bottom
+        onClick={handleConnect}
+        disabled={connecting}
+      >
+        {connecting ? "Connecting..." : "Connect Wallet"}
+      </button>
+    ) : (
+      <div
+        style={{
+          backgroundColor: "var(--input-bg)",
+          padding: "0.5rem", // Reduced padding
+          borderRadius: "0.5rem",
+          marginBottom: "0.5rem", // Reduced margin-bottom
+        }}
+      >
+        <div className="d-flex justify-content-between" style={{ color: "#ffffff", fontSize: "0.9rem" }}>
+          <span>Connected:</span>
+          <span>{account.substring(0, 6)}...{account.substring(account.length - 4)}</span>
+        </div>
+        <button 
+          className="btn btn-outline-secondary w-100 mt-1" // Reduced margin-top
+          onClick={handleDisconnect}
+        >
+          Disconnect
+        </button>
+      </div>
+    )}
+
+    <div className="mt-2" style={{ color: "#ffffff", fontSize: "0.875rem" }}> {/* Explicit white text */}
+      <p>Status: {connecting ? "Connecting..." : account ? "Connected" : "Not connected"}</p>
     </div>
+  </div>
+</div>
   );
 };
 

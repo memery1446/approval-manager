@@ -41,9 +41,6 @@ const AppContent = () => {
 
               {/* Wallet Selector - more compact */}
               <div className="mb-3">
-                <label className="d-block mb-1" style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
-                  Connect Wallet
-                </label>
                 <WalletConnect />
               </div>
 
@@ -70,9 +67,6 @@ const AppContent = () => {
 
               {/* Network Selector - more compact */}
               <div className="mb-3">
-                <label className="d-block mb-1" style={{ color: "#94a3b8", fontSize: "0.9rem" }}>
-                  Select Network
-                </label>
                 <NetworkSelector />
               </div>
 
