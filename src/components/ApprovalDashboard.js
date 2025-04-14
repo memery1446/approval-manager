@@ -326,89 +326,79 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
         sel.contract === a.contract &&
         sel.spender === a.spender &&
         (a.tokenId !== undefined ? sel.tokenId === a.tokenId : true),
-    )
+    );
 
     return (
       <tr key={idx} className="border-0">
-        <td colSpan="8" className="p-0 border-0">
-          <div
-            style={{
-              backgroundColor: isSelected ? "#2c3545" : "#1e2636",
-              border: "1px solid rgba(255, 255, 255, 0.12)", // more visible divider line
-              borderRadius: "0", // keeps the original styling
-              padding: isSelected ? "14px 14px" : "10px 14px",
-              marginBottom: isSelected ? "12px" : "0px", // spacing only when selected
-              color: "#ffffff",
-              boxShadow: isSelected ? "0 2px 6px rgba(0,0,0,0.25)" : "none",
-              transform: isSelected ? "scale(1.01)" : "scale(1)",
-              transition: "all 0.2s ease-in-out",
-              cursor: "pointer",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "#2c3545"
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = isSelected ? "#2c3545" : "#1e2636"
-            }}
+        {/* Checkbox Column */}
+        <td style={{ padding: "0.5rem" }}>
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={() => handleSelect(a)}
+            disabled={processing}
+          />
+        </td>
+
+        {/* Token Column */}
+        <td style={{ padding: "0.5rem" }}>
+          <AssetDisplay approval={a} compact={true} logoSize="small" />
+        </td>
+
+        {/* Type Column */}
+        <td style={{ padding: "0.5rem" }}>
+          <span
+            className={`badge bg-${a.type === "ERC-20" ? "success" : a.type === "ERC-721" ? "primary" : "warning"}`}
+            style={{ fontSize: "0.75rem" }}
           >
-            <div className="row align-items-center">
-              <div className="col-auto">
-                <input
-                  type="checkbox"
-                  checked={isSelected}
-                  onChange={() => handleSelect(a)}
-                  disabled={processing}
-                />
-              </div>
-              <div className="col">
-                <AssetDisplay approval={a} compact={true} logoSize="small" />
-              </div>
-              <div className="col-auto">
-                <span
-                  className={`badge bg-${a.type === "ERC-20" ? "success" : a.type === "ERC-721" ? "primary" : "warning"}`}
-                  style={{ fontSize: "0.75rem" }}
-                >
-                  {a.type}
-                </span>
-              </div>
-              <div className="col-auto text-truncate" title={a.spender}>
-                {getSpenderType(a.spender) && (
-                  <span className="badge bg-info me-2" style={{ fontSize: "0.7rem" }}>
-                    {getSpenderType(a.spender)}
-                  </span>
-                )}
-                <span style={{ fontSize: "0.85rem" }}>
-                  {a.spender.substring(0, 6)}...{a.spender.substring(a.spender.length - 4)}
-                </span>
-              </div>
-              <div className="col-auto" style={{ fontSize: "0.85rem" }}>
-                {a.valueAtRisk
-                  ? a.type === "ERC-20" && a.valueAtRisk.toLowerCase() !== "unlimited"
-                    ? `${a.valueAtRisk}`
-                    : a.valueAtRisk
-                  : "Unknown"}
-              </div>
-<div className="col-auto">
-  <RiskLevel approval={a} />
-</div>
-<div className="col-auto">
-  <span style={{ fontSize: "0.85rem" }}>{a.lastUsed || "15/03/2023 14:30"}</span>
-</div>
-              <div className="col-auto">
-                <button
-                  className="btn btn-danger btn-sm"
-                  style={{ fontSize: "0.75rem" }}
-                  onClick={() => handleSingleRevoke(a)}
-                  disabled={processing}
-                >
-                  Revoke
-                </button>
-              </div>
-            </div>
-          </div>
+            {a.type}
+          </span>
+        </td>
+
+        {/* Spender Column */}
+        <td style={{ padding: "0.5rem" }}>
+          {getSpenderType(a.spender) && (
+            <span className="badge bg-info me-2" style={{ fontSize: "0.7rem" }}>
+              {getSpenderType(a.spender)}
+            </span>
+          )}
+          <span style={{ fontSize: "0.85rem" }}>
+            {a.spender.substring(0, 6)}...{a.spender.substring(a.spender.length - 4)}
+          </span>
+        </td>
+
+        {/* Allowance Column */}
+        <td style={{ padding: "0.5rem", fontSize: "0.85rem" }}>
+          {a.valueAtRisk
+            ? a.type === "ERC-20" && a.valueAtRisk.toLowerCase() !== "unlimited"
+              ? `${a.valueAtRisk}`
+              : a.valueAtRisk
+            : "Unknown"}
+        </td>
+
+        {/* Risk Level Column */}
+        <td style={{ padding: "0.5rem" }}>
+          <RiskLevel approval={a} />
+        </td>
+
+        {/* Last Used Column */}
+        <td style={{ padding: "0.5rem", fontSize: "0.85rem" }}>
+          {a.lastUsed || "15/03/2023 14:30"}
+        </td>
+
+        {/* Actions Column */}
+        <td style={{ padding: "0.5rem" }}>
+          <button
+            className="btn btn-danger btn-sm"
+            style={{ fontSize: "0.75rem" }}
+            onClick={() => handleSingleRevoke(a)}
+            disabled={processing}
+          >
+            Revoke
+          </button>
         </td>
       </tr>
-    )
+    );
   })}
 </tbody>
 

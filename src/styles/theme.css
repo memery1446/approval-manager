@@ -24,6 +24,8 @@ body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+
+
 /* Card styling exactly matching BL Example 2 */
 .card {
   background-color: var(--modal-bg);
