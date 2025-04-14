@@ -12,6 +12,7 @@ import TransactionProgressBar from "../components/TransactionProgressBar"
 import TransactionHashComponent from "../components/TransactionHashComponent"
 import { getSpenderType } from "../utils/spenderMapping" // Import the spender utility
 import AssetDisplay from "../components/AssetDisplay" // Import the new component
+import RiskLevel from "../components/RiskLevel" // Import the RiskLevel component
 
 const ApprovalDashboard = ({ onNavigateToEducation }) => {
   const dispatch = useDispatch()
@@ -387,14 +388,12 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                     : a.valueAtRisk
                   : "Unknown"}
               </div>
-              <div className="col-auto">
-                <span className="badge bg-warning" style={{ fontSize: "0.75rem" }}>
-                  MEDIUM RISK
-                </span>
-              </div>
-              <div className="col-auto">
-                <span style={{ fontSize: "0.85rem" }}>15/03/2023 14:30</span>
-              </div>
+<div className="col-auto">
+  <RiskLevel approval={a} />
+</div>
+<div className="col-auto">
+  <span style={{ fontSize: "0.85rem" }}>{a.lastUsed || "15/03/2023 14:30"}</span>
+</div>
               <div className="col-auto">
                 <button
                   className="btn btn-danger btn-sm"
