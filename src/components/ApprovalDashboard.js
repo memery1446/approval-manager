@@ -309,12 +309,13 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                 disabled={approvals.length === 0 || processing}
               />
             </th>
-            <th style={{ padding: "0.5rem" }}>TX Hash</th>
-            <th style={{ padding: "0.5rem" }}>Asset</th>
-            <th style={{ padding: "0.5rem" }}>Type</th>
-            <th style={{ padding: "0.5rem" }}>Approved Spender</th>
-            <th style={{ padding: "0.5rem" }}>Value at Risk</th>
-            <th style={{ padding: "0.5rem" }}>Actions</th>
+            <th style={{ padding: "0.5rem" }}>TOKEN</th>
+            <th style={{ padding: "0.5rem" }}>TYPE</th>
+            <th style={{ padding: "0.5rem" }}>SPENDER</th>
+            <th style={{ padding: "0.5rem" }}>ALLOWANCE</th>
+            <th style={{ padding: "0.5rem" }}>RISK LEVEL</th>
+            <th style={{ padding: "0.5rem" }}>LAST USED</th>
+            <th style={{ padding: "0.5rem" }}>ACTIONS</th>
           </tr>
         </thead>
 <tbody className="border-0">
@@ -328,7 +329,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
 
     return (
       <tr key={idx} className="border-0">
-        <td colSpan="7" className="p-0 border-0">
+        <td colSpan="8" className="p-0 border-0">
           <div
             style={{
               backgroundColor: isSelected ? "#2c3545" : "#1e2636",
@@ -358,9 +359,6 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
                   disabled={processing}
                 />
               </div>
-              <div className="col-auto">
-                <TransactionHashComponent transactionHash={a.transactionHash} />
-              </div>
               <div className="col">
                 <AssetDisplay approval={a} compact={true} logoSize="small" />
               </div>
@@ -385,9 +383,17 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
               <div className="col-auto" style={{ fontSize: "0.85rem" }}>
                 {a.valueAtRisk
                   ? a.type === "ERC-20" && a.valueAtRisk.toLowerCase() !== "unlimited"
-                    ? `${a.valueAtRisk} / Unlimited`
+                    ? `${a.valueAtRisk}`
                     : a.valueAtRisk
                   : "Unknown"}
+              </div>
+              <div className="col-auto">
+                <span className="badge bg-warning" style={{ fontSize: "0.75rem" }}>
+                  MEDIUM RISK
+                </span>
+              </div>
+              <div className="col-auto">
+                <span style={{ fontSize: "0.85rem" }}>15/03/2023 14:30</span>
               </div>
               <div className="col-auto">
                 <button
