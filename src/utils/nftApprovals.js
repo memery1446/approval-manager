@@ -38,7 +38,9 @@ function getAllPossibleNFTSpenders() {
         "0x4feE7B061C97C9c496b01DbcE9CDb10c02f0a0Be", // Rarible
         "0xf42aa99F011A1fA7CDA90E5E98b277E306BcA83e", // LooksRare
         "0xFF9c1b15b16263C61d017ee9f65c50E4AE0113D7",
-        "0x6484EB0792c646A4827638Fc1B6F20461418eB00"  
+        "0x6484EB0792c646A4827638Fc1B6F20461418eB00",
+        "0x00000000000111AbE46ff893f3B2fdF1F759a8A8", // Blur
+        "0x74312363e45DCaBA76c59ec49a7Aa8A65a67EeD3"  // X2Y2
     ];
     
     // Combine and remove duplicates
@@ -116,6 +118,7 @@ export async function getERC721Approvals(ownerAddress, providedProvider) {
     return [];
   }
 
+  // Make sure we check all three of your deployed NFTs
   const nftCollections = [
     {
       address: CONTRACT_ADDRESSES.TestNFT,
@@ -131,13 +134,24 @@ export async function getERC721Approvals(ownerAddress, providedProvider) {
       address: CONTRACT_ADDRESSES.DynamicNFT,
       name: "Dynamic NFT Collection",
       symbol: "DynamicNFT"
+    },
+    // Keep any other collections that are already in the UI
+    {
+      address: "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D", // BAYC
+      name: "Bored Ape Yacht Club",
+      symbol: "BAYC"
+    },
+    {
+      address: "0xED5AF388653567Af2F388E6224dC7C4b3241C544", // Azuki
+      name: "Azuki",
+      symbol: "AZUKI"
     }
   ].filter(n => n.address);
 
-  console.log(`🔍 Checking ${nftCollections.length} NFT collections`);
+  console.log(`🔍 Checking ${nftCollections.length} NFT collections:`, nftCollections.map(c => c.name));
 
   const spenderAddresses = getAllPossibleNFTSpenders();
-  console.log(`🔍 Checking for approvals to ${spenderAddresses.length} spenders:`, spenderAddresses);
+  console.log(`🔍 Checking for approvals to ${spenderAddresses.length} spenders`);
 
   let approvals = [];
 
@@ -177,7 +191,7 @@ export async function getERC721Approvals(ownerAddress, providedProvider) {
         continue;
       }
 
-      console.log(`🔍 Checking NFT approval for spender: ${spender}`);
+      console.log(`🔍 Checking NFT approval for collection ${collectionName} and spender: ${spender}`);
 
       // Check isApprovedForAll
       try {
@@ -201,7 +215,7 @@ export async function getERC721Approvals(ownerAddress, providedProvider) {
       }
 
       // Check getApproved(tokenId) — always
-      const tokenIdsToCheck = [1, 100, 999];
+      const tokenIdsToCheck = [1, 100, 999]; // These match your tokenIds from deployment
       for (let tokenId of tokenIdsToCheck) {
         try {
           const approvedSpender = await contract.getApproved(tokenId);
@@ -228,6 +242,5 @@ export async function getERC721Approvals(ownerAddress, providedProvider) {
   console.log("✅ Completed ERC-721 check. Found approvals:", approvals.length);
   return approvals;
 }
-
 
 export default getERC721Approvals;

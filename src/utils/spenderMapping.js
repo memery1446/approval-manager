@@ -9,6 +9,7 @@ const SPENDER_TYPES = {
   [CONTRACT_ADDRESSES.LendingSpender?.toLowerCase()]: "Lending Protocol",
   [CONTRACT_ADDRESSES.MiscSpender?.toLowerCase()]: "Misc Service",
   [CONTRACT_ADDRESSES.NftMarketplaceSpender?.toLowerCase()]: "NFT Marketplace",
+  [CONTRACT_ADDRESSES.RaribleSpender?.toLowerCase()]: "Rarible NFT Marketplace", // Added RaribleSpender
   
   // Common known spenders
   "0x7a250d5630b4cf539739df2c5dacb4c659f2488d": "Uniswap Router",
@@ -16,6 +17,15 @@ const SPENDER_TYPES = {
   "0x00000000006c3852cbef3e08e8df289169ede581": "OpenSea Seaport",
   "0x207a32a58e1666f4109b361869b9456bf4761283": "OpenSea",
   "0xdef1c0ded9bec7f1a1670819833240f027b25eff": "0x Exchange",
+  "0x11111112542d85b3ef69ae05771c2dccff4faa26": "1inch Router",
+  
+  // Added missing spenders from your ERC1155 approval scripts
+  "0x207fa8df3a17d96ca7ea4f2893fcdcb78a304101": "Sandbox Operator", // Your custom operator
+  "0xfac7bea255a6990f749363002136af6556b31e04": "Rarible v2 Operator", // Rarible operator
+  
+  // Additional marketplaces
+  "0x00000000000111abe46ff893f3b2fdf1f759a8a8": "Blur Marketplace",
+  "0x74312363e45dcaba76c59ec49a7aa8a65a67eed3": "X2Y2 Marketplace"
 };
 
 /**
