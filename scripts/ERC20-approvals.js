@@ -4,7 +4,7 @@ const { ethers } = require("hardhat");
  * ERC20 Approval Manager - Handles different types of ERC20 approvals
  * 
  * Supports:
- * 1. Standard ERC20 tokens (like USDC)
+ * 1. Standard ERC20 tokens (like USDC) - Limited amount
  * 2. ERC20 Permit tokens (EIP2612, like UNI)
  * 3. ERC20 Fee tokens (tokens with transfer fees)
  */
@@ -52,7 +52,7 @@ async function getGasSettings() {
 /**
  * Standard ERC20 approval
  */
-async function standardApprove(tokenConfig, spender, signer) {
+async function standardApprove(tokenConfig, spender, signer, amount = ethers.MaxUint256, approvalDate = null) {
   console.log(`\n🔑 Processing STANDARD approval for ${tokenConfig.name}...`);
   
   const token = await ethers.getContractAt(
@@ -64,26 +64,34 @@ async function standardApprove(tokenConfig, spender, signer) {
   // Get optimized gas settings
   const gasSettings = await getGasSettings();
 
-  // For unlimited approval, use MaxUint256
-  const unlimitedAmount = ethers.MaxUint256;
+  // Format amount for display
+  const amountStr = amount === ethers.MaxUint256 
+    ? "unlimited" 
+    : ethers.formatUnits(amount, tokenConfig.decimals);
   
-  console.log(`⏳ Approving ${spender} to spend unlimited ${tokenConfig.name}...`);
+  console.log(`⏳ Approving ${spender} to spend ${amountStr} ${tokenConfig.name}...`);
   const tx = await token.approve(
     spender,
-    unlimitedAmount,
+    amount,
     gasSettings
   );
   
   const receipt = await tx.wait();
   console.log(`✅ Approved! Transaction: ${tx.hash}`);
   
-  return { tokenConfig, tx, receipt };
+  return { 
+    tokenConfig, 
+    tx, 
+    receipt,
+    approvalDate: approvalDate || new Date().toISOString().split('T')[0], // Store approval date
+    approvalAmount: amountStr
+  };
 }
 
 /**
  * ERC20 Permit approval (EIP2612)
  */
-async function permitApprove(tokenConfig, spender, signer) {
+async function permitApprove(tokenConfig, spender, signer, approvalDate = null) {
   console.log(`\n🔑 Processing PERMIT approval for ${tokenConfig.name}...`);
   
   // For permit tokens, we need the ERC20Permit interface
@@ -114,64 +122,13 @@ async function permitApprove(tokenConfig, spender, signer) {
     const receipt = await tx.wait();
     console.log(`✅ Approved! Transaction: ${tx.hash}`);
     
-    return { tokenConfig, tx, receipt };
-    
-    /* Full permit implementation would look like this:
-    const owner = await signer.getAddress();
-    const nonce = await token.nonces(owner);
-    const name = await token.name();
-    const chainId = (await ethers.provider.getNetwork()).chainId;
-    const deadline = Math.floor(Date.now() / 1000) + 3600; // 1 hour from now
-    
-    // For unlimited approval, use MaxUint256
-    const value = ethers.MaxUint256;
-    
-    // Create permit signature
-    const domain = {
-      name,
-      version: '1',
-      chainId,
-      verifyingContract: tokenConfig.address
+    return { 
+      tokenConfig, 
+      tx, 
+      receipt,
+      approvalDate: approvalDate || new Date().toISOString().split('T')[0],
+      approvalAmount: "unlimited"
     };
-    
-    const types = {
-      Permit: [
-        { name: 'owner', type: 'address' },
-        { name: 'spender', type: 'address' },
-        { name: 'value', type: 'uint256' },
-        { name: 'nonce', type: 'uint256' },
-        { name: 'deadline', type: 'uint256' }
-      ]
-    };
-    
-    const message = {
-      owner,
-      spender,
-      value,
-      nonce,
-      deadline
-    };
-    
-    const signature = await signer._signTypedData(domain, types, message);
-    const { v, r, s } = ethers.utils.splitSignature(signature);
-    
-    // Execute the permit
-    const tx = await token.permit(
-      owner,
-      spender,
-      value,
-      deadline,
-      v,
-      r,
-      s,
-      await getGasSettings()
-    );
-    
-    const receipt = await tx.wait();
-    console.log(`✅ Permit approved! Transaction: ${tx.hash}`);
-    
-    return { tokenConfig, tx, receipt };
-    */
     
   } catch (error) {
     console.error(`❌ Error during permit approval:`, error);
@@ -182,7 +139,7 @@ async function permitApprove(tokenConfig, spender, signer) {
 /**
  * ERC20 Fee token approval (tokens with transfer fees)
  */
-async function feeTokenApprove(tokenConfig, spender, signer) {
+async function feeTokenApprove(tokenConfig, spender, signer, approvalDate = null) {
   console.log(`\n🔑 Processing FEE TOKEN approval for ${tokenConfig.name}...`);
   console.log(`⚠️ Note: ${tokenConfig.name} has transfer fees, approving unlimited amount`);
   
@@ -208,20 +165,28 @@ async function feeTokenApprove(tokenConfig, spender, signer) {
   const receipt = await tx.wait();
   console.log(`✅ Approved! Transaction: ${tx.hash}`);
   
-  return { tokenConfig, tx, receipt };
+  return { 
+    tokenConfig, 
+    tx, 
+    receipt,
+    approvalDate: approvalDate || new Date().toISOString().split('T')[0],
+    approvalAmount: "unlimited"
+  };
 }
 
 /**
  * Process the appropriate approval based on token type
  */
-async function processApproval(tokenConfig, spenderAddress, signer) {
+async function processApproval(tokenConfig, spenderAddress, signer, options = {}) {
+  const { amount, approvalDate } = options;
+  
   switch (tokenConfig.type) {
     case "standard":
-      return await standardApprove(tokenConfig, spenderAddress, signer);
+      return await standardApprove(tokenConfig, spenderAddress, signer, amount, approvalDate);
     case "permit":
-      return await permitApprove(tokenConfig, spenderAddress, signer);
+      return await permitApprove(tokenConfig, spenderAddress, signer, approvalDate);
     case "fee":
-      return await feeTokenApprove(tokenConfig, spenderAddress, signer);
+      return await feeTokenApprove(tokenConfig, spenderAddress, signer, approvalDate);
     default:
       throw new Error(`Unknown token type: ${tokenConfig.type}`);
   }
@@ -250,11 +215,35 @@ async function main() {
   const signerAddress = await signer.getAddress();
   console.log(`📝 Using signer: ${signerAddress}`);
   
+  // Generate a recent date for USDC approval (today - 3 days)
+  const recentDate = new Date();
+  recentDate.setDate(recentDate.getDate() - 3);
+  const recentDateStr = recentDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+  
   // Define our approvals to process
   const approvalsToProcess = [
-    { token: TOKENS.USDC, spender: SPENDERS.ONEINCH },    // Standard USDC approval
-    { token: TOKENS.UNI, spender: SPENDERS.UNISWAP },     // Permit token (UNI)
-    { token: TOKENS.FLOKI, spender: SPENDERS.OPENSEA }    // Fee token (FLOKI)
+    { 
+      token: TOKENS.USDC, 
+      spender: SPENDERS.ONEINCH,
+      options: {
+        amount: ethers.parseUnits("100", TOKENS.USDC.decimals), // 100 USDC
+        approvalDate: recentDateStr // Recent date (3 days ago)
+      }
+    },
+    { 
+      token: TOKENS.UNI, 
+      spender: SPENDERS.UNISWAP,
+      options: {
+        approvalDate: new Date().toISOString().split('T')[0] // Today's date
+      }
+    },
+    { 
+      token: TOKENS.FLOKI, 
+      spender: SPENDERS.OPENSEA,
+      options: {
+        approvalDate: new Date().toISOString().split('T')[0] // Today's date
+      }
+    }
   ];
   
   // Process each approval
@@ -268,7 +257,8 @@ async function main() {
       const result = await processApproval(
         approval.token,
         approval.spender,
-        signer
+        signer,
+        approval.options || {}
       );
       
       results.push(result);
@@ -282,7 +272,7 @@ async function main() {
   console.log(`\n-----------------------------------------------`);
   console.log(`✅ Approval Summary:`);
   for (const result of results) {
-    console.log(`- ${result.tokenConfig.name}: Approved successfully, tx: ${result.tx.hash}`);
+    console.log(`- ${result.tokenConfig.name}: Approved for ${result.approvalAmount} on ${result.approvalDate}, tx: ${result.tx.hash}`);
   }
   console.log(`-----------------------------------------------`);
 }
