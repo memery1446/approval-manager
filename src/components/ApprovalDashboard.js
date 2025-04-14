@@ -13,6 +13,7 @@ import TransactionHashComponent from "../components/TransactionHashComponent"
 import { getSpenderType } from "../utils/spenderMapping" // Import the spender utility
 import AssetDisplay from "../components/AssetDisplay" // Import the new component
 import RiskLevel from "../components/RiskLevel" // Import the RiskLevel component
+import SpenderDisplay from "../utils/getSpenderInfo" 
 
 const ApprovalDashboard = ({ onNavigateToEducation }) => {
   const dispatch = useDispatch()
@@ -357,14 +358,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
 
         {/* Spender Column */}
         <td style={{ padding: "0.5rem" }}>
-          {getSpenderType(a.spender) && (
-            <span className="badge bg-info me-2" style={{ fontSize: "0.7rem" }}>
-              {getSpenderType(a.spender)}
-            </span>
-          )}
-          <span style={{ fontSize: "0.85rem" }}>
-            {a.spender.substring(0, 6)}...{a.spender.substring(a.spender.length - 4)}
-          </span>
+          <SpenderDisplay address={a.spender} /> {/* Use SpenderDisplay here */}
         </td>
 
         {/* Allowance Column */}

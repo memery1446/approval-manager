@@ -1,4 +1,3 @@
-// utils/spenderMapping.js
 import { CONTRACT_ADDRESSES } from "../constants/abis";
 
 // Map of spender addresses 
@@ -43,9 +42,26 @@ export const isKnownSpender = (address) => {
   return getSpenderType(address) !== null;
 };
 
+/**
+ * Get formatted spender display information
+ * @param {string} address - The spender address
+ * @returns {Object} - An object containing the spender name and truncated address
+ */
+export const getSpenderDisplayInfo = (address) => {
+  const spenderType = getSpenderType(address);
+  const truncatedAddress = address
+    ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
+    : '';
+
+  return {
+    name: spenderType || "Unknown Spender", // Fallback to "Unknown Spender" if no type is found
+    address: truncatedAddress,
+  };
+};
+
 export default {
   getSpenderType,
   isKnownSpender,
+  getSpenderDisplayInfo,
   SPENDER_TYPES
 };
-

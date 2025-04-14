@@ -1,6 +1,6 @@
 import TokenLogo from './TokenLogo';
 import { getAssetDisplayInfo } from '../utils/tokenMapping';
-
+import { getSpenderDisplayInfo } from '../utils/spenderMapping';
 /**
  * Component to display asset information with logo
  * 
@@ -12,7 +12,9 @@ import { getAssetDisplayInfo } from '../utils/tokenMapping';
 const AssetDisplay = ({ approval, compact = false, logoSize = 'small' }) => {
   // Get enhanced asset information
   const assetInfo = getAssetDisplayInfo(approval);
-  
+  const spenderAddress = "0x7a250d5630b4cf539739df2c5dacb4c659f2488d"; // Example address
+const spenderInfo = getSpenderDisplayInfo(spenderAddress);
+
   // Compact mode for tables
   if (compact) {
     return (
