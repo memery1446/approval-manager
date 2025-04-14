@@ -1,7 +1,7 @@
 import React from 'react';
 import { getSpenderDisplayInfo } from '../utils/spenderMapping';
 
-const SpenderDisplay = ({ address }) => {
+const getSpenderInfo = ({ address }) => {
   const { name, address: truncatedAddress } = getSpenderDisplayInfo(address);
 
   return (

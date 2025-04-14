@@ -288,115 +288,127 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
     {/* Progress Bar */}
     {progressValue > 0 && <TransactionProgressBar progress={progressValue} status={progressStatus} />}
 
-    {/* Approvals table with more compact rows */}
-<div
-  className="approval-window p-3"
-  style={{
-    height: "350px",
-    overflowY: "auto",
-    border: "1px solid var(--border-color)",
-    borderRadius: "0.75rem",
-    backgroundColor: "var(--form-bg)",
-    boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.05)",
-  }}
->
-      <table className="table table-hover mb-0">
-        <thead className="table-dark sticky-top">
-          <tr style={{ lineHeight: "1" }}> {/* More compact header */}
-            <th style={{ padding: "0.5rem" }}>
-              <input
-                type="checkbox"
-                onChange={(e) => handleSelectAll(e.target.checked)}
-                checked={approvals.length > 0 && selectedApprovals.length === approvals.length}
-                disabled={approvals.length === 0 || processing}
-              />
-            </th>
-            <th style={{ padding: "0.5rem" }}>TOKEN</th>
-            <th style={{ padding: "0.5rem" }}>TYPE</th>
-            <th style={{ padding: "0.5rem" }}>SPENDER</th>
-            <th style={{ padding: "0.5rem" }}>ALLOWANCE</th>
-            <th style={{ padding: "0.5rem" }}>RISK LEVEL</th>
-            <th style={{ padding: "0.5rem" }}>LAST USED</th>
-            <th style={{ padding: "0.5rem" }}>ACTIONS</th>
-          </tr>
-        </thead>
-<tbody className="border-0">
-  {approvals.map((a, idx) => {
-    const isSelected = selectedApprovals.some(
-      (sel) =>
-        sel.contract === a.contract &&
-        sel.spender === a.spender &&
-        (a.tokenId !== undefined ? sel.tokenId === a.tokenId : true),
-    );
+    {/* Approvals table  */}
+    <div
+      className="approval-window"
+      style={{
+        minHeight: "200px",
+        maxHeight: "calc(60vh - 200px)", // Responsive height based on viewport
+        overflowY: "auto",
+        border: "1px solid var(--border-color)",
+        borderRadius: "0.75rem",
+        backgroundColor: "var(--form-bg)",
+        boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.05)",
+        position: "relative",
+        padding: "0"
+      }}
+    >
+      <div style={{ padding: "0 0.75rem" }}>
+        <table className="table table-hover mb-0" style={{ marginTop: 0 }}>
+          <thead style={{
+            position: "sticky",
+            top: "0",
+            zIndex: 2,
+            backgroundColor: "#000000", // Pure black background
+            color: "#ffffff", // White text
+            borderBottom: "2px solid #000000", // Match the black background
+            marginTop: 0
+          }}>
+            <tr style={{ lineHeight: "1" }}>
+              <th style={{ padding: "0.75rem 0.5rem", backgroundColor: "#000000", color: "#ffffff" }}>
+                <input
+                  type="checkbox"
+                  onChange={(e) => handleSelectAll(e.target.checked)}
+                  checked={approvals.length > 0 && selectedApprovals.length === approvals.length}
+                  disabled={approvals.length === 0 || processing}
+                />
+              </th>
+              <th style={{ padding: "0.75rem 0.5rem", backgroundColor: "#000000", color: "#ffffff" }}>TOKEN</th>
+              <th style={{ padding: "0.75rem 0.5rem", backgroundColor: "#000000", color: "#ffffff" }}>TYPE</th>
+              <th style={{ padding: "0.75rem 0.5rem", backgroundColor: "#000000", color: "#ffffff" }}>SPENDER</th>
+              <th style={{ padding: "0.75rem 0.5rem", backgroundColor: "#000000", color: "#ffffff" }}>ALLOWANCE</th>
+              <th style={{ padding: "0.75rem 0.5rem", backgroundColor: "#000000", color: "#ffffff" }}>RISK LEVEL</th>
+              <th style={{ padding: "0.75rem 0.5rem", backgroundColor: "#000000", color: "#ffffff" }}>LAST USED</th>
+              <th style={{ padding: "0.75rem 0.5rem", backgroundColor: "#000000", color: "#ffffff" }}>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody className="border-0" style={{ marginTop: "0.5rem" }}>
+            {approvals.map((a, idx) => {
+              const isSelected = selectedApprovals.some(
+                (sel) =>
+                  sel.contract === a.contract &&
+                  sel.spender === a.spender &&
+                  (a.tokenId !== undefined ? sel.tokenId === a.tokenId : true),
+              );
 
-    return (
-      <tr key={idx} className="border-0">
-        {/* Checkbox Column */}
-        <td style={{ padding: "0.5rem" }}>
-          <input
-            type="checkbox"
-            checked={isSelected}
-            onChange={() => handleSelect(a)}
-            disabled={processing}
-          />
-        </td>
+              return (
+                <tr key={idx} className="border-0">
+                  {/* Checkbox Column */}
+                  <td style={{ padding: "0.5rem" }}>
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => handleSelect(a)}
+                      disabled={processing}
+                    />
+                  </td>
 
-        {/* Token Column */}
-        <td style={{ padding: "0.5rem" }}>
-          <AssetDisplay approval={a} compact={true} logoSize="small" />
-        </td>
+                  {/* Token Column */}
+                  <td style={{ padding: "0.5rem" }}>
+                    <AssetDisplay approval={a} compact={true} logoSize="small" />
+                  </td>
 
-        {/* Type Column */}
-        <td style={{ padding: "0.5rem" }}>
-          <span
-            className={`badge bg-${a.type === "ERC-20" ? "success" : a.type === "ERC-721" ? "primary" : "warning"}`}
-            style={{ fontSize: "0.75rem" }}
-          >
-            {a.type}
-          </span>
-        </td>
+                  {/* Type Column */}
+                  <td style={{ padding: "0.5rem" }}>
+                    <span
+                      className={`badge bg-${a.type === "ERC-20" ? "success" : a.type === "ERC-721" ? "primary" : "warning"}`}
+                      style={{ fontSize: "0.75rem" }}
+                    >
+                      {a.type}
+                    </span>
+                  </td>
 
-        {/* Spender Column */}
-        <td style={{ padding: "0.5rem" }}>
-          <SpenderDisplay address={a.spender} /> {/* Use SpenderDisplay here */}
-        </td>
+                  {/* Spender Column */}
+                  <td style={{ padding: "0.5rem" }}>
+                    <SpenderDisplay address={a.spender} />
+                  </td>
 
-        {/* Allowance Column */}
-        <td style={{ padding: "0.5rem", fontSize: "0.85rem" }}>
-          {a.valueAtRisk
-            ? a.type === "ERC-20" && a.valueAtRisk.toLowerCase() !== "unlimited"
-              ? `${a.valueAtRisk}`
-              : a.valueAtRisk
-            : "Unknown"}
-        </td>
+                  {/* Allowance Column */}
+                  <td style={{ padding: "0.5rem", fontSize: "0.85rem" }}>
+                    {a.valueAtRisk
+                      ? a.type === "ERC-20" && a.valueAtRisk.toLowerCase() !== "unlimited"
+                        ? `${a.valueAtRisk}`
+                        : a.valueAtRisk
+                      : "Unknown"}
+                  </td>
 
-        {/* Risk Level Column */}
-        <td style={{ padding: "0.5rem" }}>
-          <RiskLevel approval={a} />
-        </td>
+                  {/* Risk Level Column */}
+                  <td style={{ padding: "0.5rem" }}>
+                    <RiskLevel approval={a} />
+                  </td>
 
-        {/* Last Used Column */}
-        <td style={{ padding: "0.5rem", fontSize: "0.85rem" }}>
-          {a.lastUsed || "15/03/2023 14:30"}
-        </td>
+                  {/* Last Used Column */}
+                  <td style={{ padding: "0.5rem", fontSize: "0.85rem" }}>
+                    {a.lastUsed || "15/03/2023 14:30"}
+                  </td>
 
-        {/* Actions Column */}
-        <td style={{ padding: "0.5rem" }}>
-          <button
-            className="btn btn-danger btn-sm"
-            style={{ fontSize: "0.75rem" }}
-            onClick={() => handleSingleRevoke(a)}
-            disabled={processing}
-          >
-            Revoke
-          </button>
-        </td>
-      </tr>
-    );
-  })}
-</tbody>
-
-      </table>
+                  {/* Actions Column */}
+                  <td style={{ padding: "0.5rem" }}>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      style={{ fontSize: "0.75rem" }}
+                      onClick={() => handleSingleRevoke(a)}
+                      disabled={processing}
+                    >
+                      Revoke
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
 
 {/* PROCEED Button with metallic gradient and white highlight */}
