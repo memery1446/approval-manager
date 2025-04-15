@@ -15,7 +15,7 @@ import AssetDisplay from "../components/AssetDisplay" // Import the new componen
 import RiskLevel from "../components/RiskLevel" // Import the RiskLevel component
 import SpenderDisplay from "../utils/getSpenderInfo" 
 
-const ApprovalDashboard = ({ onNavigateToEducation }) => {
+const ApprovalDashboard = ({ onNavigateToEducation, setHoveredRiskMessage }) => {
   const dispatch = useDispatch()
   const wallet = useSelector((state) => state.web3?.account)
   // Guarantee approvals is always an array and log its value
@@ -30,6 +30,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
   const [progressStatus, setProgressStatus] = useState("")
   const [error, setError] = useState(null)
   const [refreshing, setRefreshing] = useState(false)
+
 
   // Refresh approvals on wallet connection
   useEffect(() => {
@@ -288,6 +289,8 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
     {/* Progress Bar */}
     {progressValue > 0 && <TransactionProgressBar progress={progressValue} status={progressStatus} />}
 
+
+
     {/* Approvals table  */}
     <div
       className="approval-window"
@@ -384,7 +387,7 @@ const ApprovalDashboard = ({ onNavigateToEducation }) => {
 
                   {/* Risk Level Column */}
                   <td style={{ padding: "0.5rem" }}>
-                    <RiskLevel approval={a} />
+                   <RiskLevel approval={a} setHoveredRiskMessage={setHoveredRiskMessage} />
                   </td>
 
                   {/* Last Used Column */}

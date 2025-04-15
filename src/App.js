@@ -12,9 +12,13 @@ import ApprovalEducationPage from "./components/ApprovalEducationPage.js"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { BootstrapWrapper } from "./utils/provider"
 import { initializeProvider } from "./utils/providerService"
+import FloatingRiskBanner from "./components/FloatingRiskBanner";
+
 
 // Import the custom theme CSS
 import "./styles/theme.css"
+import './styles/tooltip.css'
+
 
 // Use Redux hooks
 const AppContent = () => {
@@ -23,6 +27,8 @@ const AppContent = () => {
   const network = useSelector((state) => state.web3.network)
   const approvals = useSelector((state) => state.web3.approvals)
   const [showEducation, setShowEducation] = useState(false)
+  const [hoveredRiskMessage, setHoveredRiskMessage] = useState(null);
+
 
   useEffect(() => {
     initializeProvider().catch((error) => console.error("❌ Provider initialization error:", error))
@@ -43,6 +49,7 @@ const AppContent = () => {
               <div className="mb-3">
                 <WalletConnect />
               </div>
+
 
               {/* Wallet Details - more compact */}
               {wallet && (
@@ -71,7 +78,10 @@ const AppContent = () => {
               </div>
 
               {/* Approval Dashboard - given more vertical space */}
-              <ApprovalDashboard onNavigateToEducation={() => setShowEducation(true)} />
+             <ApprovalDashboard
+  onNavigateToEducation={() => setShowEducation(true)}
+  setHoveredRiskMessage={setHoveredRiskMessage}
+/>
             </div>
           </div>
         </div>
@@ -81,6 +91,10 @@ const AppContent = () => {
           <ApprovalEducationPage onBack={() => setShowEducation(false)} />
         </div>
       )}
+
+<FloatingRiskBanner message={hoveredRiskMessage} />
+
+
     </BootstrapWrapper>
   )
 }
