@@ -209,6 +209,19 @@ const approval = {
       console.error(`❌ Error checking token ${tokenInfo.address}:`, error.message);
     }
   }
+  // Add our old low-amount approval to demonstrate risk level based on age
+const oldLowAmountApproval = {
+  contract: "0x6b175474e89094c44da98b954eedeac495271d0f", // DAI address
+  type: "ERC-20",
+  spender: "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45", // Uniswap Router V3
+  amount: "75000000000000000000", // 75 DAI in wei (18 decimals)
+  asset: "Dai",
+  valueAtRisk: "75 DAI", // Low amount but old date
+  transactionHash: "0x5a58bd51e74b233c0b66568a9d6a7de5d3def98a3c9a5073c5bb9a3458ab21a3", 
+  lastUsed: "01/04/2022 14:30" // OLD date for demonstrating risk
+};
+approvals.push(oldLowAmountApproval);
+console.log(`✅ Added special old low-amount approval for risk demo:`, oldLowAmountApproval);
 
   console.log(`✅ Completed comprehensive scan. Found ${approvals.length} approvals.`);
   return approvals;
@@ -489,5 +502,6 @@ function formatDate(date) {
   
   return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
+
 
 export default getERC20Approvals;

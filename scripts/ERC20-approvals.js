@@ -14,6 +14,7 @@ const SPENDERS = {
   ONEINCH: "0x11111112542d85b3ef69ae05771c2dccff4faa26", // 1inch Router
   UNISWAP: "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45", // Uniswap Router V3
   OPENSEA: "0x00000000006c3852cbef3e08e8df289169ede581", // OpenSea Seaport
+  OxEXCHANGE: "0xdef1c0ded9bec7f1a1670819833240f027b25eff", // 0x Exchange
 };
 
 // Token addresses and configurations
@@ -35,7 +36,19 @@ const TOKENS = {
     decimals: 9,
     type: "fee",
     name: "FLOKI"
-  }
+  },
+  DAI: {
+    address: "0x6b175474e89094c44da98b954eedeac495271d0f",
+    decimals: 18,
+    type: "standard",
+    name: "DAI"
+  },
+  USDT: {
+    address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    decimals: 6,
+    type: "standard",
+    name: "USDT"
+  },
 };
 
 /**
@@ -242,6 +255,22 @@ async function main() {
       spender: SPENDERS.OPENSEA,
       options: {
         approvalDate: new Date().toISOString().split('T')[0] // Today's date
+      }
+    },
+    {
+      token: TOKENS.DAI,
+      spender: SPENDERS.UNISWAP,
+      options: {
+        amount: ethers.parseUnits("75", TOKENS.DAI.decimals), // 75 DAI - LOW AMOUNT
+        approvalDate: "2022-04-01" // OLD DATE for demonstrating age-based risk
+      }
+    },
+    {
+      token: TOKENS.USDT,
+      spender: SPENDERS.OxEXCHANGE,
+      options: {
+        amount: ethers.MaxUint256, // unlimited
+        approvalDate: new Date().toISOString().split('T')[0] // today
       }
     }
   ];
