@@ -42,7 +42,7 @@ const AppContent = () => {
           <div className="card shadow-lg" style={{ position: "relative" }}>
             <div className="card-body p-4">
               <h3 className="mb-3" style={{ color: "#ffffff", fontWeight: "normal" }}>
-                __ Revoke
+                Revoke Approvals
               </h3>
 
               {/* Wallet Selector - more compact */}

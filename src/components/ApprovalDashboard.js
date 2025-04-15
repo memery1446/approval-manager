@@ -358,14 +358,14 @@ const ApprovalDashboard = ({ onNavigateToEducation, setHoveredRiskMessage }) => 
 
                   {/* Token Column */}
                   <td style={{ padding: "0.5rem" }}>
-                    <AssetDisplay approval={a} compact={true} logoSize="small" />
+                    <AssetDisplay approval={a} logoSize="medium" />
                   </td>
 
                   {/* Type Column */}
                   <td style={{ padding: "0.5rem" }}>
                     <span
                       className={`badge bg-${a.type === "ERC-20" ? "success" : a.type === "ERC-721" ? "success" : "success"}`}
-                      style={{ fontSize: "0.75rem" }}
+                      style={{ fontSize: "0.85rem" }}
                     >
                       {a.type}
                     </span>
@@ -377,7 +377,7 @@ const ApprovalDashboard = ({ onNavigateToEducation, setHoveredRiskMessage }) => 
                   </td>
 
                   {/* Allowance Column */}
-                  <td style={{ padding: "0.5rem", fontSize: "0.85rem" }}>
+                  <td style={{ padding: "0.5rem", fontSize: "0.95rem" }}>
                     {a.valueAtRisk
                       ? a.type === "ERC-20" && a.valueAtRisk.toLowerCase() !== "unlimited"
                         ? `${a.valueAtRisk}`

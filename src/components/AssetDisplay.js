@@ -9,7 +9,7 @@ import { getSpenderDisplayInfo } from '../utils/spenderMapping';
  * @param {boolean} props.compact - Whether to display in compact mode
  * @param {string} props.logoSize - Size of the logo (tiny, small, medium, large)
  */
-const AssetDisplay = ({ approval, compact = false, logoSize = 'small' }) => {
+const AssetDisplay = ({ approval, compact = false, logoSize = 'medium' }) => {
   // Get enhanced asset information
   const assetInfo = getAssetDisplayInfo(approval);
   const spenderAddress = "0x7a250d5630b4cf539739df2c5dacb4c659f2488d"; // Example address
@@ -33,24 +33,26 @@ const spenderInfo = getSpenderDisplayInfo(spenderAddress);
   }
   
   // Full display mode
-  return (
-    <div className="d-flex align-items-center">
-      <TokenLogo 
-        address={approval.contract} 
-        type={approval.type} 
-        size={logoSize}
-        className="me-3" // Increased spacing for better alignment
-      />
-      <div>
-        <div className="fw-bold mb-1" style={{ fontSize: '1.1rem' }}> {/* Slightly larger font for title */}
-          {assetInfo.name}
-        </div>
-        <div className="small text-muted" style={{ lineHeight: '1.2' }}> {/* Improved line height for description */}
-          {assetInfo.description}
-        </div>
+// Full display mode
+return (
+  <div className="d-flex align-items-center">
+    <TokenLogo 
+      address={approval.contract} 
+      type={approval.type} 
+      size={logoSize}
+      className="me-3"
+    />
+    <div>
+      <div className="fw-bold mb-1" style={{ fontSize: '1.1rem' }}>
+        {assetInfo.name}
+      </div>
+      <div className="small text-muted" style={{ lineHeight: '1.2' }}>
+        {approval.contract?.slice(0, 6)}...{approval.contract?.slice(-4)}
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default AssetDisplay;

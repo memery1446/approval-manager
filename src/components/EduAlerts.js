@@ -1,12 +1,12 @@
 // components/EduAlerts.js
 
 const EduAlerts = {
-  HIGH_RISK_OLD_DATE: "Approval is from 2022 or 2023 — high risk due to inactivity.",
-  HIGH_RISK_DAI: "DAI approvals are always high risk due to known scam patterns.",
-  MEDIUM_RISK_LOW_AMOUNT: "ERC-20 approval is below 500 tokens — moderate risk.",
+  HIGH_RISK_OLD_DATE: "WARNING: This approval is over a year old.",
+  HIGH_RISK_DAI: "This approval is over a year old.",
+  MEDIUM_RISK_LOW_AMOUNT: "Approval amount is below 500 tokens.",
   MEDIUM_RISK_SINGLE_NFT: "Approval is for a single NFT, not full collection.",
-  DEFAULT_HIGH: "This approval exposes a high-risk pattern.",
-  DEFAULT_MEDIUM: "This approval exposes a medium-risk pattern.",
+  DEFAULT_HIGH: "This approval is unlimited. Revoke today.",
+  DEFAULT_MEDIUM: "This approval is unlimited. Revoke today.",
 };
 
 export default EduAlerts;
