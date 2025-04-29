@@ -54,10 +54,25 @@ Then open: [http://localhost:3000](http://localhost:3000)
 You can run this **outside Docker**, or create a second container later.
 
 ```bash
+Docker Settings
 npx hardhat node --fork https://mainnet.infura.io/v3/$INFURA_API_KEY
+It will expose RPC at `http://127.0.0.1:8545`.
 ```
 
-It will expose RPC at `http://127.0.0.1:8545`.
+```bash
+Instructions for the web server: 
+1. NPM Instructions from the root directory in the screen called "screen -d -r BlockLock-Revoke": 
+npm install -g serve
+serve -s build
+
+* We will get a new IP address that we can use for Nginx. We need to hard code one. 
+
+2. Start the Hardhat node on the server in "screen -d -r BlockLock-Revoke":
+npx hardhat public-node
+
+3. It will expose RPC at the local transport layer `http://0.0.0.0:8545`.
+Use Nginx as the web server to server: /etc/nginx/sites-enabled/revokedev.blocklock.ai
+```
 
 🔁 **Ensure MetaMask is connected to:**
 ```
