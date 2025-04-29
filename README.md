@@ -29,7 +29,8 @@ ALCHEMY_API_KEY=optional_alchemy_key
 FORK_BLOCK_NUMBER=19700000          # Optional: Use a known stable block
 USE_DEFAULT_CHAIN_ID=false
 DEFAULT_CHAIN_ID=1337
-```
+``` 
+Change ChainID by switching the boolean in hardhat.config.js
 
 Make sure to **use the same `.env` file inside and outside Docker** if switching between local and container development.
 

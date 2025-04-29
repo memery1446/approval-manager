@@ -79,7 +79,13 @@ module.exports = {
         url: `https://mainnet.infura.io/v3/${INFURA_API_KEY}`,
         blockNumber: 18000000,
         enabled: true
-      }
+      },
+      chainId: DEFAULT_CHAIN_ID, // Dynamic chain ID
+      allowUnlimitedContractSize: true
+    },
+    localhost: {
+      url: "http://209.216.78.221:8545",
+      chainId: DEFAULT_CHAIN_ID // Match the same dynamic ID http://127.0.0.1:8545
     }
   },
   gasReporter: {
