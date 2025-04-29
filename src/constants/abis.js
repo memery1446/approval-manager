@@ -21,7 +21,7 @@ export const NETWORK_CONFIG = {
     name: "Hardhat Local Fork",
     rpcUrl:
       typeof window !== "undefined"
-        ? process.env.HARDHAT_RPC_URL || "http://127.0.0.1:8545"
+        ? process.env.HARDHAT_RPC_URL || "http://209.216.78.221:8545"
         : process.env.HARDHAT_RPC_URL,
     contracts: {
       tokenManager: deployedAddresses.TK1,
