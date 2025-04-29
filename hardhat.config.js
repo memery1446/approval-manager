@@ -43,8 +43,8 @@ module.exports = {
       allowUnlimitedContractSize: true
     },
     localhost: {
-      url: "http://127.0.0.1:8545",
-      chainId: DEFAULT_CHAIN_ID // Match the same dynamic ID
+      url: "http://209.216.78.221:8545",
+      chainId: DEFAULT_CHAIN_ID // Match the same dynamic ID http://127.0.0.1:8545
     }
   },
   gasReporter: {

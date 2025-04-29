@@ -1,0 +1,32 @@
+
+
+│   ├── App.js
+│   ├── constants
+│   │   ├── abis.js
+│   │   ├── config.js
+│   │   ├── deployedAddresses.json
+│   │   └── networks.js
+│   ├── index.js
+│   ├── store
+│   │   ├── index.js
+│   │   └── web3Slice.js
+│   └── utils
+│       ├── batchRevokeUtils.js
+│       ├── erc1155Approvals.js
+│       ├── erc20Approvals.js
+│       ├── getSpenderInfo.js
+│       ├── nftApprovals.js
+│       ├── provider.js
+│       ├── providerService.js
+│       ├── spenderMapping.js
+│       ├── tokenMapping.js
+│       └── walletService.js
+│   ├── ApprovalDashboard.js
+│   ├── Erc20approvals.js
+│   ├── ExistingApprovals.js
+│   ├── Functionality.js
+│   ├── NFTApprovals.js
+│   ├── TestERC1155.js
+│   └── WalletAndNetwork.js
+└
+
