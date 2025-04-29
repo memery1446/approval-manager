@@ -12,7 +12,7 @@ const CMC_API_KEY = process.env.CMC_API_KEY || "";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 
 // Chain ID configuration
-const USE_DEFAULT_CHAIN_ID = process.env.USE_DEFAULT_CHAIN_ID === "false";
+const USE_DEFAULT_CHAIN_ID = process.env.USE_DEFAULT_CHAIN_ID === "true";
 const DEFAULT_CHAIN_ID = USE_DEFAULT_CHAIN_ID ? 31337 : 1337;
 
 // Add this task to force 0.0.0.0 binding
