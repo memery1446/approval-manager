@@ -1,8 +1,8 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/markemery/approval-manager/contracts/BridgeSpender.sol": {
-      "lastModificationDate": 1742910454950,
+    "/var/www/html/blocklock_revoke/contracts/BridgeSpender.sol": {
+      "lastModificationDate": 1745422677830,
       "contentHash": "0c09f7e466371c81c7063b95a438906d",
       "sourceName": "contracts/BridgeSpender.sol",
       "solcConfig": {
@@ -37,8 +37,8 @@
         "BridgeSpender"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/DexSpender.sol": {
-      "lastModificationDate": 1742910347869,
+    "/var/www/html/blocklock_revoke/contracts/DexSpender.sol": {
+      "lastModificationDate": 1745422677830,
       "contentHash": "1414946f98d0e84d063e4d3ee5b847d9",
       "sourceName": "contracts/DexSpender.sol",
       "solcConfig": {
@@ -73,8 +73,8 @@
         "DexSpender"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/DynamicNFT.sol": {
-      "lastModificationDate": 1741999941544,
+    "/var/www/html/blocklock_revoke/contracts/DynamicNFT.sol": {
+      "lastModificationDate": 1745422677830,
       "contentHash": "47280c356ac1835c871737526e32d814",
       "sourceName": "contracts/DynamicNFT.sol",
       "solcConfig": {
@@ -111,8 +111,8 @@
         "DynamicNFT"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol": {
-      "lastModificationDate": 1741991922172,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol": {
+      "lastModificationDate": 1745423233261,
       "contentHash": "ba4a727732c179b4dfd6f8846c52c856",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
       "solcConfig": {
@@ -152,8 +152,47 @@
         "ERC721URIStorage"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
-      "lastModificationDate": 1741991922483,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/interfaces/IERC4906.sol": {
+      "lastModificationDate": 1745423233976,
+      "contentHash": "273c26c9c728a6052d1175ace81d10b4",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC4906.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC165.sol",
+        "./IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC4906"
+      ]
+    },
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
+      "lastModificationDate": 1745423234493,
       "contentHash": "a55fef2557b35bac18a1880d3c2e6740",
       "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
       "solcConfig": {
@@ -192,47 +231,8 @@
         "Strings"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/interfaces/IERC4906.sol": {
-      "lastModificationDate": 1741991922336,
-      "contentHash": "273c26c9c728a6052d1175ace81d10b4",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC4906.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC165.sol",
-        "./IERC721.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC4906"
-      ]
-    },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/interfaces/IERC165.sol": {
-      "lastModificationDate": 1741991922292,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/interfaces/IERC165.sol": {
+      "lastModificationDate": 1745423233779,
       "contentHash": "f808b485ee0cdc6768ee8385ae5f9a2a",
       "sourceName": "@openzeppelin/contracts/interfaces/IERC165.sol",
       "solcConfig": {
@@ -267,8 +267,8 @@
       ],
       "artifacts": []
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol": {
-      "lastModificationDate": 1741991922137,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol": {
+      "lastModificationDate": 1745423233138,
       "contentHash": "a7951c81f7037d558c6d2f220b0cb38e",
       "sourceName": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
       "solcConfig": {
@@ -311,10 +311,46 @@
         "ERC721"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/math/SafeCast.sol": {
-      "lastModificationDate": 1741991922462,
-      "contentHash": "2adca1150f58fc6f3d1f0a0f22ee7cca",
-      "sourceName": "@openzeppelin/contracts/utils/math/SafeCast.sol",
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/interfaces/IERC721.sol": {
+      "lastModificationDate": 1745423234023,
+      "contentHash": "d8d23fc2f55ed934d1a1b91c9afd8526",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC721.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": []
+    },
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+      "lastModificationDate": 1745423233788,
+      "contentHash": "bf0119eb2a570f219729ff38b6cd1df8",
+      "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -344,11 +380,49 @@
         "^0.8.20"
       ],
       "artifacts": [
-        "SafeCast"
+        "IERC165"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/math/Math.sol": {
-      "lastModificationDate": 1741991922378,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
+      "lastModificationDate": 1745423234037,
+      "contentHash": "1fdc621cd6747e8985e11fc76ce74511",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC721"
+      ]
+    },
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/math/Math.sol": {
+      "lastModificationDate": 1745423234200,
       "contentHash": "2b2665ae9bdb1af440658741a77fe213",
       "sourceName": "@openzeppelin/contracts/utils/math/Math.sol",
       "solcConfig": {
@@ -386,8 +460,8 @@
         "Math"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/math/SignedMath.sol": {
-      "lastModificationDate": 1741991922473,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/math/SignedMath.sol": {
+      "lastModificationDate": 1745423234461,
       "contentHash": "ae3528afb8bdb0a7dcfba5b115ee8074",
       "sourceName": "@openzeppelin/contracts/utils/math/SignedMath.sol",
       "solcConfig": {
@@ -424,8 +498,44 @@
         "SignedMath"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/Panic.sol": {
-      "lastModificationDate": 1741991922438,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/math/SafeCast.sol": {
+      "lastModificationDate": 1745423234419,
+      "contentHash": "2adca1150f58fc6f3d1f0a0f22ee7cca",
+      "sourceName": "@openzeppelin/contracts/utils/math/SafeCast.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "SafeCast"
+      ]
+    },
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/Panic.sol": {
+      "lastModificationDate": 1745423234348,
       "contentHash": "2133dc13536b4a6a98131e431fac59e1",
       "sourceName": "@openzeppelin/contracts/utils/Panic.sol",
       "solcConfig": {
@@ -460,118 +570,8 @@
         "Panic"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/interfaces/IERC721.sol": {
-      "lastModificationDate": 1741991922343,
-      "contentHash": "d8d23fc2f55ed934d1a1b91c9afd8526",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC721.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../token/ERC721/IERC721.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": []
-    },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
-      "lastModificationDate": 1741991922294,
-      "contentHash": "bf0119eb2a570f219729ff38b6cd1df8",
-      "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC165"
-      ]
-    },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
-      "lastModificationDate": 1741991922345,
-      "contentHash": "1fdc621cd6747e8985e11fc76ce74511",
-      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../utils/introspection/IERC165.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC721"
-      ]
-    },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1741991921927,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/Context.sol": {
+      "lastModificationDate": 1745423232332,
       "contentHash": "67bfbc07588eb8683b3fd8f6f909563e",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
@@ -606,8 +606,8 @@
         "Context"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
-      "lastModificationDate": 1741991922065,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
+      "lastModificationDate": 1745423232806,
       "contentHash": "7c03c1e37c3dc24eafb76dc2b8a5c3a6",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
@@ -644,8 +644,8 @@
         "ERC165"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
-      "lastModificationDate": 1741991921967,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
+      "lastModificationDate": 1745423232465,
       "contentHash": "267d92fe4de67b1bdb3302c08f387dbf",
       "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC6093.sol",
       "solcConfig": {
@@ -682,8 +682,8 @@
         "IERC721Errors"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
-      "lastModificationDate": 1741991922352,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
+      "lastModificationDate": 1745423234099,
       "contentHash": "12c206f185cb951213799561fdcaa40d",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
       "solcConfig": {
@@ -720,8 +720,8 @@
         "IERC721Metadata"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC721/utils/ERC721Utils.sol": {
-      "lastModificationDate": 1741991922173,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC721/utils/ERC721Utils.sol": {
+      "lastModificationDate": 1745423233275,
       "contentHash": "f4b67273e290784d0e155f004ae52f0b",
       "sourceName": "@openzeppelin/contracts/token/ERC721/utils/ERC721Utils.sol",
       "solcConfig": {
@@ -759,8 +759,8 @@
         "ERC721Utils"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
-      "lastModificationDate": 1741991922355,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
+      "lastModificationDate": 1745423234111,
       "contentHash": "729ce0904eb533489ffcc3bfe91237d4",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
       "solcConfig": {
@@ -795,8 +795,8 @@
         "IERC721Receiver"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Utils.sol": {
-      "lastModificationDate": 1741991922048,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Utils.sol": {
+      "lastModificationDate": 1745423232689,
       "contentHash": "346f1d25727e87df31335bbbc03a6c20",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Utils.sol",
       "solcConfig": {
@@ -834,8 +834,8 @@
         "ERC1155Utils"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol": {
-      "lastModificationDate": 1741991922280,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol": {
+      "lastModificationDate": 1745423233711,
       "contentHash": "a1c249dfb5f349be0b4fc85e635dfd59",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
       "solcConfig": {
@@ -872,8 +872,8 @@
         "IERC1155Receiver"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol": {
-      "lastModificationDate": 1741991922273,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol": {
+      "lastModificationDate": 1745423233652,
       "contentHash": "1c608119423d96df908c14227957bd75",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
       "solcConfig": {
@@ -910,8 +910,8 @@
         "IERC1155"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol": {
-      "lastModificationDate": 1741991922276,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol": {
+      "lastModificationDate": 1745423233680,
       "contentHash": "f8867afd172ace7ffa75d3752d785770",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
       "solcConfig": {
@@ -948,8 +948,8 @@
         "IERC1155MetadataURI"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol": {
-      "lastModificationDate": 1741991922026,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol": {
+      "lastModificationDate": 1745423232596,
       "contentHash": "7c7e5fac496b72e79ede7720a44a887c",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
       "solcConfig": {
@@ -992,8 +992,8 @@
         "ERC1155"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/Arrays.sol": {
-      "lastModificationDate": 1741991921858,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/Arrays.sol": {
+      "lastModificationDate": 1745423232147,
       "contentHash": "d7ecd50ca59f27485f37e919aeb0392a",
       "sourceName": "@openzeppelin/contracts/utils/Arrays.sol",
       "solcConfig": {
@@ -1033,44 +1033,8 @@
         "Arrays"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/StorageSlot.sol": {
-      "lastModificationDate": 1741991922478,
-      "contentHash": "e656d64c4ce918f3d13030b91c935134",
-      "sourceName": "@openzeppelin/contracts/utils/StorageSlot.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "StorageSlot"
-      ]
-    },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/Comparators.sol": {
-      "lastModificationDate": 1741991921924,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/Comparators.sol": {
+      "lastModificationDate": 1745423232328,
       "contentHash": "0e57405a6f979853cbfeb0df3546c3a3",
       "sourceName": "@openzeppelin/contracts/utils/Comparators.sol",
       "solcConfig": {
@@ -1105,8 +1069,44 @@
         "Comparators"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/SlotDerivation.sol": {
-      "lastModificationDate": 1741991922474,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/StorageSlot.sol": {
+      "lastModificationDate": 1745423234483,
+      "contentHash": "e656d64c4ce918f3d13030b91c935134",
+      "sourceName": "@openzeppelin/contracts/utils/StorageSlot.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "StorageSlot"
+      ]
+    },
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/SlotDerivation.sol": {
+      "lastModificationDate": 1745423234472,
       "contentHash": "b1b4d2a2542c75ed7ce12036009f3617",
       "sourceName": "@openzeppelin/contracts/utils/SlotDerivation.sol",
       "solcConfig": {
@@ -1141,8 +1141,8 @@
         "SlotDerivation"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155URIStorage.sol": {
-      "lastModificationDate": 1741991922047,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155URIStorage.sol": {
+      "lastModificationDate": 1745423232684,
       "contentHash": "41cab3d54b5ea3f9c99255d7809a0694",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155URIStorage.sol",
       "solcConfig": {
@@ -1180,8 +1180,8 @@
         "ERC1155URIStorage"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol": {
-      "lastModificationDate": 1741991922388,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol": {
+      "lastModificationDate": 1745423234243,
       "contentHash": "86fd93657e4e27ff76c38699e9b9fcef",
       "sourceName": "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol",
       "solcConfig": {
@@ -1218,8 +1218,8 @@
         "MessageHashUtils"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/cryptography/EIP712.sol": {
-      "lastModificationDate": 1741991921983,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/cryptography/EIP712.sol": {
+      "lastModificationDate": 1745423232515,
       "contentHash": "8dbb261c55f358342798c4d1803d4f8e",
       "sourceName": "@openzeppelin/contracts/utils/cryptography/EIP712.sol",
       "solcConfig": {
@@ -1258,44 +1258,8 @@
         "EIP712"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/interfaces/IERC5267.sol": {
-      "lastModificationDate": 1741991922337,
-      "contentHash": "94364524cb1a39dcbc3d3afff6d8e53e",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC5267.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC5267"
-      ]
-    },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/ShortStrings.sol": {
-      "lastModificationDate": 1741991922468,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/ShortStrings.sol": {
+      "lastModificationDate": 1745423234451,
       "contentHash": "94e7feaf138d08fb736e43ca0be9bf26",
       "sourceName": "@openzeppelin/contracts/utils/ShortStrings.sol",
       "solcConfig": {
@@ -1332,8 +1296,44 @@
         "ShortStrings"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol": {
-      "lastModificationDate": 1741991922098,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/interfaces/IERC5267.sol": {
+      "lastModificationDate": 1745423233985,
+      "contentHash": "94364524cb1a39dcbc3d3afff6d8e53e",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC5267.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC5267"
+      ]
+    },
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol": {
+      "lastModificationDate": 1745423232985,
       "contentHash": "b1a8fc63b83ce00408e0c9ed1230b717",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
       "solcConfig": {
@@ -1374,8 +1374,8 @@
         "ERC20Permit"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
-      "lastModificationDate": 1741991922083,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
+      "lastModificationDate": 1745423232907,
       "contentHash": "227a6eb2225701c12d9c959b758b6333",
       "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
@@ -1415,44 +1415,8 @@
         "ERC20"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol": {
-      "lastModificationDate": 1741991921981,
-      "contentHash": "81de029d56aa803972be03c5d277cb6c",
-      "sourceName": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ECDSA"
-      ]
-    },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/utils/Nonces.sol": {
-      "lastModificationDate": 1741991922393,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/Nonces.sol": {
+      "lastModificationDate": 1745423234269,
       "contentHash": "c32d108058718efb9061b88e83a83f79",
       "sourceName": "@openzeppelin/contracts/utils/Nonces.sol",
       "solcConfig": {
@@ -1487,8 +1451,44 @@
         "Nonces"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol": {
-      "lastModificationDate": 1741991922313,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol": {
+      "lastModificationDate": 1745423232501,
+      "contentHash": "81de029d56aa803972be03c5d277cb6c",
+      "sourceName": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ECDSA"
+      ]
+    },
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol": {
+      "lastModificationDate": 1745423233862,
       "contentHash": "94ec15baf0d5df863f45b8f351937ec7",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol",
       "solcConfig": {
@@ -1523,8 +1523,8 @@
         "IERC20Permit"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1741991922308,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1745423233835,
       "contentHash": "8f19f64d2adadf448840908bbaf431c8",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
@@ -1559,8 +1559,8 @@
         "IERC20"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
-      "lastModificationDate": 1741991922311,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+      "lastModificationDate": 1745423233853,
       "contentHash": "794db3115001aa372c79326fcfd44b1f",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
       "solcConfig": {
@@ -1597,8 +1597,8 @@
         "IERC20Metadata"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol": {
-      "lastModificationDate": 1741991922086,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol": {
+      "lastModificationDate": 1745423232926,
       "contentHash": "273d8d24b06f67207dd5f35c3a0c1086",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
       "solcConfig": {
@@ -1636,8 +1636,8 @@
         "ERC20Burnable"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1741991922395,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1745423234291,
       "contentHash": "d3c790edc9ccf808a17c5a6cd13614fd",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
@@ -1674,8 +1674,8 @@
         "Ownable"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/TestNFT.sol": {
-      "lastModificationDate": 1742129780175,
+    "/var/www/html/blocklock_revoke/contracts/TestNFT.sol": {
+      "lastModificationDate": 1745422677831,
       "contentHash": "9f7ee56d4c6e40d8992bb208bc8e89c2",
       "sourceName": "contracts/TestNFT.sol",
       "solcConfig": {
@@ -1714,8 +1714,8 @@
         "TestNFT"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol": {
-      "lastModificationDate": 1741991922154,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol": {
+      "lastModificationDate": 1745423233199,
       "contentHash": "bf1596648447152f4d3a5f5bc4444a6e",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
       "solcConfig": {
@@ -1754,8 +1754,8 @@
         "ERC721Enumerable"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol": {
-      "lastModificationDate": 1741991922349,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol": {
+      "lastModificationDate": 1745423234071,
       "contentHash": "3fdc14aab706458ae99314f6f7f529a2",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol",
       "solcConfig": {
@@ -1792,8 +1792,8 @@
         "IERC721Enumerable"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/TestERC1155.sol": {
-      "lastModificationDate": 1742129780175,
+    "/var/www/html/blocklock_revoke/contracts/TestERC1155.sol": {
+      "lastModificationDate": 1745422677831,
       "contentHash": "ca96e004e0f051b747dbc6da59987cf2",
       "sourceName": "contracts/TestERC1155.sol",
       "solcConfig": {
@@ -1831,8 +1831,8 @@
         "TestERC1155"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/PermitToken.sol": {
-      "lastModificationDate": 1742000580552,
+    "/var/www/html/blocklock_revoke/contracts/PermitToken.sol": {
+      "lastModificationDate": 1745422677831,
       "contentHash": "824e045c64856564daf230d567cf514d",
       "sourceName": "contracts/PermitToken.sol",
       "solcConfig": {
@@ -1870,8 +1870,8 @@
         "PermitToken"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/TestToken.sol": {
-      "lastModificationDate": 1742129780176,
+    "/var/www/html/blocklock_revoke/contracts/TestToken.sol": {
+      "lastModificationDate": 1745422677831,
       "contentHash": "f6f8c049d0d2be260458ab29ceb79c1c",
       "sourceName": "contracts/TestToken.sol",
       "solcConfig": {
@@ -1908,8 +1908,8 @@
         "TestToken"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/FeeToken.sol": {
-      "lastModificationDate": 1742129780174,
+    "/var/www/html/blocklock_revoke/contracts/FeeToken.sol": {
+      "lastModificationDate": 1745422677830,
       "contentHash": "d04cb8ecc21c8cbbb4f3011faa1d2680",
       "sourceName": "contracts/FeeToken.sol",
       "solcConfig": {
@@ -1946,8 +1946,8 @@
         "FeeToken"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/UpgradeableERC1155.sol": {
-      "lastModificationDate": 1742129780176,
+    "/var/www/html/blocklock_revoke/contracts/UpgradeableERC1155.sol": {
+      "lastModificationDate": 1745422677831,
       "contentHash": "624afb8f74592928d756384d9f1a5775",
       "sourceName": "contracts/UpgradeableERC1155.sol",
       "solcConfig": {
@@ -1985,8 +1985,8 @@
         "UpgradeableERC1155"
       ]
     },
-    "/Users/markemery/approval-manager/node_modules/@openzeppelin/contracts/proxy/utils/Initializable.sol": {
-      "lastModificationDate": 1741991922368,
+    "/var/www/html/blocklock_revoke/node_modules/@openzeppelin/contracts/proxy/utils/Initializable.sol": {
+      "lastModificationDate": 1745423234167,
       "contentHash": "f0cedd674b4863ee90d1521a92ab82df",
       "sourceName": "@openzeppelin/contracts/proxy/utils/Initializable.sol",
       "solcConfig": {
@@ -2021,8 +2021,8 @@
         "Initializable"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/UpgradeableNFT.sol": {
-      "lastModificationDate": 1742129780176,
+    "/var/www/html/blocklock_revoke/contracts/UpgradeableNFT.sol": {
+      "lastModificationDate": 1745422677831,
       "contentHash": "1ffc8b403ac616725a25bb7425fb91a4",
       "sourceName": "contracts/UpgradeableNFT.sol",
       "solcConfig": {
@@ -2060,8 +2060,8 @@
         "UpgradeableNFT"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/LendingSpender.sol": {
-      "lastModificationDate": 1742910375334,
+    "/var/www/html/blocklock_revoke/contracts/LendingSpender.sol": {
+      "lastModificationDate": 1745422677830,
       "contentHash": "bc76a42cfa82fdfa56593afce4981347",
       "sourceName": "contracts/LendingSpender.sol",
       "solcConfig": {
@@ -2096,8 +2096,8 @@
         "LendingSpender"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/MiscSpender.sol": {
-      "lastModificationDate": 1742910477880,
+    "/var/www/html/blocklock_revoke/contracts/MiscSpender.sol": {
+      "lastModificationDate": 1745422677831,
       "contentHash": "315928678296c3717930f1718e3fce3c",
       "sourceName": "contracts/MiscSpender.sol",
       "solcConfig": {
@@ -2132,8 +2132,8 @@
         "MiscSpender"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/MockSpender.sol": {
-      "lastModificationDate": 1741946203632,
+    "/var/www/html/blocklock_revoke/contracts/MockSpender.sol": {
+      "lastModificationDate": 1745422677831,
       "contentHash": "f0225558d4f40c58367fc66c61333f42",
       "sourceName": "contracts/MockSpender.sol",
       "solcConfig": {
@@ -2171,8 +2171,8 @@
         "MockSpender"
       ]
     },
-    "/Users/markemery/approval-manager/contracts/NftMarketplaceSpender.sol": {
-      "lastModificationDate": 1742910427139,
+    "/var/www/html/blocklock_revoke/contracts/NftMarketplaceSpender.sol": {
+      "lastModificationDate": 1745422677831,
       "contentHash": "fe928f69f7f30808371c88d7d0e0b458",
       "sourceName": "contracts/NftMarketplaceSpender.sol",
       "solcConfig": {

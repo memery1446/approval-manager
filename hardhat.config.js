@@ -15,6 +15,45 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 const USE_DEFAULT_CHAIN_ID = process.env.USE_DEFAULT_CHAIN_ID === "true";
 const DEFAULT_CHAIN_ID = USE_DEFAULT_CHAIN_ID ? 31337 : 1337;
 
+// Add this task to force 0.0.0.0 binding
+task("public-node", "Runs a Hardhat node that listens on all interfaces", async () => {
+  const { spawn } = require("child_process");
+  
+  // Start Hardhat on a different port first
+  const node = spawn("npx", ["hardhat", "node", "--port", "8546"]);
+  
+  node.stdout.on("data", (data) => {
+    console.log(data.toString());
+    // When we see the node is ready, start our proxy
+    if (data.toString().includes("Started HTTP")) {
+      const http = require("http");
+      const server = http.createServer((req, res) => {
+        const proxy = http.request({
+          host: "localhost",
+          port: 8546,  // Proxy to the alternate port
+          path: req.url,
+          method: req.method,
+          headers: req.headers
+        }, (pres) => {
+          res.writeHead(pres.statusCode, pres.headers);
+          pres.pipe(res);
+        });
+        req.pipe(proxy);
+      });
+      server.listen(8545, "0.0.0.0", () => {
+        console.log(`\nPublic proxy running at http://0.0.0.0:8545`);
+        console.log(`Accessible externally at http://209.216.78.221:8545`);
+      });
+    }
+  });
+  
+  node.stderr.on("data", (data) => console.error(data.toString()));
+  node.on("close", (code) => console.log(`Node process exited with code ${code}`));
+  
+  // Keep process running
+  await new Promise(() => {});
+});
+
 module.exports = {
   solidity: {
     version: "0.8.20",
@@ -34,6 +73,8 @@ module.exports = {
       explorerUrl: "https://etherscan.io/"
     },
     hardhat: {
+      chainId: DEFAULT_CHAIN_ID,
+      allowUnlimitedContractSize: true,
       forking: {
         url: `https://mainnet.infura.io/v3/${INFURA_API_KEY}`,
         blockNumber: 18000000,
@@ -43,8 +84,8 @@ module.exports = {
       allowUnlimitedContractSize: true
     },
     localhost: {
-      url: "http://127.0.0.1:8545",
-      chainId: DEFAULT_CHAIN_ID // Match the same dynamic ID
+      url: "http://209.216.78.221:8545",
+      chainId: DEFAULT_CHAIN_ID // Match the same dynamic ID http://127.0.0.1:8545
     }
   },
   gasReporter: {

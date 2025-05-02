@@ -26,6 +26,12 @@ ENV CMC_API_KEY=${CMC_API_KEY}
 # Build the application
 RUN npm run build
 
+# Install server
+RUN npm install -g serve
+
+#Serve
+RUN serve -s build
+
 # Expose the port
 EXPOSE 3003
 
