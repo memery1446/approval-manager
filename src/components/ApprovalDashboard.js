@@ -289,6 +289,32 @@ const ApprovalDashboard = ({ onNavigateToEducation, setHoveredRiskMessage }) => 
     {/* Progress Bar */}
     {progressValue > 0 && <TransactionProgressBar progress={progressValue} status={progressStatus} />}
 
+{refreshing && (
+  <div
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0,0,0,0.8)",
+      zIndex: 5,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      color: "#ffffff",
+      fontSize: "1.2rem",
+      fontWeight: "bold",
+      borderRadius: "0.75rem"
+    }}
+  >
+    <div className="spinner-border text-light mb-3" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </div>
+    Searching for approved spenders...
+  </div>
+)}
 
 
     {/* Approvals table  */}
