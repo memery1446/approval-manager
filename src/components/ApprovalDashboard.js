@@ -32,8 +32,6 @@ const ApprovalDashboard = ({ onNavigateToEducation, setHoveredRiskMessage }) => 
   const [refreshing, setRefreshing] = useState(false)
   const [scanMessages, setScanMessages] = useState([]);
 
-
-
   // Refresh approvals on wallet connection
   useEffect(() => {
     if (wallet) {
@@ -48,7 +46,6 @@ function delay(ms) {
 const logScanMessage = (message) => {
   setScanMessages((prev) => [...prev, message]);
 };
-
 
   // Allow selection of individual approvals
   const handleSelect = (approval) => {
@@ -97,7 +94,7 @@ const logScanMessage = (message) => {
   }
 
   // Refresh approvals with better error handling
-const refreshApprovals = async () => {
+  const refreshApprovals = async () => {
   console.log("🔄 Refreshing approvals for wallet:", wallet)
   setRefreshing(true)
   setError(null)
@@ -178,9 +175,8 @@ const refreshApprovals = async () => {
   }
 }
 
-
-  // Process selected approvals
-  const handleRevoke = async () => {
+    // Process selected approvals
+    const handleRevoke = async () => {
     if (!selectedApprovals.length || processing) {
       console.log("⚠️ No approvals selected or already processing")
       return
@@ -314,27 +310,27 @@ const refreshApprovals = async () => {
     {/* Progress Bar */}
     {progressValue > 0 && <TransactionProgressBar progress={progressValue} status={progressStatus} />}
 
-{refreshing && (
-  <div
-    style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: "rgba(0,0,0,0.85)",
-      zIndex: 5,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "flex-start",
-      color: "#ffffff",
-      fontSize: "1.2rem",
-      fontWeight: "bold",
-      borderRadius: "0.75rem",
-      paddingTop: "3rem",
-      overflowY: "auto",
-    }}
+  {refreshing && (
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0,0,0,0.85)",
+        zIndex: 5,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        color: "#ffffff",
+        fontSize: "1.2rem",
+        fontWeight: "bold",
+        borderRadius: "0.75rem",
+        paddingTop: "3rem",
+        overflowY: "auto",
+      }}
   >
     <div className="spinner-border text-light mb-3" role="status">
       <span className="visually-hidden">Loading...</span>
@@ -472,41 +468,41 @@ const refreshApprovals = async () => {
       </div>
     </div>
 
-{/* PROCEED Button with metallic gradient and white highlight */}
-<button
-  className="btn btn-proceed w-100 text-uppercase mt-3"
-  onClick={handleRevoke}
-  disabled={processing || selectedApprovals.length === 0}
-  style={{ 
-    background: "linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, #0dcc8e 100%)",
-    border: "none",
-    borderRadius: "0.5rem",
-    padding: "0.875rem",
-    fontWeight: "500",
-    color: "#ffffff",
-    letterSpacing: "0.05rem",
-    boxShadow: "0 4px 10px rgba(10, 21, 37, 0.2), 0 0 20px rgba(14, 181, 130, 0.3)",
-    textShadow: "0 1px 2px rgba(0, 0, 0, 0.2)",
-    position: "relative",
-    overflow: "hidden"
-  }}
->
-  <span
-    style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      height: "40%",
-      background: "linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent)",
-      borderRadius: "0.5rem 0.5rem 0 0",
-      pointerEvents: "none"
+  {/* PROCEED Button with metallic gradient and white highlight */}
+  <button
+    className="btn btn-proceed w-100 text-uppercase mt-3"
+    onClick={handleRevoke}
+    disabled={processing || selectedApprovals.length === 0}
+    style={{ 
+      background: "linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, #0dcc8e 100%)",
+      border: "none",
+      borderRadius: "0.5rem",
+      padding: "0.875rem",
+      fontWeight: "500",
+      color: "#ffffff",
+      letterSpacing: "0.05rem",
+      boxShadow: "0 4px 10px rgba(10, 21, 37, 0.2), 0 0 20px rgba(14, 181, 130, 0.3)",
+      textShadow: "0 1px 2px rgba(0, 0, 0, 0.2)",
+      position: "relative",
+      overflow: "hidden"
     }}
-  ></span>
-  {processing ? "PROCESSING..." : "PROCEED"}
-</button>
-  </>
-  );
-};
+  >
+    <span
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        height: "40%",
+        background: "linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent)",
+        borderRadius: "0.5rem 0.5rem 0 0",
+        pointerEvents: "none"
+      }}
+    ></span>
+    {processing ? "PROCESSING..." : "PROCEED"}
+  </button>
+    </>
+    );
+  };
 
-export default ApprovalDashboard;
+  export default ApprovalDashboard;
