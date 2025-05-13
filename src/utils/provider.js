@@ -7,10 +7,19 @@ const USE_DEFAULT_CHAIN_ID = process.env.USE_DEFAULT_CHAIN_ID === "true";
 const LOCAL_CHAIN_ID = USE_DEFAULT_CHAIN_ID ? 31337 : 1337;
 
 const getRpcUrl = () => {
+  if (typeof window !== "undefined") {
+    const mode = localStorage.getItem("rpcMode") || "remote";
+    if (mode === "local") {
+      return "http://127.0.0.1:8545"; // 🖥 Hardhat local
+    }
+  }
+
+  // Default: use Infura or fallback
   return process.env.HARDHAT_RPC_URL || 
-         `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}` || 
-         "https://ethereum-sepolia-rpc.publicnode.com"; // Public fallback
+         `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}` ||
+         "https://ethereum.publicnode.com"; // final backup
 };
+
 
 // Dynamic network RPC URLs
 const NETWORK_RPC_URLS = {
@@ -65,6 +74,8 @@ async function getProvider() {
 
         const rpcUrl = getRpcUrl();
         console.log(`📡 No wallet detected, using RPC: ${rpcUrl}`);
+        console.log(`🌐 Selected RPC URL: ${rpcUrl}`);
+
 
         const fallbackProvider = new JsonRpcProvider(rpcUrl);
         window.ethersProvider = fallbackProvider;

@@ -13,6 +13,9 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { BootstrapWrapper } from "./utils/provider"
 import { initializeProvider } from "./utils/providerService"
 import FloatingRiskBanner from "./components/FloatingRiskBanner";
+import ProviderInitializer from "./components/ProviderInitializer"; 
+import RpcToggle from "./components/RpcToggle";
+
 
 
 // Import the custom theme CSS
@@ -36,6 +39,8 @@ const AppContent = () => {
 
   return (
     <BootstrapWrapper>
+    <ProviderInitializer />
+    
       {!showEducation ? (
         // Main Dashboard View styled like the modal in the screenshot
         <div className="container my-4" style={{ maxWidth: "968px" }}>
@@ -75,6 +80,11 @@ const AppContent = () => {
               {/* Network Selector - more compact */}
               <div className="mb-3">
                 <NetworkSelector />
+              </div>
+
+{/* Rpc Dev Toggle */}
+              <div className="mb-3">
+               <RpcToggle />
               </div>
 
               {/* Approval Dashboard - given more vertical space */}

@@ -33,7 +33,7 @@
   position: fixed;
   top: 70px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-40%);
   background-color: rgba(250, 204, 21, 0.97); /* brighter soft yellow */
   color: #1a1a1a;
   padding: 1.5rem 3rem;
@@ -44,7 +44,7 @@
   z-index: 9999;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
   pointer-events: none;
-  max-width: 95vw;
+  max-width: 85vw;
   text-align: center;
 }
 
