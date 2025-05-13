@@ -180,6 +180,32 @@ approvals.push({
     }
     
     console.log(`✅ Found ${approvals.length} ERC-1155 approvals`);
+
+// OpenSea Shared Storefront → Custom Operator
+approvals.push({
+  contract: "0x495f947276749Ce646f68AC8c248420045cb7b5e",
+  type: "ERC-1155",
+  spender: "0x207Fa8Df3a17D96Ca7EA4f2893fcdCb78a304101",
+  isApproved: true,
+  asset: "OpenSea Shared Storefront",
+  valueAtRisk: "All Items",
+  transactionHash: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  lastUsed: "05/05/2025 12:03"
+});
+
+// Upgradeable ERC1155 → Rarible Operator
+approvals.push({
+  contract: "0xB66a603f4cFe17e3D27B87a8BfCaD319856518B8",
+  type: "ERC-1155",
+  spender: "0xfac7bea255a6990f749363002136af6556b31e04",
+  isApproved: true,
+  asset: "Upgradeable ERC-1155",
+  valueAtRisk: "All Items",
+  transactionHash: "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  lastUsed: "05/05/2025 12:04"
+});
+
+    
     return approvals;
   } catch (error) {
     console.error("❌ Error in ERC-1155 approvals check:", error);

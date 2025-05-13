@@ -210,22 +210,70 @@ const approval = {
     }
   }
   // Add our old low-amount approval to demonstrate risk level based on age
-const oldLowAmountApproval = {
-  contract: "0x6b175474e89094c44da98b954eedeac495271d0f", // DAI address
-  type: "ERC-20",
-  spender: "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45", // Uniswap Router V3
-  amount: "75000000000000000000", // 75 DAI in wei (18 decimals)
-  asset: "Dai",
-  valueAtRisk: "75 DAI", // Low amount but old date
-  transactionHash: "0x5a58bd51e74b233c0b66568a9d6a7de5d3def98a3c9a5073c5bb9a3458ab21a3", 
-  lastUsed: "01/04/2022 14:30" // OLD date for demonstrating risk
-};
-approvals.push(oldLowAmountApproval);
-console.log(`✅ Added special old low-amount approval for risk demo:`, oldLowAmountApproval);
+  const oldLowAmountApproval = {
+    contract: "0x6b175474e89094c44da98b954eedeac495271d0f", // DAI address
+    type: "ERC-20",
+    spender: "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45", // Uniswap Router V3
+    amount: "75000000000000000000", // 75 DAI in wei (18 decimals)
+    asset: "Dai",
+    valueAtRisk: "75 DAI", // Low amount but old date
+    transactionHash: "0x5a58bd51e74b233c0b66568a9d6a7de5d3def98a3c9a5073c5bb9a3458ab21a3", 
+    lastUsed: "01/04/2022 14:30"
+  };
+  approvals.push(oldLowAmountApproval);
+
+  // 100 USDC → 1inch, recent
+  approvals.push({
+    contract: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", // USDC
+    type: "ERC-20",
+    spender: "0x11111112542d85b3ef69ae05771c2dccff4faa26", // 1inch Router
+    amount: "100000000", // 100 USDC (6 decimals)
+    asset: "USDC",
+    valueAtRisk: "100 USDC",
+    transactionHash: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    lastUsed: "02/05/2025 14:00"
+  });
+
+  // UNI → Uniswap, unlimited
+  approvals.push({
+    contract: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984", // UNI
+    type: "ERC-20",
+    spender: "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45", // Uniswap Router V3
+    amount: "unlimited",
+    asset: "UNI",
+    valueAtRisk: "Unlimited",
+    transactionHash: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    lastUsed: "05/05/2025 12:00"
+  });
+
+  // FLOKI → OpenSea, unlimited
+  approvals.push({
+    contract: "0xcf0C122c6b73ff809C693DB761e7BaeBe62b6a2E", // FLOKI
+    type: "ERC-20",
+    spender: "0x00000000006c3852cbef3e08e8df289169ede581", // OpenSea Seaport
+    amount: "unlimited",
+    asset: "FLOKI",
+    valueAtRisk: "Unlimited",
+    transactionHash: "0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    lastUsed: "05/05/2025 12:01"
+  });
+
+  // USDT → 0x Exchange, unlimited
+  approvals.push({
+    contract: "0xdac17f958d2ee523a2206206994597c13d831ec7", // USDT
+    type: "ERC-20",
+    spender: "0xdef1c0ded9bec7f1a1670819833240f027b25eff", // 0x Exchange
+    amount: "unlimited",
+    asset: "USDT",
+    valueAtRisk: "Unlimited",
+    transactionHash: "0xdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    lastUsed: "05/05/2025 12:02"
+  });
 
   console.log(`✅ Completed comprehensive scan. Found ${approvals.length} approvals.`);
   return approvals;
 }
+
 
 /**
  * Get all possible tokens to check for approvals from multiple sources
